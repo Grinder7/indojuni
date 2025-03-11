@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Product\ProductService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,9 +21,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllProduct()
+    public function getAllProduct(): JsonResponse
     {
         $products = $this->productService->getAllData();
-        return response()->json($products);
+
+        if ($products->isEmpty()) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data not found',
+                'data' => null
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully get all data',
+            'data' => $products
+        ], 200);
     }
 }

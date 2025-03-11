@@ -28,13 +28,23 @@
                 justify-content: center;
                 scrollbarPadding: false,
             }
+
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                scroll-behavior: smooth;
+                scroll-padding-top: 6rem;
+            }
         </style>
     </head>
 
     <body>
-        @include('partials.app-navbar')
+        <div>
+            @include('partials.app-navbar')
+        </div>
 
-        <div class="d-flex h-100 w-100 text-center"
+        <div class="d-flex h-100 text-center"
             style="padding-top:6rem; background-image:url({{ asset('images/app/ZiO1i56gJbwduUeaoQDW.jpg') }}); background-repeat:no-repeat; background-size:cover; background-position:center">
             <div class="cover-container d-flex w-100 h-100 flex-column mx-auto p-3">
                 <main class="align-items-center mt-auto px-3">
