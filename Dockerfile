@@ -1,21 +1,14 @@
-FROM php:8.2.12-fpm
+FROM php:8.2.12-fpm-alpine
 
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libpq-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip
+RUN apk add --no-cache postgresql-dev
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install pdo pdo_pgsql pgsql && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 
 WORKDIR /app
 COPY composer.json .
 RUN composer install --no-scripts
 COPY . .
+EXPOSE 8080
+CMD php artisan serve --host=0.0.0.0 --port 8080
 
-CMD php artisan serve --host=0.0.0.0 --port 80
