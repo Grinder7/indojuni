@@ -28,7 +28,6 @@ Route::prefix("v1")->group(function () {
         Route::post("login", [UserController::class, "postAuthLogin"]);
 
         Route::middleware('auth:sanctum')->group(function () {
-            Route::post("refresh-token", [UserController::class, "postAuthRefreshToken"]);
             Route::get("check", [UserController::class, "getAuthCheck"]);
             Route::post("logout", [UserController::class, "postAuthLogout"]);
         });
