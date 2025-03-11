@@ -30,6 +30,15 @@ class UserController extends Controller
         ], 400);
     }
 
+    private function successResponse($message = "Success", $data = null): JsonResponse
+    {
+        return response()->json([
+            'status' => 200,
+            'message' => $message,
+            'data' => $data
+        ], 200);
+    }
+
     private function createCart(Request $request): ShoppingSession
     {
         $validated = $request->validate([
@@ -43,7 +52,7 @@ class UserController extends Controller
         return $this->shoppingSessionService->create($validated);
     }
 
-    public function postAuthLogin(LoginRequest $request)
+    public function postAuthLogin(LoginRequest $request): JsonResponse
     {
         $request->checkThrottle();
         $loginSuccess = $this->userService->login($request->validated(), $request->throttleKey());
@@ -62,34 +71,23 @@ class UserController extends Controller
             return $this->errorResponse("failed to create cart");
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully login',
-            'data' => [
-                "user" => $user,
-                "shopping_session" => $shoppingSessionData,
-                "token" => $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken,
-            ]
-        ], 200);
+        $accessToken = $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken;
+
+        return $this->successResponse('Successfully login', [
+            "user" => $user,
+            "shopping_session" => $shoppingSessionData,
+            "access_token" => $accessToken
+        ]);
     }
 
     public function postAuthLogout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully logout',
-            'data' => null
-        ], 200);
+        return $this->successResponse('Successfully logout');
     }
 
     public function getAuthCheck(): JsonResponse
     {
-        return response()->json([
-            'status' => 200,
-            'message' => 'User is authenticated',
-            'data' => Auth::user()
-        ], 200);
+        return $this->successResponse('User is authenticated', Auth::user());
     }
 }

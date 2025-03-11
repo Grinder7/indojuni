@@ -14,8 +14,8 @@ class ShoppingSession extends Model
         'user_id',
         'total'
     ];
-    public function user_id()
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
 }
