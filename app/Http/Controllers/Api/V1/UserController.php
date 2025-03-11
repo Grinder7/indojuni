@@ -83,4 +83,13 @@ class UserController extends Controller
             'data' => null
         ], 200);
     }
+
+    public function getAuthCheck(): JsonResponse
+    {
+        return response()->json([
+            'status' => 200,
+            'message' => 'User is authenticated',
+            'data' => Auth::user()
+        ], 200);
+    }
 }
