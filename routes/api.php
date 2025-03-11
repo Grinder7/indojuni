@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get("ping", function () {
+    return response()->json([
+        "status" => 200,
+        "message" => "pong",
+        "data" => null
+    ]);
+});
+
 Route::prefix("v1")->group(function () {
     Route::prefix("auth")->group(function () {
         Route::post("login", [UserController::class, "postAuthLogin"]);
 
         Route::middleware('auth:sanctum')->group(function () {
-            Route::post("logout", [UserController::class, "postAuthLogout"]);
+            Route::post("refresh-token", [UserController::class, "postAuthRefreshToken"]);
             Route::get("check", [UserController::class, "getAuthCheck"]);
+            Route::post("logout", [UserController::class, "postAuthLogout"]);
         });
     });
 
