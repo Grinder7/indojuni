@@ -17,10 +17,10 @@ class OrderDetail extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
     public function payment()
     {
-        return $this->belongsTo(PaymentDetail::class);
+        return $this->belongsTo(PaymentDetail::class, "payment_id");
     }
 }

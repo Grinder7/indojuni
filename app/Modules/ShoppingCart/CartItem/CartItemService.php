@@ -10,15 +10,18 @@ use App\Modules\Product\ProductRepository;
 use App\Modules\ShoppingCart\ShoppingSession\ShoppingSessionRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+
+use function PHPUnit\Framework\isEmpty;
 
 class CartItemService
 {
     public CartItemRepository $cartItemRepository;
     // Get shopping cart session
     public ShoppingSessionRepository $shoppingSessionRepository;
-    // Get product 
+    // Get product
     public ProductRepository $productRepository;
     public function __construct(CartItemRepository $cartItemRepository, ShoppingSessionRepository $shoppingSessionRepository, ProductRepository $productRepository)
     {
@@ -51,6 +54,11 @@ class CartItemService
                 'success' => false,
                 'message' => 'Stock is not available'
             ], 400);
+        } else if ($product->stock < $data['quantity']) {
+            return Response::json([
+                'success' => false,
+                'message' => 'Stock is not available'
+            ], 400);
         }
         // Update total price in shopping session
         $shoppingSession->total += $product->price * $data['quantity'];
@@ -78,6 +86,120 @@ class CartItemService
             ], 200);
         }
     }
+
+    // for api
+    public function removeItem(array $data): array
+    {
+        $shoppingSession = $this->shoppingSessionRepository->getByUserId(Auth::id());
+        $failedProducts = [];
+        $successProducts = [];
+        foreach ($data["product_id"] as $productId) {
+            $product = $this->productRepository->getById((int)$productId);
+            if ($product == null) {
+                $failedProducts[] = $productId;
+                continue;
+            }
+            $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$productId);
+            if ($cartItem == null) {
+                $failedProducts[] = $productId;
+                continue;
+            }
+            // Update total price in shopping session
+            $shoppingSession->total -= $product->price * $cartItem->quantity;
+            $success = $shoppingSession->save();
+            if (!$success) {
+                $failedProducts[] = $productId;
+                continue;
+            }
+            // Remove product from cart
+            $removedProduct = $cartItem->delete();
+            if (!$removedProduct) {
+                $failedProducts[] = $productId;
+            } else {
+                $successProducts[] = $productId;
+            }
+        }
+        if (count($failedProducts) > 0) {
+            return [
+                'success' => false,
+                'message' => 'Failed to remove item(s) from cart',
+                'data' => [
+                    "failed" => $failedProducts,
+                    "success" => $successProducts
+                ]
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => 'Successfully remove item(s) from cart',
+            'data' => [
+                "failed" => $failedProducts,
+                "success" => $successProducts
+            ]
+        ];
+    }
+
+    // for api
+    public function addItem(array $data): array
+    {
+        $shoppingSession = $this->shoppingSessionRepository->getByUserId(Auth::id());
+        $failedProducts = [];
+        $successProducts = [];
+        foreach ($data["product"] as $item) {
+            $product = $this->productRepository->getById((int)$item["product_id"]);
+            if ($product == null) {
+                $failedProducts[] = $item["product_id"];
+                continue;
+            }
+            $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$item["product_id"]);
+            // Check if stock is available
+            if (($cartItem != null) && ($product->stock < $cartItem->quantity + $item["quantity"])) {
+                $failedProducts[] = $item;
+                continue;
+            } else if ($product->stock < $item["quantity"]) {
+                $failedProducts[] = $item;
+                continue;
+            }
+            // Update total price in shopping session
+            $shoppingSession->total += $product->price * $item["quantity"];
+            $success = $shoppingSession->save();
+            if (!$success) {
+                $failedProducts[] = $item;
+                continue;
+            }
+            // Add product to cart
+            $addedProduct = $this->cartItemRepository->insertProduct([
+                "session_id" => $shoppingSession->id,
+                "product_id" => $item["product_id"],
+                "quantity" => $item["quantity"]
+            ]);
+
+            if (!$addedProduct) {
+                $failedProducts[] = $item;
+            } else {
+                $successProducts[] = $item;
+            }
+        }
+        if (count($failedProducts) > 0) {
+            return [
+                'success' => false,
+                'message' => 'Failed to add item(s) to cart',
+                'data' => [
+                    "failed" => $failedProducts,
+                    "success" => $successProducts
+                ]
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => 'Successfully add item(s) to cart',
+            'data' => [
+                "failed" => $failedProducts,
+                "success" => $successProducts
+            ]
+        ];
+    }
+
     public function deleteBySessionId(string $sId): int
     {
         return $this->cartItemRepository->deleteBySessionId($sId);

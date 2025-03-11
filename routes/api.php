@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -39,5 +40,11 @@ Route::prefix("v1")->group(function () {
         // Route::middleware('auth:sanctum')->group(function () {
         //     Route::get("all", [ProductController::class, "getAllProduct"]);
         // });
+    });
+
+    Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
+        Route::get("current", [CartController::class, "getUserCartItems"]);
+        Route::post("add", [CartController::class, "postAddCartItem"]);
+        Route::post("remove", [CartController::class, "postRemoveCartItem"]);
     });
 });
