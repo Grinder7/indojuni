@@ -31,6 +31,7 @@ Route::prefix("v1")->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::get("check", [UserController::class, "getAuthCheck"]);
             Route::post("logout", [UserController::class, "postAuthLogout"]);
+            Route::post("logout-all", [UserController::class, "postAuthLogoutAll"]);
         });
     });
 
