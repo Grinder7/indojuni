@@ -6,6 +6,7 @@ namespace App\Modules\ShoppingCart\CartItem;
 
 use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CartItemRepository
 {
@@ -23,16 +24,23 @@ class CartItemRepository
     }
     public function insertProduct(array $data): CartItem
     {
-        // Check if product already exist in cart
-        $product = CartItem::where('product_id', $data['product_id'])->where('session_id', $data['session_id'])->get()->first();
-        if ($product) {
-            $product->quantity += $data['quantity'];
-            $product->save();
-            return $product;
-        } else {
-            return CartItem::create($data);
-        }
+        return DB::transaction(function () use ($data) {
+            // Lock the cart item to prevent race conditions
+            $product = CartItem::where('product_id', $data['product_id'])
+                ->where('session_id', $data['session_id'])
+                ->lockForUpdate()
+                ->first();
+
+            if ($product) {
+                $product->quantity += $data['quantity'];
+                $product->save();
+                return $product;
+            } else {
+                return CartItem::create($data);
+            }
+        });
     }
+
     public function deleteBySessionId(string $sId): int
     {
         return CartItem::where('session_id', $sId)->delete();

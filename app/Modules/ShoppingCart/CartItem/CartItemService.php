@@ -8,10 +8,13 @@ use App\Models\CartItem;
 use App\Models\ShoppingSession;
 use App\Modules\Product\ProductRepository;
 use App\Modules\ShoppingCart\ShoppingSession\ShoppingSessionRepository;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 use function PHPUnit\Framework\isEmpty;
@@ -146,38 +149,66 @@ class CartItemService
         $failedProducts = [];
         $successProducts = [];
         foreach ($data["product"] as $item) {
-            $product = $this->productRepository->getById((int)$item["product_id"]);
+            DB::beginTransaction();
+            $product = DB::table('products')->where('id', '=', (int)$item["product_id"])->lockForUpdate()->first();
             if ($product == null) {
-                $failedProducts[] = $item["product_id"];
+                $itemData = [
+                    "product_id" => $item["product_id"],
+                    "product_name" => null,
+                    "product_price" => null,
+                    "quantity" => $item["quantity"],
+                    "error" => "Product not found"
+                ];
+                $failedProducts[] = $itemData;
+                Log::error("Product not found", [
+                    'product_id' => $item["product_id"],
+                    'session_id' => $shoppingSession->id,
+                    'user_id' => Auth::id()
+                ]);
+                DB::rollBack();
                 continue;
             }
-            $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$item["product_id"]);
-            // Check if stock is available
-            if (($cartItem != null) && ($product->stock < $cartItem->quantity + $item["quantity"])) {
-                $failedProducts[] = $item;
-                continue;
-            } else if ($product->stock < $item["quantity"]) {
-                $failedProducts[] = $item;
-                continue;
-            }
-            // Update total price in shopping session
-            $shoppingSession->total += $product->price * $item["quantity"];
-            $success = $shoppingSession->save();
-            if (!$success) {
-                $failedProducts[] = $item;
-                continue;
-            }
-            // Add product to cart
-            $addedProduct = $this->cartItemRepository->insertProduct([
-                "session_id" => $shoppingSession->id,
+            $itemData = [
                 "product_id" => $item["product_id"],
-                "quantity" => $item["quantity"]
-            ]);
+                "product_name" => $product->name,
+                "product_price" => $product->price,
+                "quantity" => $item["quantity"],
+                "error" => null
+            ];
+            try {
+                $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$itemData["product_id"]);
 
-            if (!$addedProduct) {
-                $failedProducts[] = $item;
-            } else {
-                $successProducts[] = $item;
+                if (($cartItem && ($product->stock < $cartItem->quantity + $itemData["quantity"])) || ($product->stock < $itemData["quantity"])) {
+                    throw new \Exception("Insufficient stock");
+                }
+
+                // Update total price only after cart itemData is successfully inserted
+                $addedProduct = $this->cartItemRepository->insertProduct([
+                    "session_id" => $shoppingSession->id,
+                    "product_id" => $itemData["product_id"],
+                    "quantity" => $itemData["quantity"]
+                ]);
+
+                if (!$addedProduct) {
+                    throw new \Exception("Failed to add product to cart");
+                }
+
+                $shoppingSession->total += $product->price * $itemData["quantity"];
+                if (!$shoppingSession->save()) {
+                    throw new \Exception("Failed to update shopping session total");
+                }
+
+                $successProducts[] = $itemData;
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                $itemData["error"] = $e->getMessage();
+                $failedProducts[] = $itemData;
+                Log::error("Error adding item to cart: " . $e->getMessage(), [
+                    'data' => $item,
+                    'session_id' => $shoppingSession->id,
+                    'user_id' => Auth::id()
+                ]);
             }
         }
         if (count($failedProducts) > 0) {
