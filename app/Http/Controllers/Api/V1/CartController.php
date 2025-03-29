@@ -62,27 +62,8 @@ class CartController extends Controller
 
     public function postAddCartItem(AddCartItemRequest $request): JsonResponse
     {
-        // $validated = $request->validated();
-        // $res = $this->cartItemService->addItem($validated);
         $validated = $request->validated();
-
-        // Filter out invalid product items
-        $validProducts = collect($validated['product'])->filter(function ($product) {
-            return isset($product['product_id']) && isset($product['quantity']) &&
-                is_numeric($product['product_id']) && is_numeric($product['quantity']) &&
-                $product['quantity'] >= 1;
-        })->values()->all(); // Reset array keys
-
-        if (empty($validProducts)) {
-            return response()->json([
-                'status' => 400,
-                'message' => 'No valid products found',
-                'data' => []
-            ], 200);
-        }
-
-        // Pass only valid products to the service
-        $res = $this->cartItemService->addItem(['product' => $validProducts]);
+        $res = $this->cartItemService->addItem($validated);
         if (!$res["success"]) {
             return response()->json([
                 'status' => 400,
