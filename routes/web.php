@@ -11,6 +11,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\Disabled;
+use App\Http\Middleware\Enable;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,12 +34,7 @@ Route::middleware(Disabled::class)->group(function () {
 
     Route::get('aboutus', [AppController::class, 'aboutus'])->name('app.aboutus');
 
-    Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
-
     Route::middleware('guest')->group(function () {
-        Route::get('login', [LoginController::class, 'index'])->name('login.page');
-        Route::post('login', [LoginController::class, 'store'])->name('login');
-
         Route::get('register', [RegisterController::class, 'index'])->name('register.page');
         Route::post('register', [RegisterController::class, 'store'])->name('register');
     });
@@ -51,11 +47,23 @@ Route::middleware(Disabled::class)->group(function () {
         Route::post('checkout/confirm', [PaymentController::class, 'confirm'])->name('app.checkout.confirm');
         Route::get('invoice/{id}', [InvoiceController::class, 'index'])->name('app.invoice');
         Route::get('transaction', [TransactionController::class, 'index'])->name('app.transaction');
-        Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
-        Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
-        Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
-        Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
     });
+});
+
+Route::middleware(Enable::class)->middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'index'])->name('login.page');
+    Route::post('login', [LoginController::class, 'store'])->name('login');
+});
+
+Route::middleware(Enable::class)->middleware('auth')->group(function () {
+    Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
+});
+
+Route::middleware(Enable::class)->middleware('admin')->group(function () {
+    Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
+    Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
+    Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
+    Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
 });
 
 // Route::fallback(function () {

@@ -26,8 +26,21 @@ class AddCartItemRequest extends FormRequest
         return [
 
             'product' => 'required|array',
-            'product.*.product_id' => 'required|numeric|exists:products,id',
+            'product.*.product_id' => 'required|numeric',
             'product.*.quantity' => 'required|numeric|min:1'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'product.required' => 'Product is required',
+            'product.array' => 'Product must be an array',
+            'product.*.product_id.required' => 'Product ID is required',
+            'product.*.product_id.numeric' => 'Product ID must be a number',
+            'product.*.quantity.required' => 'Quantity is required',
+            'product.*.quantity.numeric' => 'Quantity must be a number',
+            'product.*.quantity.min' => 'Quantity must be at least 1',
         ];
     }
 }

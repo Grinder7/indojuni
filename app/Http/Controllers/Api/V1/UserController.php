@@ -61,14 +61,17 @@ class UserController extends Controller
         }
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        // Add Shopping Session to Database
-        $requestCart = Request::create("", 'POST', [
-            'user_id' => $user->id,
-            'total' => 0
-        ]);
-        $shoppingSessionData = $this->createCart($requestCart);
+        $shoppingSessionData = $this->shoppingSessionService->getByUserId($user->id);
         if (!$shoppingSessionData) {
-            return $this->errorResponse("failed to create cart");
+            $requestCart = Request::create("", 'POST', [
+                'user_id' => $user->id,
+                'total' => 0
+            ]);
+            // Add Shopping Session to Database
+            $shoppingSessionData = $this->createCart($requestCart);
+            if (!$shoppingSessionData) {
+                return $this->errorResponse("failed to create cart");
+            }
         }
 
         $accessToken = $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken;
