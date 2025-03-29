@@ -93,4 +93,10 @@ class UserController extends Controller
     {
         return $this->successResponse('User is authenticated', Auth::user());
     }
+
+    public function postAuthLogoutAll(Request $request): JsonResponse
+    {
+        $request->user()->tokens()->delete();
+        return $this->successResponse('Successfully logout all tokens');
+    }
 }
