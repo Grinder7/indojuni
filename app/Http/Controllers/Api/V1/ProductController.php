@@ -34,11 +34,16 @@ class ProductController extends Controller
         }
         // remove description and image from the response
         $products->makeHidden(['description', 'img']);
+        $data = array_map(function($item) {
+            $item["product_id"] = $item["id"];
+            unset($item["id"]);
+            return $item;
+        }, $products);
 
         return response()->json([
             'status' => 200,
             'message' => 'Successfully get all data',
-            'data' => $products
+            'data' => $data
         ], 200);
     }
 }
