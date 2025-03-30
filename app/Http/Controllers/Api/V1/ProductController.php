@@ -34,7 +34,7 @@ class ProductController extends Controller
         }
         // remove description and image from the response
         $products->makeHidden(['description', 'img']);
-        $data = array_map(function($item) {
+        $data = $products->map(function($item) {
             $item["product_id"] = $item["id"];
             unset($item["id"]);
             return $item;
