@@ -32,6 +32,8 @@ class ProductController extends Controller
                 'data' => null
             ], 200);
         }
+        // remove description and image from the response
+        $products->makeHidden(['description', 'img']);
 
         return response()->json([
             'status' => 200,
