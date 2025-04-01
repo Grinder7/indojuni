@@ -33,7 +33,7 @@ class ProductController extends Controller
             ], 200);
         }
         // remove description and image from the response
-        $products->makeHidden(['description', 'img']);
+        $products->makeHidden(['description', 'img', 'search_vector']);
         $data = $products->map(function ($item) {
             $item["product_id"] = $item["id"];
             unset($item["id"]);
@@ -50,11 +50,10 @@ class ProductController extends Controller
     public function getProductById(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'id' => 'required|integer'
+            'product_id' => 'required|integer'
         ]);
 
-        $product = $this->productService->getById($validated['id']);
-
+        $product = $this->productService->getById($validated['product_id']);
         if (!$product) {
             return response()->json([
                 'status' => 400,
@@ -62,6 +61,9 @@ class ProductController extends Controller
                 'data' => null
             ], 200);
         }
+        $product->makeHidden(['search_vector']);
+        $product["product_id"] = $product["id"];
+        unset($product["id"]);
 
         return response()->json([
             'status' => 200,

@@ -251,7 +251,7 @@ class CartItemService
                 if ($cartItem == null) {
                     throw new \Exception("Cart item not found");
                 }
-                if (($cartItem->quantity + $item["quantity"] > $product->stock)) {
+                if (($item["quantity"] > $product->stock)) {
                     throw new \Exception("Insufficient stock");
                 }
 
@@ -268,10 +268,20 @@ class CartItemService
                     throw new \Exception("Failed to update shopping session total");
                 }
                 $item["error"] = null;
-                $successProducts[] = $item;
+                $itemData = [
+                    "product_id" => $item["product_id"],
+                    "product_name" => $product->name,
+                    "product_price" => $product->price,
+                    "quantity" => $item["quantity"],
+                    "error" => null
+                ];
+                $successProducts[] = $itemData;
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
+                $item["quantity"] = $item["quantity"] ?? null;
+                $item["product_name"] = $product->name ?? null;
+                $item["product_price"] = $product->price ?? null;
                 $item["error"] = $e->getMessage();
                 $failedProducts[] = $item;
                 Log::error("Error updating item in cart: " . $e->getMessage(), [

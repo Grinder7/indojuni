@@ -22,7 +22,7 @@ class ProductRepository
     {
         return Product::find($id);
     }
-    public function getById(int $id): Product
+    public function getById(int $id): Product | null
     {
         return Product::find($id);
     }
