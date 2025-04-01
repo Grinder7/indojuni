@@ -30,4 +30,20 @@ class OrderDetailService
     {
         return $this->orderDetailRepository->getByUserId($id);
     }
+    public function getThisMonthSalesAmount()
+    {
+        return $this->orderDetailRepository->getThisMonthSalesAmount();
+    }
+    public function getLastWeekTransactions()
+    {
+        return $this->orderDetailRepository->getLastWeekTransactions();
+    }
+    public function getTransactionCount()
+    {
+        return $this->orderDetailRepository->getTransactionCount();
+    }
+    public function getFiveLatestOrders()
+    {
+        return $this->orderDetailRepository->getFiveLatestOrders();
+    }
 }

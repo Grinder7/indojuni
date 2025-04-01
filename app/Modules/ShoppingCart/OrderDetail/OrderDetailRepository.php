@@ -25,4 +25,20 @@ class OrderDetailRepository
     {
         return OrderDetail::find($id);
     }
+    public function getThisMonthSalesAmount()
+    {
+        return OrderDetail::whereMonth('created_at', now()->month)->sum('total');
+    }
+    public function getLastWeekTransactions()
+    {
+        return OrderDetail::whereBetween('created_at', [now()->subWeek(), now()])->get();
+    }
+    public function getTransactionCount()
+    {
+        return OrderDetail::count();
+    }
+    public function getFiveLatestOrders()
+    {
+        return OrderDetail::orderBy('created_at', 'desc')->take(5)->get();
+    }
 }

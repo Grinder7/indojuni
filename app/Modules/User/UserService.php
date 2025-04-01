@@ -19,7 +19,7 @@ class UserService
     {
         $this->userRepository = $userRepository;
     }
-    public function login(array $validated, string $throttleKey = null)
+    public function login(array $validated, string $throttleKey)
     {
         $credentials = [
             "email" => $validated["email"],
@@ -45,5 +45,9 @@ class UserService
     public function getAllData(): Collection
     {
         return $this->userRepository->getAllUser();
+    }
+    public function getUserCount()
+    {
+        return $this->userRepository->getUserCount();
     }
 }

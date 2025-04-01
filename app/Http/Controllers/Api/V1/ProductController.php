@@ -34,7 +34,7 @@ class ProductController extends Controller
         }
         // remove description and image from the response
         $products->makeHidden(['description', 'img']);
-        $data = $products->map(function($item) {
+        $data = $products->map(function ($item) {
             $item["product_id"] = $item["id"];
             unset($item["id"]);
             return $item;
@@ -44,6 +44,59 @@ class ProductController extends Controller
             'status' => 200,
             'message' => 'Successfully get all data',
             'data' => $data
+        ], 200);
+    }
+
+    public function getProductById(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer'
+        ]);
+
+        $product = $this->productService->getById($validated['id']);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data not found',
+                'data' => null
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully get data',
+            'data' => $product
+        ], 200);
+    }
+
+    public function getProductByName(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'product_name' => 'required|string',
+            'limit' => 'integer|nullable'
+        ]);
+        $limit = $validated['limit'] ?? null;
+        $product = $this->productService->searchBySimilarity("name", $validated['product_name'], $limit);
+        if ($product->isEmpty()) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Data not found',
+                'data' => null
+            ], 200);
+        }
+        // remove description and image from the response
+        $product->makeHidden(['description', 'img']);
+        $product = $product->map(function ($item) {
+            $item["product_id"] = $item["id"];
+            unset($item["id"]);
+            return $item;
+        }, $product);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Successfully get data',
+            'data' => $product
         ], 200);
     }
 }

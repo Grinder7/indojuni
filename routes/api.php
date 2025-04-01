@@ -37,6 +37,7 @@ Route::prefix("v1")->group(function () {
 
     Route::prefix("product")->group(function () {
         Route::get("all", [ProductController::class, "getAllProduct"]);
+        Route::post("search", [ProductController::class, "getProductByName"]);
 
         // Route::middleware('auth:sanctum')->group(function () {
         //     Route::get("all", [ProductController::class, "getAllProduct"]);
@@ -47,5 +48,6 @@ Route::prefix("v1")->group(function () {
         Route::get("current", [CartController::class, "getUserCartItems"]);
         Route::post("add", [CartController::class, "postAddCartItem"]);
         Route::post("remove", [CartController::class, "postRemoveCartItem"]);
+        Route::post("modify", [CartController::class, "postUpdateCartItem"]);
     });
 });

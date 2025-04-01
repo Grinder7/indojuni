@@ -17,4 +17,8 @@ class UserRepository
     {
         return User::All();
     }
+    public function getUserCount()
+    {
+        return User::count();
+    }
 }
