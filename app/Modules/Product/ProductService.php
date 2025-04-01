@@ -35,4 +35,12 @@ class ProductService
     {
         return $this->productRepository->createProduct($data);
     }
+    public function getProductCount()
+    {
+        return $this->productRepository->getProductCount();
+    }
+    public function searchBySimilarity(string $columnName, string $name, int $limit): Collection
+    {
+        return $this->productRepository->searchBySimilarity($columnName, $name, $limit);
+    }
 }

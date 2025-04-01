@@ -37,6 +37,7 @@ Route::prefix("v1")->group(function () {
 
     Route::prefix("product")->group(function () {
         Route::get("all", [ProductController::class, "getAllProduct"]);
+        Route::post("search", [ProductController::class, "getProductByName"]);
 
         // Route::middleware('auth:sanctum')->group(function () {
         //     Route::get("all", [ProductController::class, "getAllProduct"]);
