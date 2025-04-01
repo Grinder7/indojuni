@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddCartItemRequest;
 use App\Http\Requests\CartItemRequest;
 use App\Http\Requests\DeleteCartItemRequest;
+use App\Http\Requests\ModifyCartItemRequest;
 use App\Http\Resources\CartItemResource;
 use App\Http\Resources\ShoppingSessionResource;
 use App\Modules\ShoppingCart\CartItem\CartItemService;
 use App\Modules\ShoppingCart\ShoppingSession\ShoppingSessionService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -78,6 +80,20 @@ class CartController extends Controller
     {
         $validated = $request->validated();
         $res = $this->cartItemService->removeItem($validated);
+        if (!$res["success"]) {
+            return response()->json([
+                'status' => 400,
+                'message' => $res["message"],
+                'data' => $res["data"]
+            ], 200);
+        }
+        return $this->successResponse($res["message"], $res["data"]);
+    }
+
+    public function postUpdateCartItem(ModifyCartItemRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $res = $this->cartItemService->updateItems($validated);
         if (!$res["success"]) {
             return response()->json([
                 'status' => 400,

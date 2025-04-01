@@ -48,5 +48,6 @@ Route::prefix("v1")->group(function () {
         Route::get("current", [CartController::class, "getUserCartItems"]);
         Route::post("add", [CartController::class, "postAddCartItem"]);
         Route::post("remove", [CartController::class, "postRemoveCartItem"]);
+        Route::post("modify", [CartController::class, "postUpdateCartItem"]);
     });
 });

@@ -22,9 +22,7 @@ use function PHPUnit\Framework\isEmpty;
 class CartItemService
 {
     public CartItemRepository $cartItemRepository;
-    // Get shopping cart session
     public ShoppingSessionRepository $shoppingSessionRepository;
-    // Get product
     public ProductRepository $productRepository;
     public function __construct(CartItemRepository $cartItemRepository, ShoppingSessionRepository $shoppingSessionRepository, ProductRepository $productRepository)
     {
@@ -234,5 +232,75 @@ class CartItemService
     public function deleteBySessionId(string $sId): int
     {
         return $this->cartItemRepository->deleteBySessionId($sId);
+    }
+
+    // for api
+    public function updateItems(array $data): array
+    {
+        $shoppingSession = $this->shoppingSessionRepository->getByUserId(Auth::id());
+        $failedProducts = [];
+        $successProducts = [];
+        foreach ($data["product"] as $item) {
+            DB::beginTransaction();
+            try {
+                $product = $this->productRepository->getById((int)$item["product_id"]);
+                if ($product == null) {
+                    throw new \Exception("Product not found");
+                }
+                $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$item["product_id"]);
+                if ($cartItem == null) {
+                    throw new \Exception("Cart item not found");
+                }
+                if (($cartItem->quantity + $item["quantity"] > $product->stock)) {
+                    throw new \Exception("Insufficient stock");
+                }
+
+                $newTotal = $shoppingSession->total
+                    - ($cartItem->quantity * $product->price)
+                    + ($item["quantity"] * $product->price);
+                if ($newTotal < 0) {
+                    throw new \Exception("Total cannot be negative");
+                }
+
+                $this->cartItemRepository->updateItem($shoppingSession, $item, $cartItem);
+
+                if (!$this->shoppingSessionRepository->updateTotal(Auth::id(), $newTotal)) {
+                    throw new \Exception("Failed to update shopping session total");
+                }
+                $item["error"] = null;
+                $successProducts[] = $item;
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                $item["error"] = $e->getMessage();
+                $failedProducts[] = $item;
+                Log::error("Error updating item in cart: " . $e->getMessage(), [
+                    'data' => $item,
+                    'session_id' => $shoppingSession->id,
+                    'user_id' => Auth::id()
+                ]);
+            }
+        }
+        if (count($failedProducts) > 0) {
+            return [
+                'success' => false,
+                'message' => 'Failed to update item(s) in cart',
+                'data' => [
+                    "failed" => $failedProducts,
+                    "success" => $successProducts
+                ]
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => 'Successfully update item(s) in cart',
+            'data' => [
+                "failed" => $failedProducts,
+                "success" => $successProducts
+            ]
+        ];
+
+
+        // return $this->cartItemRepository->updateByProductId($data);
     }
 }

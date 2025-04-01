@@ -34,7 +34,7 @@ class ProductRepository
     {
         return Product::count();
     }
-    public function searchBySimilarity(string $columnName, string $name, int $limit): Collection
+    public function searchBySimilarity(string $columnName, string $name, int|null $limit): Collection
     {
         return Product::searchBySimilarity($columnName, $name, $limit);
     }

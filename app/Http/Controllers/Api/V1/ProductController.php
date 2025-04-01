@@ -76,8 +76,8 @@ class ProductController extends Controller
             'product_name' => 'required|string',
             'limit' => 'integer|nullable'
         ]);
-
-        $product = $this->productService->searchBySimilarity("name", $validated['product_name'], $validated['limit']);
+        $limit = $validated['limit'] ?? null;
+        $product = $this->productService->searchBySimilarity("name", $validated['product_name'], $limit);
         if ($product->isEmpty()) {
             return response()->json([
                 'status' => 400,

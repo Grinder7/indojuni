@@ -27,31 +27,42 @@ class Product extends Model
         }
         $wordCount = str_word_count($searchParam);
         $threshold = match ($wordCount) {
-            1 => 0.2,
-            2 => 0.225,
-            3 => 0.25,
-            4 => 0.275,
-            default => 0.3,
+            1 => 0.1,
+            2 => 0.275,
+            3 => 0.375,
+            default => 0.45,
         };
-        $query =  self::query()
+        // $query =  self::query()
+        //     ->selectRaw("
+        //         *,
+        //         ts_rank_cd(to_tsvector('simple', {$columnName}), websearch_to_tsquery('simple', ?)) AS text_rank,
+        //         similarity($columnName, ?) AS fuzzy_rank
+        //     ", [$searchParam, $searchParam])
+        //     ->where(function ($queryBuilder) use ($columnName, $searchParam, $threshold) {
+        //         $queryBuilder
+        //             ->whereRaw("to_tsvector('simple', {$columnName}) @@ websearch_to_tsquery('simple', ?)", [$searchParam])
+        //             ->orWhereRaw("similarity({$columnName}, ?) >= ?", [$searchParam, $threshold]);
+        //     })
+        //     ->orderByDesc('text_rank')
+        //     ->orderByDesc('fuzzy_rank');
+        $result = self::query()
             ->selectRaw("
                 *,
-                ts_rank_cd(to_tsvector('simple', {$columnName}), websearch_to_tsquery('simple', ?)) AS text_rank,
-                similarity($columnName, ?) AS fuzzy_rank
+                ts_rank_cd(search_vector, websearch_to_tsquery('indonesian', ?) ||
+                                        websearch_to_tsquery('english', ?)) AS text_rank,
+                similarity({$columnName}, ?) AS fuzzy_rank
+            ", [$searchParam, $searchParam, $searchParam])
+            ->whereRaw("
+                search_vector @@ (websearch_to_tsquery('indonesian', ?) ||
+                                  websearch_to_tsquery('english', ?))
             ", [$searchParam, $searchParam])
-            ->where(function ($queryBuilder) use ($columnName, $searchParam, $threshold) {
-                $queryBuilder
-                    ->whereRaw("to_tsvector('simple', {$columnName}) @@ websearch_to_tsquery('simple', ?)", [$searchParam])
-                    ->orWhereRaw("similarity({$columnName}, ?) >= ?", [$searchParam, $threshold]);
-            })
+            ->orWhereRaw("similarity({$columnName}, ?) >= {$threshold}", [$searchParam])
             ->orderByDesc('text_rank')
-            ->orderByDesc('fuzzy_rank');
-        if ($limit) {
-            $query->limit($limit);
-        }
-        $result = $query->get();
+            ->orderByDesc('fuzzy_rank')
+            ->when($limit, fn($query) => $query->limit($limit))
+            ->get();
         // Remove the text_rank and fuzzy_rank columns from the result
-        $result->makeHidden(['text_rank', 'fuzzy_rank']);
+        $result->makeHidden(['text_rank', 'fuzzy_rank', 'search_vector']);
         // dd($result->toArray());
         return $result;
     }

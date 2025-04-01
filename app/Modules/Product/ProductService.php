@@ -39,7 +39,7 @@ class ProductService
     {
         return $this->productRepository->getProductCount();
     }
-    public function searchBySimilarity(string $columnName, string $name, int $limit): Collection
+    public function searchBySimilarity(string $columnName, string $name, int|null $limit): Collection
     {
         return $this->productRepository->searchBySimilarity($columnName, $name, $limit);
     }
