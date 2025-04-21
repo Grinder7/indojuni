@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Modules\Product\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,14 +33,7 @@ class ProductController extends Controller
                 'data' => null
             ], 200);
         }
-        // remove description and image from the response
-        $products->makeHidden(['description', 'img', 'search_vector']);
-        $data = $products->map(function ($item) {
-            $item["product_id"] = $item["id"];
-            unset($item["id"]);
-            return $item;
-        }, $products);
-
+        $data = ProductResource::collection($products);
         return response()->json([
             'status' => 200,
             'message' => 'Successfully get all data',
@@ -53,7 +47,7 @@ class ProductController extends Controller
             'product_id' => 'required|integer'
         ]);
 
-        $product = $this->productService->getById($validated['product_id']);
+        $product = $this->productService->getByProductId($validated['product_id']);
         if (!$product) {
             return response()->json([
                 'status' => 400,
@@ -61,14 +55,12 @@ class ProductController extends Controller
                 'data' => null
             ], 200);
         }
-        $product->makeHidden(['search_vector']);
-        $product["product_id"] = $product["id"];
-        unset($product["id"]);
+        $data = new ProductResource($product);
 
         return response()->json([
             'status' => 200,
             'message' => 'Successfully get data',
-            'data' => $product
+            'data' => $data
         ], 200);
     }
 
@@ -87,18 +79,11 @@ class ProductController extends Controller
                 'data' => null
             ], 200);
         }
-        // remove description and image from the response
-        $product->makeHidden(['description', 'img']);
-        $product = $product->map(function ($item) {
-            $item["product_id"] = $item["id"];
-            unset($item["id"]);
-            return $item;
-        }, $product);
-
+        $data = new ProductResource($product);
         return response()->json([
             'status' => 200,
             'message' => 'Successfully get data',
-            'data' => $product
+            'data' => $data
         ], 200);
     }
 }

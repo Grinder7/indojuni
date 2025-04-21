@@ -1,18 +1,31 @@
-FROM php:8.2.12-fpm-alpine
-
-RUN apk add --no-cache nginx postgresql-dev
-RUN docker-php-ext-install pdo_pgsql
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-RUN mkdir -p /run/nginx
-
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+FROM composer:2.4 AS builder
 
 WORKDIR /app
+COPY composer.json composer.lock ./
+RUN apk add --no-cache autoconf build-base libzip-dev oniguruma-dev openssl-dev libsodium-dev\
+    && pecl install mongodb \
+    && docker-php-ext-install opcache zip bz2 sodium \
+    && docker-php-ext-enable mongodb
+RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 COPY . .
+ADD .env.production .env
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-RUN composer install --no-dev
+FROM dunglas/frankenphp
 
-RUN chown -R www-data: /app
+RUN install-php-extensions \
+    pcntl mongodb
+# Add other PHP extensions here...
+WORKDIR /app
+COPY --from=builder /app .
+EXPOSE 8000
+RUN  php artisan octane:install --server=frankenphp
 
-CMD sh /app/docker/startup.sh
+ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
+
+# docker build -f Dockerfile.production -t registry.cafaku.dev/indojuni-laravel:latest .
+# docker push registry.cafaku.dev/indojuni-laravel:latest
+
+# docker image push 192.168.1.100:8500/indojuni-laravel:latest
+# docker tag indojuni-laravel:latest registry.cafaku.dev/indojuni-laravel:latest
+# docker image save -o indojuni-laravel.tar indojuni-laravel:latest

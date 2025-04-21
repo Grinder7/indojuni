@@ -23,10 +23,26 @@ class CartItemRepository
     {
         return CartItem::where('session_id', $sId)->get();
     }
-    public function insertProduct(array $data): CartItem
+    public function insertProduct(array $data, bool $useTransaction): CartItem
     {
-        return DB::transaction(function () use ($data) {
-            // Lock the cart item to prevent race conditions
+        $result = null;
+        if ($useTransaction) {
+            DB::transaction(function () use ($data) {
+                // Lock the cart item to prevent race conditions
+                $product = CartItem::where('product_id', $data['product_id'])
+                    ->where('session_id', $data['session_id'])
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($product) {
+                    $product->quantity += $data['quantity'];
+                    $product->save();
+                    $result = $product;
+                } else {
+                    $result = CartItem::create($data);
+                }
+            });
+        } else {
             $product = CartItem::where('product_id', $data['product_id'])
                 ->where('session_id', $data['session_id'])
                 ->lockForUpdate()
@@ -35,11 +51,12 @@ class CartItemRepository
             if ($product) {
                 $product->quantity += $data['quantity'];
                 $product->save();
-                return $product;
+                $result = $product;
             } else {
-                return CartItem::create($data);
+                $result = CartItem::create($data);
             }
-        });
+        }
+        return $result;
     }
 
     public function deleteBySessionId(string $sId): int

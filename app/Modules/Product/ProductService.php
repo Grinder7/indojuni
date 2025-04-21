@@ -22,9 +22,9 @@ class ProductService
         return $this->productRepository->getAllProduct();
     }
 
-    public function getById(int $id): Product
+    public function getByProductId(int $id): Product
     {
-        return $this->productRepository->getProductById($id);
+        return $this->productRepository->getByProductId($id);
     }
 
     public function getPaginatedProduct(int $page, string $column): LengthAwarePaginator

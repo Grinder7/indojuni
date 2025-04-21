@@ -41,7 +41,7 @@ Route::middleware(Disabled::class)->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::get('checkout', [CheckoutController::class, 'index'])->name('app.checkout');
-        Route::post('checkout', [CheckoutController::class, 'store'])->name('app.checkout');
+        Route::post('checkout', [CheckoutController::class, 'store'])->name('app.checkout.store');
         Route::post('checkout/qtyupdate', [CheckoutController::class, 'qtyUpdate'])->name('app.checkout.qtyupdate');
         Route::post('checkout/deleteitem', [CheckoutController::class, 'deleteItem'])->name('app.checkout.deleteitem');
         Route::post('checkout/confirm', [PaymentController::class, 'confirm'])->name('app.checkout.confirm');

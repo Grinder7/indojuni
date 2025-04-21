@@ -27,7 +27,7 @@
                             @if ($product->img)
                                 {{-- <img src="{{ asset($product->img) }}" alt="cover" height="225"
                                     style="object-fit: contain"> --}}
-                                <x-cld-image public-id="{{ $product->img }}" height="225" />
+                                <x-cloudinary::image public-id="{{ $product->img }}" height="225" />
                             @else
                                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"

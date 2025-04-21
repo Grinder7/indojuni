@@ -3,21 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
     use HasFactory;
+    protected $connection = 'mongodb';
     protected $fillable = [
+        'product_id',
         'name',
         'price',
         'img',
     ];
-    protected $guarded = [
-        'id'
-    ];
+    // protected $guarded = [
+    //     'id'
+    // ];
     public $timestamps = false;
+
+    protected $primaryKey = 'product_id';
+    public $incrementing = false;
 
     public static function searchBySimilarity($columnName, $searchParam, $limit = null)
     {
@@ -65,6 +70,17 @@ class Product extends Model
         $result->makeHidden(['text_rank', 'fuzzy_rank', 'search_vector']);
         // dd($result->toArray());
         return $result;
+    }
+
+    public static function createProduct(array $data): bool
+    {
+        if (empty($data)) {
+            return false;
+        }
+
+        $data["product_id"] = NumberCounter::getCurrentIncrementNumber("products");
+        self::create($data);
+        return true;
     }
 
     // public function img(): Attribute

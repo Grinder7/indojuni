@@ -25,7 +25,7 @@ class DeleteCartItemRequest extends FormRequest
     {
         return [
             'product_id' => 'required|array',
-            'product_id.*' => 'required|numeric|exists:products,id'
+            'product_id.*' => 'required|numeric'
         ];
     }
 }

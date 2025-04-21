@@ -26,7 +26,7 @@ class CartController extends Controller
         $this->shoppingSessionService = $shoppingSessionService;
     }
 
-    private function errorResponse($message = 'Erorr'): JsonResponse
+    private function errorResponse($message = 'Error'): JsonResponse
     {
         return response()->json([
             'status' => 400,

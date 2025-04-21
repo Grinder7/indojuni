@@ -1,0 +1,13 @@
+services:
+  indojuni:
+    image: registry.cafaku.dev/indojuni-laravel:prod
+    container_name: indojuni-laravel
+    ports:
+      - 8800:8000
+    entrypoint: php artisan octane:frankenphp --workers=1 --max-requests=1
+    healthcheck:
+      test: curl --fail http://localhost:8000/api/ping || exit 1
+      interval: 40s
+      timeout: 30s
+      retries: 3
+      start_period: 60s

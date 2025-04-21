@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->timestamps();
             $table->foreign('session_id')->references('id')->on('shopping_sessions')->cascadeOnDelete();
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreign('product_id')->references('product_id')->on('products')->cascadeOnDelete();
         });
     }
 

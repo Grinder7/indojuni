@@ -72,7 +72,7 @@ class CartItemService
             ], 400);
         }
         // Add product to cart
-        $addedProduct = $this->cartItemRepository->insertProduct($data);
+        $addedProduct = $this->cartItemRepository->insertProduct($data, true);
         if (!$addedProduct) {
             return Response::json([
                 'success' => false,
@@ -95,7 +95,7 @@ class CartItemService
         $failedProducts = [];
         $successProducts = [];
         foreach ($data["product_id"] as $productId) {
-            $product = $this->productRepository->getById((int)$productId);
+            $product = $this->productRepository->getByProductId((int)$productId);
             if ($product == null) {
                 $failedProducts[] = $productId;
                 continue;
@@ -144,48 +144,30 @@ class CartItemService
     public function addItem(array $data): array
     {
         $shoppingSession = $this->shoppingSessionRepository->getByUserId(Auth::id());
-        $failedProducts = [];
-        $successProducts = [];
-        foreach ($data["product"] as $item) {
-            DB::beginTransaction();
-            $product = DB::table('products')->where('id', '=', (int)$item["product_id"])->lockForUpdate()->first();
-            if ($product == null) {
-                $itemData = [
-                    "product_id" => $item["product_id"],
-                    "product_name" => null,
-                    "product_price" => null,
-                    "quantity" => $item["quantity"],
-                    "error" => "Product not found"
-                ];
-                $failedProducts[] = $itemData;
-                Log::error("Product not found", [
-                    'product_id' => $item["product_id"],
-                    'session_id' => $shoppingSession->id,
-                    'user_id' => Auth::id()
-                ]);
-                DB::rollBack();
-                continue;
-            }
-            $itemData = [
-                "product_id" => $item["product_id"],
-                "product_name" => $product->name,
-                "product_price" => $product->price,
-                "quantity" => $item["quantity"],
-                "error" => null
+        $validatedItems = $this->validateItems($data["product"], $shoppingSession);
+        if (count($validatedItems["dataSuccess"]) == 0) {
+            return [
+                'success' => false,
+                'message' => 'Failed to add item(s) to cart',
+                'data' => [
+                    "failed" => $validatedItems["dataError"],
+                    "success" => []
+                ]
             ];
+        }
+
+        $error = null;
+        $successProducts = [];
+        DB::beginTransaction();
+        foreach ($validatedItems["dataSuccess"] as $itemData) {
             try {
-                $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$itemData["product_id"]);
-
-                if (($cartItem && ($product->stock < $cartItem->quantity + $itemData["quantity"])) || ($product->stock < $itemData["quantity"])) {
-                    throw new \Exception("Insufficient stock");
-                }
-
+                $product = DB::table('products')->where('product_id', (int)$itemData["product_id"])->lockForUpdate()->first();
                 // Update total price only after cart itemData is successfully inserted
                 $addedProduct = $this->cartItemRepository->insertProduct([
                     "session_id" => $shoppingSession->id,
                     "product_id" => $itemData["product_id"],
                     "quantity" => $itemData["quantity"]
-                ]);
+                ], false);
 
                 if (!$addedProduct) {
                     throw new \Exception("Failed to add product to cart");
@@ -197,24 +179,40 @@ class CartItemService
                 }
 
                 $successProducts[] = $itemData;
-                DB::commit();
             } catch (Exception $e) {
-                DB::rollBack();
-                $itemData["error"] = $e->getMessage();
-                $failedProducts[] = $itemData;
                 Log::error("Error adding item to cart: " . $e->getMessage(), [
-                    'data' => $item,
+                    'data' => $itemData,
                     'session_id' => $shoppingSession->id,
                     'user_id' => Auth::id()
                 ]);
+                error_log("Error adding item to cart: " . $e->getMessage());
+                $error = $e->getMessage();
+                break;
             }
         }
-        if (count($failedProducts) > 0) {
+        if ($error != null) {
+            DB::rollBack();
+            $failedProducts = $validatedItems["dataError"];
+            foreach ($validatedItems["dataSuccess"] as $item) {
+                $item["error"] = $error;
+                $failedProducts[] = $item;
+            }
             return [
                 'success' => false,
                 'message' => 'Failed to add item(s) to cart',
                 'data' => [
                     "failed" => $failedProducts,
+                    "success" => []
+                ]
+            ];
+        }
+        DB::commit();
+        if (count($validatedItems["dataError"]) > 0) {
+            return [
+                'success' => false,
+                'message' => 'Failed to add item(s) to cart',
+                'data' => [
+                    "failed" => $validatedItems["dataError"],
                     "success" => $successProducts
                 ]
             ];
@@ -223,10 +221,55 @@ class CartItemService
             'success' => true,
             'message' => 'Successfully add item(s) to cart',
             'data' => [
-                "failed" => $failedProducts,
+                "failed" => [],
                 "success" => $successProducts
             ]
         ];
+    }
+
+    private function validateItems(array $items, ShoppingSession $shoppingSession): array
+    {
+        if ($shoppingSession == null) {
+            $shoppingSession = $this->shoppingSessionRepository->getByUserId(Auth::id());
+        }
+        // error_log("Validated items: " . json_encode($items));
+        $result = [
+            "dataSuccess" => [],
+            "dataError" => []
+        ];
+        foreach ($items as $item) {
+            $product = DB::table('products')->where('product_id', '=', (int)$item["product_id"])->first();
+            if ($product == null) {
+                $itemData = [
+                    "product_id" => $item["product_id"],
+                    "product_name" => null,
+                    "product_price" => null,
+                    "quantity" => $item["quantity"],
+                    "error" => "Product not found"
+                ];
+                $result["dataError"][] = $itemData;
+                error_log("Product not found: " . json_encode($result));
+                continue;
+            }
+            $itemData = [
+                "product_id" => $item["product_id"],
+                "product_name" => $product->name,
+                "product_price" => $product->price,
+                "quantity" => $item["quantity"],
+                "error" => null
+            ];
+            $cartItem = $this->cartItemRepository->getBySessionAndProductId($shoppingSession->id, (int)$itemData["product_id"]);
+            if (($cartItem && $cartItem->quantity + $item["quantity"] > $product->stock) || ($item["quantity"] > $product->stock)) {
+                $itemData["error"] = "Insufficient stock";
+                $result["dataError"][] = $itemData;
+                error_log("Insufficient stock: " . json_encode($result));
+            } else {
+                $result["dataSuccess"][] = $itemData;
+                error_log("success: " . json_encode($result));
+            }
+        }
+
+        return $result;
     }
 
     public function deleteBySessionId(string $sId): int

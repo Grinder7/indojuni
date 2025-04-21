@@ -18,13 +18,14 @@ class ProductRepository
     {
         return Product::orderby($column, 'desc')->paginate($page);
     }
-    public function getProductById(int $id): Product
-    {
-        return Product::find($id);
-    }
     public function getById(int $id): Product | null
     {
         return Product::find($id);
+        // return Product::where("product_id", $id)->get();
+    }
+    public function getByProductId(int $id): Product | null
+    {
+        return Product::where("product_id", $id)->get()->first();
     }
     public function createProduct(array $data): Product
     {

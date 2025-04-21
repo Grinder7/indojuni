@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 
 class PaymentDetail extends Model
 {
     use HasFactory, HasUlids;
-    protected $primaryKey = 'id';
-    protected $guarded = [
-        'id'
-    ];
+    protected $connection = 'mongodb';
+    // protected $primaryKey = 'id';
+    // protected $guarded = [
+    //     'id'
+    // ];
     protected $fillable = [
         'user_id',
         'firstname',
