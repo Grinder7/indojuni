@@ -30,6 +30,15 @@ class UserController extends Controller
         ], 400);
     }
 
+    private function successResponse($message = "Success", $data = null): JsonResponse
+    {
+        return response()->json([
+            'status' => 200,
+            'message' => $message,
+            'data' => $data
+        ], 200);
+    }
+
     private function createCart(Request $request): ShoppingSession
     {
         $validated = $request->validate([
@@ -43,7 +52,7 @@ class UserController extends Controller
         return $this->shoppingSessionService->create($validated);
     }
 
-    public function postAuthLogin(LoginRequest $request)
+    public function postAuthLogin(LoginRequest $request): JsonResponse
     {
         $request->checkThrottle();
         $loginSuccess = $this->userService->login($request->validated(), $request->throttleKey());
@@ -52,35 +61,42 @@ class UserController extends Controller
         }
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        // Add Shopping Session to Database
-        $requestCart = Request::create("", 'POST', [
-            'user_id' => $user->id,
-            'total' => 0
-        ]);
-        $shoppingSessionData = $this->createCart($requestCart);
+        $shoppingSessionData = $this->shoppingSessionService->getByUserId($user->id);
         if (!$shoppingSessionData) {
-            return $this->errorResponse("failed to create cart");
+            $requestCart = Request::create("", 'POST', [
+                'user_id' => $user->id,
+                'total' => 0
+            ]);
+            // Add Shopping Session to Database
+            $shoppingSessionData = $this->createCart($requestCart);
+            if (!$shoppingSessionData) {
+                return $this->errorResponse("failed to create cart");
+            }
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully login',
-            'data' => [
-                "user" => $user,
-                "shopping_session" => $shoppingSessionData,
-                "token" => $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken,
-            ]
-        ], 200);
+        $accessToken = $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken;
+
+        return $this->successResponse('Successfully login', [
+            "user" => $user,
+            "shopping_session" => $shoppingSessionData,
+            "access_token" => $accessToken
+        ]);
     }
 
     public function postAuthLogout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
+        return $this->successResponse('Successfully logout');
+    }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully logout',
-            'data' => null
-        ], 200);
+    public function getAuthCheck(): JsonResponse
+    {
+        return $this->successResponse('User is authenticated', Auth::user());
+    }
+
+    public function postAuthLogoutAll(Request $request): JsonResponse
+    {
+        $request->user()->tokens()->delete();
+        return $this->successResponse('Successfully logout all tokens');
     }
 }

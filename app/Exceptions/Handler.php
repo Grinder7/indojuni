@@ -6,6 +6,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -78,6 +79,16 @@ class Handler extends ExceptionHandler
                     'message' => 'Unauthorized!',
                     'data' => null,
                 ], 401);
+            }
+        });
+
+        $this->renderable(function (MethodNotAllowedHttpException $exception, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => 405,
+                    'message' => 'Method Not Allowed!',
+                    'data' => null,
+                ], 405);
             }
         });
     }

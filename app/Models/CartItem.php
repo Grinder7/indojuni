@@ -15,12 +15,12 @@ class CartItem extends Model
         'product_id',
         'quantity'
     ];
-    public function product_id()
+    public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, "product_id");
     }
-    public function session_id()
+    public function shoppingSession()
     {
-        return $this->belongsTo(ShoppingSession::class);
+        return $this->belongsTo(ShoppingSession::class, "session_id");
     }
 }
