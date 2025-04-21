@@ -8,7 +8,7 @@ RUN apk add --no-cache autoconf build-base libzip-dev oniguruma-dev openssl-dev 
     && docker-php-ext-enable mongodb
 RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 COPY . .
-ADD .env.production .env
+# ADD .env.production .env
 RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
 FROM dunglas/frankenphp
