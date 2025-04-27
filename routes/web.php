@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminInvoiceController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
@@ -59,9 +62,20 @@ Route::middleware(Enable::class)->middleware('auth')->group(function () {
     Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
 });
 
+Route::middleware(Enable::class)->middleware('admin')->prefix('/v2/admin')->group(function () {
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('product', [AdminProductController::class, 'index'])->name('admin.product');
+    Route::post('product/add', [AdminProductController::class, 'store'])->name('admin.product.store');
+    Route::Put('product/edit/{id}', [AdminProductController::class, 'update'])->name('admin.product.update');
+    Route::delete('product/delete/{id}', [AdminProductController::class, 'delete'])->name('admin.product.delete');
+    Route::get('invoice', [AdminInvoiceController::class, 'index'])->name('admin.invoice');
+    // Route::get('product/view', [AdminProductController::class, 'view'])->name('admin.product.view');
+    // Route::get('product/add', [AdminProductController::class, 'add'])->name('admin.product.add');
+    // Route::get('product/edit/{id}', [AdminProductController::class, 'edit'])->name('admin.product.edit');
+});
 Route::middleware(Enable::class)->middleware('admin')->group(function () {
-    Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
-    Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
+    Route::get('/admin', [AdminController::class, 'adminHome'])->name('adm.dashboard');
+    Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('adm.invoice');
     Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
     Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
 });

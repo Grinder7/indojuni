@@ -1,0 +1,68 @@
+
+<div class="d-flex flex-nowrap">
+    <div class="d-flex flex-column text-bg-dark flex-shrink-0 p-3" style="width: 280px;">
+        <a href="{{ route('admin.dashboard') }}"
+            class="d-flex align-items-center mb-md-0 me-md-auto text-decoration-none mb-3 px-3 text-white">
+            <i class="fa-solid fa-store"></i>
+            <span class="fs-4">&nbsp;Admin Page</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a href="{{ route('admin.dashboard') }}"
+                    class="nav-link {{ Request::is('admin/dashboard*') ? 'active' : '' }} d-flex align-items-center text-white">
+                    <i class="fa-solid fa-gauge" style="width: 10%"></i>
+                    <p class="m-0" style="width: 90%">Dashboard</p>
+                </a>
+            </li>
+            <li>
+                {{-- <button type="button"
+                    class="btn btn-toggle d-inline-flex align-items-center collapsed active rounded border-0"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"
+                    style="padding:8px 16px 8px 16px; font-weight: 400;">
+                    <i class="fa-solid fa-table"></i> <span>&nbsp;Product</span>
+                </button>
+                <div class="show collapse" id="home-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal small pb-1">
+                        <li><a href="{{ route('admin.product.view') }}"
+                                class="link-body-emphasis d-inline-flex text-decoration-none {{ Request::is('admin/product/view') ? 'active' : '' }} rounded">View</a>
+                        </li>
+                        <li><a href="{{ route('admin.product.add') }}"
+                                class="link-body-emphasis d-inline-flex text-decoration-none {{ Request::is('admin/product/add') ? 'active' : '' }} rounded">Add</a>
+                        </li>
+                    </ul>
+                </div> --}}
+                <a href="{{ route('admin.product') }}"
+                    class="nav-link {{ Request::is('admin/product') ? 'active' : '' }} d-flex align-items-center text-white">
+                    <i class="fa-solid fa-table" style="width: 10%"></i>
+                    <p class="m-0" style="width: 90%">Product</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.invoice') }}"
+                    class="nav-link {{ Request::is('admin/invoice') ? 'active' : '' }} d-flex align-items-center text-white">
+                    <i class="fa-solid fa-file-invoice" style="width: 10%"></i>
+                    <p class="m-0" style="width: 90%">Invoice</p>
+
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-circle-user"></i>
+                @auth
+                    <strong>&nbsp;{{ Auth::user()->username }}</strong>
+                @endauth
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="{{ route('app.home') }}">Back to homepage</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

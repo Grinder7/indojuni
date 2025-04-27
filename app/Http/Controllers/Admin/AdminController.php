@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EditDataRequest;
-use App\Models\OrderDetail;
 use App\Modules\Product\ProductService;
 use App\Modules\ShoppingCart\OrderDetail\OrderDetailService;
 use App\Modules\ShoppingCart\OrderItem\OrderItemService;
 use App\Modules\User\UserService;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Console\Input\Input;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -41,7 +38,7 @@ class AdminController extends Controller
         }
         $this->authorize('isAdmin');
         $products = $this->productService->getAllData();
-        return view('pages.admin.admin')->with(compact("products"));
+        return view('pages.admin.v1.admin')->with(compact("products"));
     }
 
     public function adminInvoice()
@@ -59,7 +56,7 @@ class AdminController extends Controller
                 }
             }
         }
-        return view('pages.admin.invoices')->with(compact("order_details"));
+        return view('pages.admin.v1.invoices')->with(compact("order_details"));
     }
     public function editData(EditDataRequest $request)
     {

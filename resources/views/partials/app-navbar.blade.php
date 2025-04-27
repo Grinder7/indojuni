@@ -1,16 +1,16 @@
 <header
-    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 fixed-top px-3"
+    class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
     style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
-    <div class="col-md-3 mb-2 mb-md-0 align-items-center">
+    <div class="col-md-3 mb-md-0 align-items-center mb-2">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
             <img src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="logo" height="40">
         </a>
     </div>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <ul class="nav col-12 col-md-auto justify-content-center mb-md-0 mb-2">
         <li><a href="{{ route('app.home') }}" class="nav-link px-2"
                 style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Home</a></li>
-        <li><a href="{{ route('catalogue.index') }}" class="nav-link px-2  "
+        <li><a href="{{ route('catalogue.index') }}" class="nav-link px-2"
                 style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Catalogue</a>
         </li>
         <li><a href="{{ route('app.aboutus') }}" class="nav-link px-2"
@@ -19,9 +19,9 @@
 
     <div class="col-md-3 text-end">
         @auth
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-end mb-md-0 ">
+            <ul class="nav col-12 col-md-auto justify-content-end mb-md-0 mb-2">
                 <li class="d-flex align-items-center">
-                    <a href="{{ route('app.checkout') }}" class="me-3"><i class="fa-solid fa-cart-shopping fa-xl "
+                    <a href="{{ route('app.checkout') }}" class="me-3"><i class="fa-solid fa-cart-shopping fa-xl"
                             style="color: rgb(255,255,255);{{ Request::is('checkout*') ? 'text-decoration:underline;text-underline-offset: 0.25rem;' : '' }}"></i></a>
                 </li>
                 <li>
@@ -32,7 +32,7 @@
                         <ul class="dropdown-menu">
                             @can('isAdmin')
                                 <li>
-                                    <a href="{{ route('admin.dashboard') }}" class="dropdown-item">Dashboard</a>
+                                    <a href="{{ route('adm.dashboard') }}" class="dropdown-item">Dashboard</a>
                                 </li>
                             @endcan
                             <li>
