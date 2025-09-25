@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class CartItem extends Model
 {
     use HasFactory, HasUlids;
+
     protected $guarded = ['id'];
     protected $fillable = [
         'session_id',

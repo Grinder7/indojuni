@@ -18,16 +18,15 @@
         </div>
     </section>
 
-    <div class="album bg-body-tertiary py-5">
-        <div class="container">
+    <div class="container">
+        <div class="album bg-body-tertiary">
             <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-lg-4 d-flex align-items-stretch mb-3">
-                        <div class="card shadow-sm">
+                    <div class="col-12 col-sm-6 col-md-4 col-xxl-3 d-flex align-items-stretch mb-3">
+                        <div class="card shadow-sm" style="width: 100%">
                             @if ($product->img)
-                                {{-- <img src="{{ asset($product->img) }}" alt="cover" height="225"
-                                    style="object-fit: contain"> --}}
-                                <x-cld-image public-id="{{ $product->img }}" height="225" />
+                                <img src="{{ $product->img_path }}" alt="productimg"
+                                    height="225"style="object-fit: contain">
                             @else
                                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
@@ -39,7 +38,7 @@
                             @endif
                             <div class="card-body d-flex flex-column">
                                 <p class="card-text fw-bolder">{{ $product->name }}</p>
-                                <p class="card-text text-body-secondary mb-4">{{ $product->description }}</p>
+                                {{-- <p class="card-text text-body-secondary mb-4">{{ $product->description }}</p> --}}
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
                                     <small
                                         class="text-body-secondary">Rp{{ number_format($product->price, 2, ',', '.') }}</small>
@@ -77,7 +76,7 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script>
         async function fetchData(product_id) {
-            const res = await fetch("{{ route('cart.store') }}", {
+            const res = await fetch("{{ route('app.cart.add') }}", {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
@@ -87,8 +86,10 @@
                     },
                     credentials: "same-origin",
                     body: JSON.stringify({
-                        'product_id': product_id,
-                        'quantity': 1
+                        "product": [{
+                            'product_id': product_id,
+                            'quantity': 1
+                        }]
                     })
                 })
                 .then((response) => response.json());
@@ -110,7 +111,7 @@
                 const response = await fetchData(this.value);
                 productAdd.innerHTML = '<i class="fa-solid fa-plus"></i>';
                 productAdd.disabled = false;
-                if (response.success == true) {
+                if (response.status === 200) {
                     alertify.success(response.message);
                 } else {
                     alertify.error(response.message);

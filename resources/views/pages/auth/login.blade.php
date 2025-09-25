@@ -80,11 +80,11 @@
 @endsection
 
 @section('content')
-    <main class="d-grid form-signin w-100 h-100 m-auto align-items-center">
-        <form action="{{ route('login') }}" method="POST">
+    <main class="d-grid form-signin w-100 h-100 align-items-center m-auto">
+        <form id="loginForm" action={{ route('app.login.login') }} method="POST">
             @csrf
             <img class="mb-4" src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="" height="57">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <h1 class="h3 fw-normal mb-3">Please sign in</h1>
 
             <div class="form-floating">
                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
@@ -97,33 +97,18 @@
                 <label for="floatingPasswordIn">Password</label>
             </div>
             <div class="d-flex float-end pb-3">
-                Doesn't have an account? <span><a href="{{ route('register.page') }}" class="ps-1">Register</a></span>
+                Doesn't have an account? <span><a href="{{ route('app.register.page') }}" class="ps-1">Register</a></span>
             </div>
             <div class="checkbox my-3">
                 <label>
                     <input type="checkbox" name="remember-me" value="1"> Remember me
                 </label>
             </div>
-            @error('email')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
-            @enderror
-            @error('password')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
+            @error('errorMessage')
+                <div class="text-danger m-3"id="errorMessage" style="max-width: 50vw">{{ $message }}</div>
             @enderror
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; 2023 IndoJuni, Inc</p>
+            <p class="text-body-secondary mb-3 mt-5">&copy; 2023 IndoJuni, Inc</p>
         </form>
     </main>
-@endsection
-
-@section('scripts')
-    @include('partials.sweet-alert')
 @endsection

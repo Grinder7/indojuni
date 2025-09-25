@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -9,13 +10,14 @@ use Illuminate\Support\Facades\DB;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $guarded = [
+        'id'
+    ];
     protected $fillable = [
         'name',
         'price',
         'img',
-    ];
-    protected $guarded = [
-        'id'
     ];
     public $timestamps = false;
 
@@ -66,11 +68,10 @@ class Product extends Model
         // dd($result->toArray());
         return $result;
     }
+    protected $appends = ['img_path'];
 
-    // public function img(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn ($img) => config('product.img_dir') . '/' . $img
-    //     );
-    // }
+    public function getImgPathAttribute()
+    {
+        return asset('images/products/' . $this->img);
+    }
 }

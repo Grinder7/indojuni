@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CartItemRequest;
+use App\Http\Requests\ModifyCartItemRequest;
+use App\Http\Resources\CartItemResource;
+use App\Http\Resources\ShoppingSessionResource;
 use App\Modules\Product\ProductService;
-use App\Modules\ShoppingCart\CartItem\CartItemService;
-use App\Modules\ShoppingCart\ShoppingSession\ShoppingSessionService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
+use App\Modules\CartItem\CartItemService;
+use App\Modules\ShoppingSession\ShoppingSessionService;
+use Auth;
 
 class ShoppingController extends Controller
 {
@@ -20,25 +21,76 @@ class ShoppingController extends Controller
         $this->shoppingSessionService = $shoppingSessionService;
         $this->productService = $productService;
     }
-    public function storeCart(CartItemRequest $request)
+    public function modifyShoppingCart(ModifyCartItemRequest $request)
     {
-        if (Auth::check()) {
-            $validated =  $request->validated();
-            // Check Stock Availability
-            $product = $this->productService->getById((int)$validated['product_id']);
-            if ($product->stock < $validated['quantity']) {
-                return Response::json([
-                    'success' => false,
-                    'message' => 'Stock is not available'
+        $validated = $request->validated();
+        $response = $this->shoppingSessionService->modifyShoppingCart($validated);
+
+        if (!$response["success"]) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    "status" => 400,
+                    "message" => $response["message"],
+                    'data' => $response["data"]
                 ], 400);
             }
-            $response = $this->cartItemService->addProduct($validated);
-            return $response;
-        } else {
-            return Response::json([
-                'success' => false,
-                'message' => 'Please login first'
-            ], 400);
+            return redirect()->back()->with('success', false)->with('data', $response["data"])->with('message', $response["message"]);
         }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                "status" => 200,
+                "message" => "Shopping cart updated successfully",
+                'data' => $response["data"]
+            ], 200);
+        }
+        return redirect()->back()->with('success', true)->with('data', $response["data"])->with('message', 'Shopping cart updated successfully');
+    }
+
+    public function addShoppingCart(ModifyCartItemRequest $request)
+    {
+        $validated = $request->validated();
+        $shoppingSession = $this->shoppingSessionService->getShoppingSessionByUserID(Auth::id());
+
+        foreach ($validated["product"] as $item) {
+            $this->cartItemService->createCartItem([
+                "session_id" => $shoppingSession->id,
+                "product_id" => $item["product_id"],
+                "quantity" => (int)$item["quantity"]
+            ]);
+            $product = $this->productService->getProductByID((int)$item["product_id"]);
+            $shoppingSession->total += $item["quantity"] * $product->price;
+            if (!$shoppingSession->save()) {
+                throw new \Exception("Failed to update shopping session");
+            }
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                "status" => 200,
+                "message" => "Shopping cart updated successfully",
+                'data' => [
+                    "success" => $validated["product"],
+                    "failed" => null
+                ]
+            ], 200);
+        }
+        return redirect()->back()->with('success', 'Shopping cart updated successfully');
+    }
+
+    public function getUserCartItems()
+    {
+        $shoppingCart = $this->shoppingSessionService->getShoppingCartByUserID(Auth::id());
+        $shoppingSession = ShoppingSessionResource::make($shoppingCart["shopping_session"]);
+        $cartItems = CartItemResource::collection($shoppingCart["cart_items"]);
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Successfully retrieved cart items",
+            'data' => [
+                "shopping_session" => $shoppingSession,
+                "cart_items" => $cartItems
+            ]
+        ]);
     }
 }

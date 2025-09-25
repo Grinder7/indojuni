@@ -10,37 +10,47 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductService
 {
-    public ProductRepository $productRepository;
+    private ProductRepository $productRepository;
 
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
-
-    public function getAllData(): Collection
+    public function createProduct(array $data): Product
     {
-        return $this->productRepository->getAllProduct();
-    }
-
-    public function getById(int $id): Product
-    {
-        return $this->productRepository->getProductById($id);
-    }
-
-    public function getPaginatedProduct(int $page, string $column): LengthAwarePaginator
-    {
-        return $this->productRepository->getProductPaginated($page, $column);
-    }
-    public function createData(array $data): Product
-    {
+        // check if exists
+        $existingProduct = $this->productRepository->getProductByName($data['name']);
+        if ($existingProduct) {
+            throw new \Exception('Product already exists');
+        }
         return $this->productRepository->createProduct($data);
     }
-    public function getProductCount()
+    public function updateProduct(array $data): bool
     {
-        return $this->productRepository->getProductCount();
+        $product = $this->productRepository->getProductByID($data['id']);
+        if (!$product) {
+            throw new \Exception('Product not found');
+        }
+        $product = $this->productRepository->getProductByName($data['name']);
+        if ($product && $product->id !== $data['id']) {
+            throw new \Exception('Product with this name already exists');
+        }
+        return $this->productRepository->updateProduct($data);
     }
-    public function searchBySimilarity(string $columnName, string $name, int|null $limit): Collection
+    public function getProductByName(string $name): Product | null
     {
-        return $this->productRepository->searchBySimilarity($columnName, $name, $limit);
+        return $this->productRepository->getProductByName($name);
+    }
+    public function getProductByID(int $id): Product | null
+    {
+        return $this->productRepository->getProductByID($id);
+    }
+    public function getPaginatedProduct(int $page, string $column): LengthAwarePaginator
+    {
+        return $this->productRepository->getPaginatedProduct($page, $column);
+    }
+    public function getAllProducts(): Collection
+    {
+        return $this->productRepository->getAllProducts();
     }
 }
