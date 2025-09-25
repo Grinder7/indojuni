@@ -9,10 +9,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
@@ -31,14 +29,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropIndex(['products_name_tsvector_idx']); // Drop old index if exists
-        });
+        DB::statement("DROP INDEX IF EXISTS products_search_vector_idx");
         Schema::dropIfExists('products');
     }
 };

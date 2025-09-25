@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentDetail extends Model
 {
     use HasFactory, HasUlids;
-    protected $primaryKey = 'id';
+
     protected $guarded = [
         'id'
     ];

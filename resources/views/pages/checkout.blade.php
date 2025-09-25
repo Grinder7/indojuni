@@ -78,12 +78,10 @@
             z-index: 1500;
         }
     </style>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-        integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('css/vendor/alertify/alertify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor/ajax/bootstrap-datepicker.min.css') }}">
+
 @endsection
 
 @section('content')
@@ -93,54 +91,13 @@
                 <div class="py-5 text-center">
                     <h2>Checkout</h2>
                     <p class="lead">Lengkapi Formulir di Bawah Sesuai Identitas Anda</p>
+                    <h1 class="text-warning">DO NOT INPUT SENSITIVE INFORMATION, THIS IS A TEST</h1>
                 </div>
 
                 <div class="row g-5">
-                    <div class="col-md-5 col-lg-4 order-md-last">
-                        <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-primary">Keranjang Anda</span>
-                            <span class="badge bg-primary rounded-pill">{{ $totalItems }}</span>
-                        </h4>
-                        <ul class="list-group mb-3">
-                            @foreach ($items as $item)
-                                <li class="list-group-item d-flex justify-content-between lh-sm">
-                                    <div>
-                                        <h6 class="my-0 pb-2">{{ $item['product_name'] }}</h6>
-                                        <div class="d-inline-flex col-lg-9 align-items-center">
-                                            <label for="product_{{ $item['product_id'] }}" class="form-label pe-2">
-                                                Qty:
-                                            </label>
-                                            <input type="number" min="0" step="1"
-                                                class="form-control form-control-sm quantity-form"
-                                                value="{{ $item['quantity'] }}" id="product_{{ $item['product_id'] }}">
-                                            <i class="fa-solid fa-trash-can ms-3 delete-item" style="cursor: pointer;"></i>
-                                        </div>
-                                    </div>
-                                    <span class="text-body-secondary"
-                                        id="sub_total_{{ $item['product_id'] }}">Rp{{ number_format($item['total'], 2, ',', '.') }}</span>
-                                </li>
-                            @endforeach
-
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>SubTotal: </span>
-                                <strong
-                                    id="totalbt">Rp{{ number_format(floor($shoppingSession->total), 2, ',', '.') }}</strong>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Pajak (11%): </span>
-                                <strong
-                                    id="tax">Rp{{ number_format(floor($shoppingSession->total * 0.11), 2, ',', '.') }}</strong>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Total (IDR)</span>
-                                <strong
-                                    id="totalPrice">Rp{{ number_format($shoppingSession->total + floor($shoppingSession->total * 0.11), 2, ',', '.') }}</strong>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-7 col-lg-8">
+                    <div class="col-7">
                         <h4 class="mb-3">Alamat Pembayaran</h4>
-                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.confirm') }}"
+                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
                             novalidate>
                             @csrf
                             <div class="row g-3">
@@ -190,8 +147,8 @@
 
                                 <div class="col-md-3">
                                     <label for="zip" class="form-label">Kode Pos</label>
-                                    <input type="text" class="form-control" id="zip" placeholder=""
-                                        name="zip" value="{{ old('zip') }}"required>
+                                    <input type="text" class="form-control" id="zip" placeholder="" name="zip"
+                                        value="{{ old('zip') }}"required>
                                     <div class="invalid-feedback">
                                         Kode pos diperlukan.
                                     </div>
@@ -268,6 +225,61 @@
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan Pembayaran</button>
                         </form>
                     </div>
+                    <div class="col-5">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary">Keranjang Anda</span>
+                            <span class="badge bg-primary rounded-pill">{{ $totalItems }}</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            @foreach ($items as $item)
+                                <li id="item_{{ $item['product_id'] }}"
+                                    class="list-group-item d-flex justify-content-between lh-sm px-3 py-2">
+                                    <div>
+                                        <h6 class="mb-2">{{ $item['product_name'] }}</h6>
+                                        <div class="d-flex col-8 align-items-center w-100">
+                                            <label for="product_{{ $item['product_id'] }}" class="form-label pe-2">
+                                                Qty:
+                                            </label>
+                                            <input type="number" min="0" step="1"
+                                                class="form-control form-control-sm quantity-form"
+                                                value="{{ $item['quantity'] }}" id="product_{{ $item['product_id'] }}">
+                                            </input>
+                                            <div>
+                                                <i id="delete_{{ $item['product_id'] }}"
+                                                    class="fa-solid fa-trash-can delete-item ms-3"
+                                                    style="cursor: pointer;"></i>
+                                                <div id="spinner_{{ $item['product_id'] }}"
+                                                    class="spinner-border text-primary product-spinner d-none ms-3"
+                                                    role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="text-body-secondary col-4 text-end"
+                                        id="sub_total_{{ $item['product_id'] }}">
+                                        Rp{{ number_format($item['total'], 2, ',', '.') }}
+                                    </span>
+                                </li>
+                            @endforeach
+
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>SubTotal: </span>
+                                <strong
+                                    id="totalbt">Rp{{ number_format(floor($shoppingSession->total), 2, ',', '.') }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Pajak (11%): </span>
+                                <strong
+                                    id="tax">Rp{{ number_format(floor($shoppingSession->total * 0.11), 2, ',', '.') }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (IDR):</span>
+                                <strong
+                                    id="totalPrice">Rp{{ number_format($shoppingSession->total + floor($shoppingSession->total * 0.11), 2, ',', '.') }}</strong>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </main>
         </div>
@@ -281,7 +293,6 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
             // Datepicker
-
             $('.datepicker').datepicker({
                 format: "mm/yy",
                 startView: "months",
@@ -307,6 +318,25 @@
                     }, false)
                 })
             })()
+
+            const startProductLoading = (productId) => {
+                const qtyInput = document.querySelector(`#product_${productId}`);
+                const spinner = document.querySelector(`#spinner_${productId}`);
+                const deleteItem = document.querySelector(`#delete_${productId}`);
+                spinner.classList.remove('d-none');
+                deleteItem.classList.add('d-none');
+                qtyInput.setAttribute('disabled', 'disabled');
+            }
+
+            const endProductLoading = (productId) => {
+                const qtyInput = document.querySelector(`#product_${productId}`);
+                const spinner = document.querySelector(`#spinner_${productId}`);
+                const deleteItem = document.querySelector(`#delete_${productId}`);
+                spinner.classList.add('d-none');
+                deleteItem.classList.remove('d-none');
+                qtyInput.removeAttribute('disabled');
+            }
+
             // Variable to store the total item
             let totalItems = {{ $totalItems }};
 
@@ -316,49 +346,16 @@
             // total before tax
             const totalbtDOM = document.querySelector('#totalbt');
 
-            // Check if the quantity is changed
-            const quantityForms = document.querySelectorAll('.quantity-form');
-            quantityForms.forEach((quantityForm) => {
-                quantityForm.addEventListener('change', async function() {
-                    const res = await fetch("{{ route('app.checkout.qtyupdate') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                            "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-                        body: JSON.stringify({
-                            product_id: quantityForm.id.split('_')[1],
-                            quantity: quantityForm.value
-                        })
-                    });
-                    const data = await res.json();
-                    if (data.success == true) {
-                        // Change DOM
-                        alertify.success(data.message);
-                        const tax = data.total * 0.11;
-                        const subTotal = document.querySelector(`#sub_total_${data.product_id}`);
-                        subTotal.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(data.subtotal)},00`;
-                        totalbtDOM.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(data.total)},00`;
-                        totalPriceDOM.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(data.total+tax)},00`;
-                        taxDOM.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(tax)},00`;
-                    } else {
-                        // Change DOM
-                        quantityForm.value = data.quantity;
-                        alertify.error(data.message);
-                    }
-                })
-            });
-            // Check if the user want to delete the item
+            const productSpinners = document.querySelectorAll('.product-spinner');
             const deleteItems = document.querySelectorAll('.delete-item');
+            const quantityForms = document.querySelectorAll('.quantity-form');
+
+            // Check if the user want to delete the item
             deleteItems.forEach((deleteItem) => {
                 deleteItem.addEventListener('click', async function() {
-                    const res = await fetch("{{ route('app.checkout.deleteitem') }}", {
+                    const productId = parseInt(deleteItem.id.split('_')[1])
+                    startProductLoading(productId)
+                    const res = await fetch("{{ route('app.cart.modify') }}", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -367,21 +364,23 @@
                             "X-CSRF-TOKEN": "{{ csrf_token() }}"
                         },
                         body: JSON.stringify({
-                            product_id: deleteItem.parentElement.querySelector(
-                                '.quantity-form').id.split('_')[1]
+                            product: [{
+                                product_id: productId,
+                                quantity: 0
+                            }]
                         })
                     });
-                    const data = await res.json();
-                    if (data.success == true) {
-                        alertify.success(data.message);
-                        // Change the DOM
-                        deleteItem.parentElement.parentElement.parentElement.remove();
+                    const response = await res.json();
+                    if (response.status === 200) {
+                        alertify.success(response.message);
+                        const shoppingSession = response.data.shoppingSession;
+                        document.getElementById(`item_${productId}`).remove();
                         // Change the total price
-                        const tax = data.total * 0.11;
+                        const tax = shoppingSession.total * 0.11;
                         totalbtDOM.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(data.total)},00`;
+                            `Rp${new Intl.NumberFormat('id-ID').format(shoppingSession.total)},00`;
                         totalPriceDOM.innerHTML =
-                            `Rp${new Intl.NumberFormat('id-ID').format(data.total+tax)},00`;
+                            `Rp${new Intl.NumberFormat('id-ID').format(shoppingSession.total + tax)},00`;
                         // Change the badge
                         totalItems--;
                         document.querySelector('.badge').innerHTML = totalItems;
@@ -389,8 +388,62 @@
                         taxDOM.innerHTML =
                             `Rp${new Intl.NumberFormat('id-ID').format(tax)},00`;
                     } else {
-                        alertify.error(data.message);
+                        alertify.error(response.message);
                     }
+                    endProductLoading(productId)
+                })
+            });
+
+            // Check if the quantity is changed
+            quantityForms.forEach((quantityForm) => {
+                let oldValue;
+                quantityForm.addEventListener('focus', async function() {
+                    oldValue = parseInt(quantityForm.value);
+                }, true);
+
+                quantityForm.addEventListener('change', async function() {
+                    const productId = parseInt(quantityForm.id.split('_')[1]);
+                    startProductLoading(productId);
+                    const oldValueLocal = oldValue
+                    const res = await fetch("{{ route('app.cart.modify') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            product: [{
+                                product_id: productId,
+                                quantity: quantityForm.value
+                            }]
+                        })
+                    });
+                    const response = await res.json();
+                    if (response.status === 200) {
+                        const shoppingSession = response.data.shoppingSession;
+                        const cartItem = response.data.success[0];
+                        // Change DOM
+                        alertify.success(response.message);
+                        const tax = shoppingSession.total * 0.11;
+                        const subTotal = cartItem.product_price * parseInt(cartItem.quantity);
+                        const subTotalDOM = document.querySelector(`#sub_total_${cartItem.product_id}`);
+                        subTotalDOM.innerHTML =
+                            `Rp${new Intl.NumberFormat('id-ID').format(subTotal)},00`;
+                        totalbtDOM.innerHTML =
+                            `Rp${new Intl.NumberFormat('id-ID').format(shoppingSession.total)},00`;
+                        totalPriceDOM.innerHTML =
+                            `Rp${new Intl.NumberFormat('id-ID').format(shoppingSession.total + tax)},00`;
+                        taxDOM.innerHTML =
+                            `Rp${new Intl.NumberFormat('id-ID').format(tax)},00`;
+                    } else {
+                        // Change DOM
+                        const cartItem = response.data.failed[0];
+                        quantityForm.value = oldValueLocal;
+                        alertify.error(`${response.message}: ${cartItem.error}`);
+                    }
+                    endProductLoading(productId);
                 })
             });
 

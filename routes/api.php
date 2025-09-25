@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\V1\CartController;
-use App\Http\Controllers\Api\V1\ProductController;
-use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShoppingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,29 +28,32 @@ Route::get("ping", function () {
 
 Route::prefix("v1")->group(function () {
     Route::prefix("auth")->group(function () {
-        Route::post("login", [UserController::class, "postAuthLogin"]);
 
+        Route::middleware('guest:sanctum')->group(function () {
+            Route::post("login", [LoginController::class, "login"])->name("api.v1.auth.login");
+        });
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get("check", [UserController::class, "getAuthCheck"]);
-            Route::post("logout", [UserController::class, "postAuthLogout"]);
-            Route::post("logout-all", [UserController::class, "postAuthLogoutAll"]);
+            Route::post("logout", [LoginController::class, "logout"])->name("api.v1.auth.logout");
         });
     });
 
     Route::prefix("product")->group(function () {
-        Route::get("all", [ProductController::class, "getAllProduct"]);
-        Route::post("detail", [ProductController::class, "getProductById"]);
-        Route::post("search", [ProductController::class, "getProductByName"]);
-
-        // Route::middleware('auth:sanctum')->group(function () {
-        //     Route::get("all", [ProductController::class, "getAllProduct"]);
-        // });
+        Route::get("all", [ProductController::class, "getProducts"])->name("api.v1.product.all");
+        Route::post("detail", [ProductController::class, "getProductById"])->name("api.v1.product.detail");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
-        Route::get("current", [CartController::class, "getUserCartItems"]);
-        Route::post("add", [CartController::class, "postAddCartItem"]);
-        Route::post("remove", [CartController::class, "postRemoveCartItem"]);
-        Route::post("modify", [CartController::class, "postUpdateCartItem"]);
+        Route::get("current", [ShoppingController::class, "getUserCartItems"])->name("api.v1.cart.current");
+        Route::post("modify", [ShoppingController::class, "modifyShoppingCart"])->name("api.v1.cart.modify");
+        Route::post("add", [ShoppingController::class, "addShoppingCart"])->name("api.v1.cart.add");
+    });
+
+    Route::prefix("checkout")->middleware('auth:sanctum')->group(function () {
+        Route::post("", [CheckoutController::class, "checkout"])->name("api.v1.checkout");
+    });
+
+    Route::prefix("invoice")->middleware('auth:sanctum')->group(function () {
+        Route::get("", [InvoiceController::class, "index"])->name("api.v1.invoice.list");
+        Route::get("{id}", [InvoiceController::class, "invoice"])->name("api.v1.invoice.detail");
     });
 });

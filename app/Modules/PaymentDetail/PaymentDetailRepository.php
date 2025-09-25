@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Modules\PaymentDetail;
 
+use App\Models\OrderDetail;
 use App\Models\PaymentDetail;
 
 class PaymentDetailRepository
 {
-    public function create(array $data): PaymentDetail
+    public function createPaymentDetail(array $data): PaymentDetail
     {
         return PaymentDetail::create($data);
     }
-    public function getById(string $id): PaymentDetail | null
+    public function getPaymentDetailByOrderDetailID(string $orderDetailID): PaymentDetail | null
     {
-        return PaymentDetail::find($id);
+        $orderDetail = OrderDetail::find($orderDetailID);
+        if (!$orderDetail) {
+            return null;
+        }
+        return $orderDetail->payment();
     }
 }

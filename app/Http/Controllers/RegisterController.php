@@ -16,14 +16,38 @@ class RegisterController extends Controller
     {
         return view('pages.auth.register');
     }
-    public function store(RegisterRequest $request)
+    public function register(RegisterRequest $request)
     {
         $validated = $request->validated();
-        $success = $this->userService->register($validated);
-        if ($success) {
-            return redirect(route('login.page'))->with('success', 'Successfully register account!');
-        } else {
-            return redirect(route('register.page'))->with('error', 'Register failed');
+
+        try {
+            $success = $this->userService->register($validated);
+
+            if (!$success) {
+                return $request->expectsJson()
+                    ? response()->json([
+                        'status' => 400,
+                        'message' => 'Register failed',
+                        'data' => null
+                    ], 400)
+                    : back()->withErrors(['register' => 'Register failed'])->withInput();
+            }
+        } catch (\Exception $e) {
+            return $request->expectsJson()
+                ? response()->json([
+                    'status' => 400,
+                    'message' => 'An error occurred: ' . $e->getMessage(),
+                    'data' => null
+                ], 400)
+                : back()->withErrors(['register' => 'An error occurred: ' . $e->getMessage()])->withInput();
         }
+
+        return $request->expectsJson()
+            ? response()->json([
+                'status' => 200,
+                'message' => 'Successfully registered',
+                'data' => null
+            ], 200)
+            : redirect()->route('app.login.page')->with('success', 'Successfully registered');
     }
 }

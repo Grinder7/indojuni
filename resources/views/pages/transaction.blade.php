@@ -37,7 +37,7 @@
         <h1>
             Halo, {{ Auth::user()->username }}
         </h1>
-        <p>Dibawah ini adalah daftar semua transaksi yang sudah pernah dilakukan di website ini</p>
+        <p>Dibawah ini adalah daftar semua transaksi yang pernah dilakukan</p>
         @if ($transactions)
             <div class="row">
                 <div class="col-12 mb-lg-5 mb-3">
@@ -46,10 +46,10 @@
                             <table class="mb-0 table">
                                 <thead class="small text-uppercase bg-body text-muted">
                                     <tr>
-                                        <th>Transaction ID</th>
-                                        <th>Date</th>
-                                        <th>Delivery Address</th>
-                                        <th>Amount</th>
+                                        <th>ID Transaksi</th>
+                                        <th>Tanggal</th>
+                                        <th>Alamat Pengiriman</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>

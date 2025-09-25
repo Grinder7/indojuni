@@ -5,13 +5,9 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShoppingController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Middleware\Disabled;
-use App\Http\Middleware\Enable;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,51 +21,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AppController::class, 'home'])->name('app.home');
 
-Route::middleware(Disabled::class)->group(function () {
+Route::get('', [AppController::class, 'home'])->name('app.home.page');
 
-    Route::get('catalogue', [ProductController::class, 'index'])->name('catalogue.index');
-    Route::post('catalogue', [ShoppingController::class, 'storeCart'])->name('cart.store');
-
-    Route::get('aboutus', [AppController::class, 'aboutus'])->name('app.aboutus');
+Route::middleware('disable')->group(function () {
+    Route::get('catalogue', [ProductController::class, 'index'])->name('app.catalogue.page');
+    Route::get('aboutus', [AppController::class, 'aboutus'])->name('app.aboutus.page');
 
     Route::middleware('guest')->group(function () {
-        Route::get('register', [RegisterController::class, 'index'])->name('register.page');
-        Route::post('register', [RegisterController::class, 'store'])->name('register');
+        Route::get('login', [LoginController::class, 'index'])->name('app.login.page');
+        Route::post('login', [LoginController::class, 'login'])->name('app.login.login');
+
+        Route::get('register', [RegisterController::class, 'index'])->name('app.register.page');
+        Route::post('register', [RegisterController::class, 'register'])->name('app.register.register');
     });
 
     Route::middleware('auth')->group(function () {
-        Route::get('checkout', [CheckoutController::class, 'index'])->name('app.checkout');
-        Route::post('checkout', [CheckoutController::class, 'store'])->name('app.checkout');
-        Route::post('checkout/qtyupdate', [CheckoutController::class, 'qtyUpdate'])->name('app.checkout.qtyupdate');
-        Route::post('checkout/deleteitem', [CheckoutController::class, 'deleteItem'])->name('app.checkout.deleteitem');
-        Route::post('checkout/confirm', [PaymentController::class, 'confirm'])->name('app.checkout.confirm');
-        Route::get('invoice/{id}', [InvoiceController::class, 'index'])->name('app.invoice');
-        Route::get('transaction', [TransactionController::class, 'index'])->name('app.transaction');
+        Route::get('checkout', [CheckoutController::class, 'index'])->name('app.checkout.page');
+        Route::get('invoice', [InvoiceController::class, 'index'])->name('app.invoice.page');
+        Route::get('invoice/{id}', [InvoiceController::class, 'invoice'])->name('app.invoice.invoice');
+        Route::get('logout', [LoginController::class, 'logout'])->name('app.logout.logout');
+
+        Route::prefix('cart')->group(function () {
+            Route::post('add', [ShoppingController::class, 'addShoppingCart'])->name('app.cart.add');
+            Route::post('modify', [ShoppingController::class, 'modifyShoppingCart'])->name('app.cart.modify');
+        });
+
+        Route::post('checkout', [CheckoutController::class, 'checkout'])->name('app.checkout.checkout');
+    });
+    Route::middleware('enable')->middleware('admin')->group(function () {
+        Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
+        Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
+        Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
+        Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
     });
 });
-
-Route::middleware(Enable::class)->middleware('guest')->group(function () {
-    Route::get('login', [LoginController::class, 'index'])->name('login.page');
-    Route::post('login', [LoginController::class, 'store'])->name('login');
-});
-
-Route::middleware(Enable::class)->middleware('auth')->group(function () {
-    Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
-});
-
-Route::middleware(Enable::class)->middleware('admin')->group(function () {
-    Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
-    Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
-    Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
-    Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
-});
-
-// Route::fallback(function () {
-//     return redirect()->route('app.home');
-// });
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });

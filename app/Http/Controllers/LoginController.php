@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Modules\ShoppingCart\ShoppingSession\ShoppingSessionService;
+use App\Modules\ShoppingSession\ShoppingSessionService;
 use App\Modules\User\UserService;
-use App\Providers\RouteServiceProvider;
+use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
 
 class LoginController extends Controller
 {
@@ -23,61 +21,58 @@ class LoginController extends Controller
     {
         return view('pages.auth.login');
     }
-    public function createCart(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'total' => 'integer'
-        ]);
-        $success = $this->shoppingSessionService->getByUserId($validated['user_id']);
-        if ($success) {
-            $json = Response::json([
-                'success' => true,
-                'message' => 'Successfully create cart',
-                'data' => $validated
-            ], 200);
-        } else {
-            $json = Response::json([
-                'success' => false,
-                'message' => 'Failed to create cart',
-                'data' => $validated
-            ], 400);
-        }
-        return $json;
-    }
-    public function store(LoginRequest $request)
-    {
-        $request->checkThrottle();
-        $success = $this->userService->login($request->validated(), $request->throttleKey());
-        if ($success) {
-            // Add Shopping Session to Database
-            $requestCart = Request::create(route('login'), 'POST', [
-                'user_id' => Auth::user()->id,
-                'total' => 0
-            ]);
-            $response = $this->createCart($requestCart);
-            $successCart = $response->getData(true);
-            if ($successCart['success'] == true) {
-                return redirect()->intended(RouteServiceProvider::HOME);
-            } else {
-                Auth::guard('web')->logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                return redirect()->back()->withErrors(['email' => 'Unexpected Error'])->onlyInput();
+        try {
+            $request->checkThrottle();
+            $data = $this->userService->login($request->validated(), $request->throttleKey());
+            if ($request->expectsJson()) {
+                $user = $data["user"];
+                $accessToken = $user->createToken('auth_token', ['*'], now()->addMonth(1))->plainTextToken;
+                $jsonResponse = [
+                    "user" => $user,
+                    "shopping_session" => $data["shopping_session"],
+                    "access_token" => $accessToken
+                ];
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Login successful',
+                    'data' => $jsonResponse
+                ], 200);
             }
-        } else {
-            return redirect()->back()->withErrors(['email' => trans('auth.failed')])->onlyInput();
+            return redirect()->route('app.home.page');
+        } catch (\Throwable $th) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Login failed: ' . $th->getMessage(),
+                    'data' => null
+                ], 400);
+            }
+            return redirect()->back()->withErrors(["errorMessage" => $th->getMessage()]);
         }
     }
-    public function destroy(Request $request)
+    public function logout(Request $request)
     {
-        // Remove Shopping Session from Database
-        if (Auth::check()) {
-            $this->shoppingSessionService->deleteByUserId(Auth::user()->id);
+        if ($request->expectsJson()) {
+            // ✅ API logout: revoke token
+            $userID = $request->user()->id;
+            $this->userService->logout($userID);
+            $request->user()->currentAccessToken()->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Successfully logged out',
+                'data' => null
+            ], 200);
         }
-        Auth::guard('web')->logout();
+
+        // ✅ Web logout: destroy session
+        $userID = Auth::id();
+        $this->userService->logout($userID);
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect(RouteServiceProvider::HOME);
+
+        return redirect()->route('app.home.page');
     }
 }

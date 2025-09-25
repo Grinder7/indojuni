@@ -4,38 +4,50 @@ declare(strict_types=1);
 
 namespace App\Modules\Product;
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository
 {
-    public function getAllProduct(): Collection
+    public function getProductByName(string $name): Product | null
     {
-        return Product::all();
-    }
-    public function getProductPaginated(int $page, string $column): LengthAwarePaginator
-    {
-        return Product::orderby($column, 'desc')->paginate($page);
-    }
-    public function getProductById(int $id): Product
-    {
-        return Product::find($id);
-    }
-    public function getById(int $id): Product | null
-    {
-        return Product::find($id);
+        return Product::where('name', $name)->first();
     }
     public function createProduct(array $data): Product
     {
         return Product::create($data);
     }
-    public function getProductCount()
+    public function getProductByID(int $productID): Product | null
     {
-        return Product::count();
+        return Product::find($productID);
     }
-    public function searchBySimilarity(string $columnName, string $name, int|null $limit): Collection
+    public function subtractQuantityByID(int $productID, int $quantity): bool
     {
-        return Product::searchBySimilarity($columnName, $name, $limit);
+        $product = Product::find($productID);
+        if ($product) {
+            if ($product->quantity >= $quantity) {
+                $product->quantity -= $quantity;
+                return $product->save();
+            }
+        }
+        return false;
+    }
+    public function updateProduct(array $data): bool
+    {
+        $product = Product::find($data['id']);
+        if ($product) {
+            $product->update($data);
+            return true;
+        }
+        return false;
+    }
+    public function getPaginatedProduct(int $page, string $column): LengthAwarePaginator
+    {
+        return Product::orderby($column, 'desc')->paginate($page);
+    }
+    public function getAllProducts(): Collection
+    {
+        return Product::all();
     }
 }
