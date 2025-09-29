@@ -22,10 +22,6 @@ yarn-error.log
 /.vscode
 /.zed
 
-**/caddy
-frankenphp
-frankenphp-worker.php
-Caddyfile
 
 **.tar
 commands.txt
