@@ -1,0 +1,20 @@
+FROM composer:2.4 AS builder
+
+WORKDIR /app
+COPY composer.json composer.lock ./
+# RUN apk add --no-cache autoconf build-base libzip-dev oniguruma-dev openssl-dev libsodium-dev\
+#     && docker-php-ext-install opcache zip bz2 sodium
+RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
+COPY . .
+ADD .env.production .env
+RUN php artisan key:generate
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+
+FROM dunglas/frankenphp
+RUN install-php-extensions pcntl pdo_pgsql
+WORKDIR /app
+COPY --from=builder /app .
+EXPOSE 8000
+RUN php artisan octane:install --server=frankenphp
+
+ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
