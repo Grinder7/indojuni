@@ -7,7 +7,7 @@ services:
       - ${COMPOSE_CONTAINER_PORT:-8001}:${COMPOSE_IMAGE_PORT:-8000}
     healthcheck:
       test: curl --fail http://localhost:${COMPOSE_IMAGE_PORT:-8000}/api/ping || exit 1
-      interval: 120s
+      interval: 150s
       timeout: 30s
       retries: 3
       start_period: 20s
