@@ -1,13 +1,20 @@
+name: ${COMPOSE_STACK_NAME:-indojuni}
 services:
   indojuni:
-    image: indojuni:latest
-    container_name: indojuni
+    image: ${COMPOSE_IMAGE_NAME:-indojuni}:${COMPOSE_IMAGE_TAG:-latest}
+    container_name: ${COMPOSE_CONTAINER_NAME:-indojuni}
     ports:
-      - 8001:8000
+      - ${COMPOSE_CONTAINER_PORT:-8001}:${COMPOSE_IMAGE_PORT:-8000}
     healthcheck:
-      test: curl --fail http://localhost:8001/api/ping || exit 1
-      interval: 60s
+      test: curl --fail http://localhost:${COMPOSE_CONTAINER_PORT:-8001}/api/ping || exit 1
+      interval: 120s
       timeout: 30s
       retries: 3
       start_period: 60s
     restart: unless-stopped
+    volumes:
+      - product_image:/app/public/images/products
+
+volumes:
+    product_image:
+        driver: local

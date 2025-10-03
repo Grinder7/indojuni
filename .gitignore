@@ -6,9 +6,8 @@
 /storage/*.key
 /storage/pail
 /vendor
-.env
-.env.backup
-.env.production
+.env*
+!.env.example
 .phpactor.json
 .phpunit.result.cache
 Homestead.json
@@ -22,10 +21,7 @@ yarn-error.log
 /.vscode
 /.zed
 
-**/caddy
-frankenphp
-frankenphp-worker.php
-Caddyfile
 
 **.tar
 commands.txt
+Makefile
