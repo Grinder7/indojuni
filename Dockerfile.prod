@@ -1,17 +1,11 @@
-FROM composer:2.4 AS builder
-
+# image build from Dockerfile.prod.base
+FROM indojuni:prod-base
 WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 COPY . .
-ADD .env.production .env
 RUN php artisan key:generate
 RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
-
-# image build from Dockerfile.prod.base
-FROM indojuni:prod-base
-WORKDIR /app
-COPY --from=builder /app .
 EXPOSE 8000
 RUN php artisan octane:install --server=frankenphp
 ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
