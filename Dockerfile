@@ -6,7 +6,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install pdo pdo_pgsql pgsql && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 
 WORKDIR /app
-COPY composer.json .
+COPY composer.json composer.lock ./
 RUN composer install --no-scripts
 COPY . .
 EXPOSE 8000
