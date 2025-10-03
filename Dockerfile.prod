@@ -4,7 +4,6 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 COPY . .
-RUN php artisan key:generate
 RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 EXPOSE 8000
 RUN php artisan octane:install --server=frankenphp
