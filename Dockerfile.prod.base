@@ -1,5 +1,5 @@
 FROM dunglas/frankenphp
 RUN apt update && apt upgrade -y
-RUN apt install curl git -y
-RUN install-php-extensions pcntl pdo_pgsql
+RUN apt install -y --no-install-recommends curl git unzip zip
+RUN install-php-extensions pcntl pdo_pgsql zip
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
