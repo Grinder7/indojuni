@@ -41,8 +41,13 @@
                 <div class="d-flex justify-content-between align-items-center border-bottom p-2"
                     style="background: #007bff; color: white;">
                     <h5 class="mb-0">Chatbot</h5>
-                    <button id="chatbot-close"
-                        style="border: none; background: transparent; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+                    <div>
+                        <button id="chatbot-clear"
+                            style="border: none; background: transparent; color: white; font-size: 1.1rem; cursor: pointer; margin-right: 0.125rem;"><i
+                                class="fa-solid fa-trash"></i></button>
+                        <button id="chatbot-close"
+                            style="border: none; background: transparent; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+                    </div>
                 </div>
                 <div id="chatbot-messages" class="d-flex flex-column bg-body-tertiary p-2"
                     style="height: calc(100% - 50px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ccc transparent; scroll-behavior: smooth;">
@@ -65,6 +70,8 @@
                 messageElem.className = 'chatbot-agent-message';
             } else if (role === 'user') {
                 messageElem.className = 'chatbot-user-message';
+            } else {
+                return;
             }
             messageElem.textContent = content;
             chatArea.appendChild(messageElem);
@@ -72,6 +79,11 @@
         }
 
         async function initializeChat() {
+            const chatInput = document.getElementById('chatbot-input');
+            chatInput.disabled = true;
+            chatInput.placeholder = 'Initializing chat...';
+            const sendButton = document.getElementById('chatbot-send');
+            sendButton.disabled = true;
             const response = await fetch("{{ route('chat.init') }}", {
                 method: 'POST',
                 headers: {
@@ -90,6 +102,13 @@
                     }]
                 };
             });
+            if (data.status === 'error') {
+                chatInput.placeholder = 'Error initializing chat.';
+            } else {
+                chatInput.disabled = false;
+                chatInput.placeholder = 'Type your message...';
+                sendButton.disabled = false;
+            }
             return data;
         }
 
@@ -125,7 +144,8 @@
         }
 
         const chats = @json(session('chats', []));
-        if (chats.length === 0 || chats[0].role !== 'system') {
+        if (chats.length === 0 || (chats[0].role !== 'system' && chats[0].content !==
+            'This is the beginning of the chat.')) {
             initializeChat().then(response => {
                 chats.push(...response.chats);
                 const chatArea = document.getElementById('chatbot-messages');
@@ -136,14 +156,7 @@
         }
         const chatArea = document.getElementById('chatbot-messages');
         chats.forEach(chat => {
-            const messageElem = document.createElement('p');
-            if (chat.role === 'agent') {
-                messageElem.className = 'chatbot-agent-message';
-            } else if (chat.role === 'user') {
-                messageElem.className = 'chatbot-user-message';
-            }
-            messageElem.textContent = chat.content;
-            chatArea.appendChild(messageElem);
+            appendChatDOM(chat.role, chat.content);
         });
 
         document.getElementById('chatbot-toggle').addEventListener('click', function() {
@@ -173,6 +186,43 @@
             if (e.key === 'Enter') {
                 e.preventDefault();
                 document.getElementById('chatbot-send').click();
+            }
+        });
+        document.getElementById('chatbot-clear').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                const chatInput = document.getElementById('chatbot-input');
+                chatInput.disabled = true;
+                chatInput.placeholder = 'Clearing chat...';
+                const sendButton = document.getElementById('chatbot-send');
+                sendButton.disabled = true;
+                fetch("{{ route('chat.clear') }}", {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({})
+                }).then((response) => {
+                    return response.json()
+                }).then(data => {
+                    if (data.status === 'success') {
+                        chats.length = 0; // Clear local chat history
+                        chatArea.innerHTML = ''; // Clear chat area
+                        initializeChat().then(response => {
+                            chats.push(...response.chats);
+                            const chatArea = document.getElementById('chatbot-messages');
+                            response.chats.forEach(chat => {
+                                appendChatDOM(chat.role, chat.content);
+                            });
+                        })
+                    } else {
+                        alert('Error clearing chat history.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    chatInput.placeholder = 'Failed to clear chat.';
+                    alert('Error clearing chat history.');
+                });
             }
         });
     </script>
