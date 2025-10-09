@@ -53,7 +53,7 @@ class ChatbotController extends Controller
         $chats[] = ['role' => 'user', 'content' => $message];
         $request->session()->put('chats', $chats);
         try {
-            $response = Http::withToken($token)->post(env('CHATBOT_API_URL') . '/chat', [
+            $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', [
                 'data' => $chats
             ]);
             if ($response->failed() || !isset($response->json()['data'])) {
