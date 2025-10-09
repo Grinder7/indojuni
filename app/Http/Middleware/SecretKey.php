@@ -15,7 +15,7 @@ class SecretKey
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->header('X-Secret-Key') !== env('API_SECRET_KEY')) {
+        if ($request->header('X-Secret-Key') !== config('app.secret_key')) {
             return response()->json([
                 'status' => 403,
                 'message' => 'Forbidden',
