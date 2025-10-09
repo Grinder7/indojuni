@@ -5,6 +5,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,12 +35,20 @@ Route::prefix("v1")->group(function () {
         });
         Route::middleware('auth:sanctum')->group(function () {
             Route::post("logout", [LoginController::class, "logout"])->name("api.v1.auth.logout");
+            Route::get("user", function (Request $request) {
+                return response()->json([
+                    "status" => 200,
+                    "message" => "User retrieved successfully",
+                    "data" => $request->user()
+                ]);
+            })->name("api.v1.auth.user");
         });
     });
 
     Route::prefix("product")->group(function () {
         Route::get("all", [ProductController::class, "getProducts"])->name("api.v1.product.all");
         Route::post("detail", [ProductController::class, "getProductById"])->name("api.v1.product.detail");
+        Route::post("search-name", [ProductController::class, "searchProductByName"])->name("api.v1.product.search");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
