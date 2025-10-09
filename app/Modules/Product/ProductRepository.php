@@ -42,16 +42,26 @@ class ProductRepository
         }
         return false;
     }
-    public function getPaginatedProduct(int $page, string $column): LengthAwarePaginator
+    public function getPaginatedProduct(int $page, string $column, string $searchKeyword): LengthAwarePaginator
     {
-        return Product::orderby($column, 'desc')->paginate($page);
+        if ($searchKeyword === null || trim($searchKeyword) === '') {
+            return Product::orderby($column, 'asc')->paginate($page);
+        }
+        return Product::searchBySimilarityPaginated("name", $searchKeyword, $page);
     }
-    public function getAllProducts(): Collection
+    public function getAllProducts($limit, $page): Collection
     {
+        if ($limit !== null) {
+            return Product::orderby('id', 'asc')->paginate($limit, ['*'], 'page', $page)->getCollection();
+        }
         return Product::all();
     }
-    public function searchProductByName(string $productName): Collection
+    public function searchSimilarProductByName(string $productName): Collection
     {
         return Product::searchBySimilarity("name", $productName);
+    }
+    public function searchContainProductByName(string $productName): Collection
+    {
+        return Product::where("name", 'ILIKE', '%' . $productName . '%')->get();
     }
 }

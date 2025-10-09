@@ -14,11 +14,18 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('category')->nullable();
+            $table->string('subcategory')->nullable();
+            $table->string('type')->nullable();
+            $table->string('variant')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('size')->nullable();
+            $table->string('unit')->nullable();
             $table->string('name');
             $table->integer('stock')->default(0);
             $table->integer('price');
             $table->text('description')->nullable();
-            $table->string('img');
+            $table->string('img')->nullable();
         });
         DB::statement("ALTER TABLE products ADD COLUMN search_vector tsvector GENERATED ALWAYS AS (
             setweight(to_tsvector('indonesian', name), 'A') ||

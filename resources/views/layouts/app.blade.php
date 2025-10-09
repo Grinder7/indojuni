@@ -31,7 +31,7 @@
         </style>
     </head>
 
-    <body class="bg-body-tertiary">
+    <body class="bg-body-tertiary d-flex flex-column min-vh-100">
 
         @include('partials.app-navbar')
 

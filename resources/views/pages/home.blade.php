@@ -41,7 +41,7 @@
         </style>
     </head>
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <div>
             @include('partials.app-navbar')
         </div>
@@ -56,20 +56,7 @@
                         IndoJuni!
                     </p>
                 </main>
-                <div class="container mt-auto">
-                    <div class="container">
-                        <footer
-                            class="d-flex justify-content-between align-items-center border-top my-4 flex-wrap border-white py-3">
-                            <div class="col-md-4 d-flex align-items-center">
-                                <a href="https://getbootstrap.com/" target="_blank"
-                                    class="mb-md-0 text-decoration-none lh-1 mb-3 me-2">
-                                    <i class="fa-brands fa-bootstrap" style="color: rgba(255,255,255,1);"></i>
-                                </a>
-                                <span class="mb-md-0 mb-3 text-white">&copy; 2023 IndoJuni, Inc</span>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
+                @include('partials.app-footer')
             </div>
         </div>
         @include('partials.chatbot')
