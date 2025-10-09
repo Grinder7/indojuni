@@ -29,7 +29,6 @@ Route::get("ping", function () {
 
 Route::prefix("v1")->group(function () {
     Route::prefix("auth")->group(function () {
-
         Route::middleware('guest:sanctum')->group(function () {
             Route::post("login", [LoginController::class, "login"])->name("api.v1.auth.login");
         });
@@ -64,5 +63,9 @@ Route::prefix("v1")->group(function () {
     Route::prefix("invoice")->middleware('auth:sanctum')->group(function () {
         Route::get("", [InvoiceController::class, "index"])->name("api.v1.invoice.list");
         Route::get("{id}", [InvoiceController::class, "invoice"])->name("api.v1.invoice.detail");
+    });
+
+    Route::prefix("query")->middleware("secretkey")->group(function () {
+        Route::post("", [\App\Http\Controllers\QueryController::class, "query"])->name("api.v1.query");
     });
 });

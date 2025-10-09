@@ -23,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "enable" => \App\Http\Middleware\Enable::class,
             "auth" => \App\Http\Middleware\Authenticate::class,
             "guest" => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            "secretkey" => \App\Http\Middleware\SecretKey::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
