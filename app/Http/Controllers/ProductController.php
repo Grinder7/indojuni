@@ -15,19 +15,59 @@ class ProductController extends Controller
     {
         $this->productService = $productService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->getPaginatedProduct(8, 'name');
+        $searchQuery = $request->query('search');
+        if ($searchQuery === null) $searchQuery = '';
+        $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery);
         return view('pages.catalogue', compact('products'));
     }
-    public function getProducts()
+    public function getProducts(Request $request)
     {
-        $products = $this->productService->getAllProducts();
-        return response()->json([
-            'status' => 200,
-            'data' => ProductSummaryResource::collection($products),
-            "message" => "Successfully retrieved products"
-        ]);
+        try {
+            $limitQuery = $request->query('limit');
+            $pageQuery = $request->query('page');
+            $limit  = null;
+            $page = null;
+            if (is_numeric($limitQuery)) {
+                $limit = (int)$limitQuery;
+                if ($limit < 1) {
+                    response()->json([
+                        'status' => 400,
+                        'message' => "Limit must be greater than 0"
+                    ], 400);
+                    return;
+                }
+                $page = 1; // Default to page 1 if limit is provided
+            }
+            if (is_numeric($pageQuery)) {
+                $page = (int)$pageQuery;
+                if ($page < 1) {
+                    response()->json([
+                        'status' => 400,
+                        'message' => "Page must be greater than 0"
+                    ], 400);
+                    return;
+                } else if ($limit === null) {
+                    response()->json([
+                        'status' => 400,
+                        'message' => "Limit must be provided when page is specified"
+                    ], 400);
+                    return;
+                }
+            }
+            $products = $this->productService->getAllProducts($limit, $page);
+            return response()->json([
+                'status' => 200,
+                'data' => ProductSummaryResource::collection($products),
+                "message" => "Successfully retrieved products"
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'message' => "Failed to retrieve products: " . $th->getMessage()
+            ], 500);
+        }
     }
     public function getProductById(Request $request)
     {
@@ -41,12 +81,25 @@ class ProductController extends Controller
             "message" => "Successfully retrieved product"
         ]);
     }
-    public function searchProductByName(Request $request)
+    public function searchSimiliarProductByName(Request $request)
     {
         $validated = $request->validate([
             'product_name' => 'required|string',
         ]);
-        $products = $this->productService->searchProductByName($validated['product_name']);
+        $products = $this->productService->searchSimiliarProductByName($validated['product_name']);
+        return response()->json([
+            'status' => 200,
+            'data' => ProductSummaryResource::collection($products),
+            "message" => "Successfully retrieved products"
+        ]);
+    }
+
+    public function searchContainProductByName(Request $request)
+    {
+        $validated = $request->validate([
+            'product_name' => 'required|string',
+        ]);
+        $products = $this->productService->searchContainProductByName($validated['product_name']);
         return response()->json([
             'status' => 200,
             'data' => ProductSummaryResource::collection($products),

@@ -5,35 +5,40 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 @endsection
 @section('content')
-    <section class="container py-5 text-center">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">Katalog</h1>
-                <p class="lead text-body-secondary">Temukan berbagai produk berkualitas dengan harga terjangkau di toko kami.
-                    Kami berkomitmen untuk memberikan nilai tambah kepada pelanggan dengan penawaran spesial dan diskon
-                    menarik setiap minggunya.
-                </p>
-
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
+    <div class="container-fluid" style="margin-top: 80px;">
         <div class="album bg-body-tertiary">
+            <div class="row p-3">
+                <div class="col">
+                    <form action="{{ route('app.catalogue.page') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search product..." name="search"
+                                value="{{ request('search') }}">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {{ $products->links() }}
+                </div>
+            </div>
             <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-12 col-sm-6 col-md-4 col-xxl-3 d-flex align-items-stretch mb-3">
+                    <div class="col-12 col-sm-4 col-md-3 col-xxl-2 d-flex align-items-stretch mb-3">
                         <div class="card shadow-sm" style="width: 100%">
                             @if ($product->img)
                                 <img src="{{ $product->img_path }}" alt="productimg"
-                                    height="225"style="object-fit: contain">
+                                    height="200"style="object-fit: contain">
                             @else
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                                     preserveAspectRatio="xMidYMid slice" focusable="false">
                                     <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%"
-                                        fill="#eceeef" dy=".3em">Image</text>
+                                    <rect width="100%" height="100%" fill="#55595c" /><text text-anchor="middle" x="50%"
+                                        y="50%" fill="#eceeef" dy=".3em">Image</text>
                                 </svg>
                             @endif
                             <div class="card-body d-flex flex-column">

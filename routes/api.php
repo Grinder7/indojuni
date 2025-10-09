@@ -47,7 +47,8 @@ Route::prefix("v1")->group(function () {
     Route::prefix("product")->group(function () {
         Route::get("all", [ProductController::class, "getProducts"])->name("api.v1.product.all");
         Route::post("detail", [ProductController::class, "getProductById"])->name("api.v1.product.detail");
-        Route::post("search-name", [ProductController::class, "searchProductByName"])->name("api.v1.product.search");
+        Route::post("search-similar-name", [ProductController::class, "searchSimilarProductByName"])->name("api.v1.product.search.similar");
+        Route::post("search-contain-name", [ProductController::class, "searchContainProductByName"])->name("api.v1.product.search.contain");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
