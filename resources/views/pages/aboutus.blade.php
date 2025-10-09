@@ -8,11 +8,11 @@
                 Selamat datang di IndoJuni!
             </h1>
             <h3>
-
-                Kami adalah toko retail yang menyediakan berbagai macam barang serba
-                ada untuk memenuhi kebutuhan sehari-hari Anda.
+                Ini adalah website testing, tidak melayani pembelian.
             </h3>
             <p>
+                Kami adalah toko retail yang menyediakan berbagai macam barang serba
+                ada untuk memenuhi kebutuhan sehari-hari Anda.
                 Dengan komitmen untuk memberikan kepuasan pelanggan, kami menawarkan beragam produk berkualitas tinggi dari
                 berbagai kategori seperti makanan, minuman, kebutuhan rumah tangga, produk kecantikan, elektronik, pakaian,
                 dan masih banyak lagi. Dengan demikian, kami berusaha memastikan bahwa Anda dapat menemukan semua yang Anda
