@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payment_details', function (Blueprint $table) {
             $table->ulid('id')->unique();
             $table->foreignUlid('user_id');
+            $table->boolean('is_default')->default(false);
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->nullable();
