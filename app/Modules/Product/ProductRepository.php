@@ -50,4 +50,8 @@ class ProductRepository
     {
         return Product::all();
     }
+    public function searchProductByName(string $productName): Collection
+    {
+        return Product::searchBySimilarity("name", $productName);
+    }
 }

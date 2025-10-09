@@ -12,37 +12,32 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable, HasUlids;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'username',
         'email',
         'password',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
     protected $guarded = [
         'id'
     ];
+
+    protected $appends = ['default_payment_detail'];
+
+    public function paymentDetail()
+    {
+        return $this->hasMany(PaymentDetail::class);
+    }
+
+    // Add this accessor
+    public function getDefaultPaymentDetailAttribute()
+    {
+        return $this->paymentDetail()->where('is_default', true)->first();
+    }
 }

@@ -41,4 +41,16 @@ class ProductController extends Controller
             "message" => "Successfully retrieved product"
         ]);
     }
+    public function searchProductByName(Request $request)
+    {
+        $validated = $request->validate([
+            'product_name' => 'required|string',
+        ]);
+        $products = $this->productService->searchProductByName($validated['product_name']);
+        return response()->json([
+            'status' => 200,
+            'data' => ProductSummaryResource::collection($products),
+            "message" => "Successfully retrieved products"
+        ]);
+    }
 }

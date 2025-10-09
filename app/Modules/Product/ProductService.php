@@ -53,4 +53,8 @@ class ProductService
     {
         return $this->productRepository->getAllProducts();
     }
+    public function searchProductByName(string $productName): Collection
+    {
+        return $this->productRepository->searchProductByName($productName);
+    }
 }
