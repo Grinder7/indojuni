@@ -49,6 +49,7 @@ Route::prefix("v1")->group(function () {
         Route::post("detail", [ProductController::class, "getProductById"])->name("api.v1.product.detail");
         Route::post("search-similar-name", [ProductController::class, "searchSimilarProductByName"])->name("api.v1.product.search.similar");
         Route::post("search-contain-name", [ProductController::class, "searchContainProductByName"])->name("api.v1.product.search.contain");
+        Route::get("filter-options", [ProductController::class, "getProductFilterOptions"])->name("api.v1.product.filter_options");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
