@@ -19,8 +19,14 @@ class ProductController extends Controller
     {
         $searchQuery = $request->query('search');
         if ($searchQuery === null) $searchQuery = '';
-        $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery);
-        return view('pages.catalogue', compact('products'));
+        $filter = [];
+        $filter["category"] = $request->query('category', '');
+        $filter["subcategory"] = $request->query("subcategory", '');
+        $filter["brand"] = $request->query("brand", '');
+
+        $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery, $filter);
+        $productFilters = $this->productService->getProductFilterOptions();
+        return view('pages.catalogue', compact('products'))->with('productFilters', $productFilters);
     }
     public function getProducts(Request $request)
     {
@@ -56,7 +62,22 @@ class ProductController extends Controller
                     return;
                 }
             }
-            $products = $this->productService->getAllProducts($limit, $page);
+            $filter = [];
+            $filter["category"] = $request->query('category');
+            $filter["subcategory"] = $request->query('subcategory');
+            $filter["type"] = $request->query('type');
+            $filter["variant"] = $request->query('variant');
+            $filter["brand"] = $request->query('brand');
+            $filter["size"] = $request->query('size');
+            $filter["unit"] = $request->query('unit');
+            $filter["name"] = $request->query('name');
+            $filter["stock_min"] = $request->query('stock_min');
+            $filter["stock_max"] = $request->query('stock_max');
+            $filter["price_min"] = $request->query('price_min');
+            $filter["price_max"] = $request->query('price_max');
+            $filter["description"] = $request->query('description');
+
+            $products = $this->productService->getAllProducts($limit, $page, $filter);
             return response()->json([
                 'status' => 200,
                 'data' => ProductSummaryResource::collection($products),
@@ -105,5 +126,21 @@ class ProductController extends Controller
             'data' => ProductSummaryResource::collection($products),
             "message" => "Successfully retrieved products"
         ]);
+    }
+    public function getProductFilterOptions(Request $request)
+    {
+        try {
+            $options = $this->productService->getProductFilterOptions();
+            return response()->json([
+                'status' => 200,
+                'data' => $options,
+                "message" => "Successfully retrieved product filter options"
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'message' => "Failed to retrieve product filter options: " . $th->getMessage()
+            ], 500);
+        }
     }
 }

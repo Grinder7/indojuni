@@ -45,13 +45,13 @@ class ProductService
     {
         return $this->productRepository->getProductByID($id);
     }
-    public function getPaginatedProduct(int $page, string $column, string $searchQuery): LengthAwarePaginator
+    public function getPaginatedProduct(int $page, string $column, string $searchQuery, array $filter): LengthAwarePaginator
     {
-        return $this->productRepository->getPaginatedProduct($page, $column, $searchQuery);
+        return $this->productRepository->getPaginatedProduct($page, $column, $searchQuery, $filter);
     }
-    public function getAllProducts($limit, $page): Collection
+    public function getAllProducts($limit, $page, $filter): Collection
     {
-        return $this->productRepository->getAllProducts($limit, $page);
+        return $this->productRepository->getAllProducts($limit, $page, $filter);
     }
     public function searchSimiliarProductByName(string $productName): Collection
     {
@@ -60,5 +60,9 @@ class ProductService
     public function searchContainProductByName(string $productName): Collection
     {
         return $this->productRepository->searchContainProductByName($productName);
+    }
+    public function getProductFilterOptions(): array
+    {
+        return $this->productRepository->getProductFilterOptions();
     }
 }

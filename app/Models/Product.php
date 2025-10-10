@@ -67,7 +67,7 @@ class Product extends Model
         return $result;
     }
 
-    public static function searchBySimilarityPaginated($columnName, $searchParam, $page = 15): LengthAwarePaginator
+    public static function searchBySimilarityPaginated($columnName, $searchParam, $page = 15, $filter = []): LengthAwarePaginator
     {
         // Check if the column exists in the table
         if (!DB::getSchemaBuilder()->hasColumn('products', $columnName)) {
@@ -92,6 +92,16 @@ class Product extends Model
                                   websearch_to_tsquery('english', ?))
             ", [$searchParam, $searchParam])
             ->orWhereRaw("similarity({$columnName}, ?) >= {$threshold}", [$searchParam])
+            // Apply filters
+            ->when(isset($filter['category']) && !empty($filter['category']), function ($query) use ($filter) {
+                $query->where('category', $filter['category']);
+            })
+            ->when(isset($filter['subcategory']) && !empty($filter['subcategory']), function ($query) use ($filter) {
+                $query->where('subcategory', $filter['subcategory']);
+            })
+            ->when(isset($filter['brand']) && !empty($filter['brand']), function ($query) use ($filter) {
+                $query->where('brand', $filter['brand']);
+            })
             ->orderByDesc('text_rank')
             ->orderByDesc('fuzzy_rank')
             ->paginate($page);

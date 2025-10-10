@@ -8,14 +8,19 @@
     <div class="container-fluid" style="margin-top: 80px;">
         <div class="album bg-body-tertiary">
             <div class="row p-3">
-                <div class="col">
+                <div class="col d-flex flex-column flex-md-row justify-content-between">
+                    @include('components.select-filter', ['filters' => $productFilters])
+
                     <form action="{{ route('app.catalogue.page') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search product..." name="search"
-                                value="{{ request('search') }}">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-search">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                        <div class="d-flex flex-md-column align-items-center align-items-md-start flex-row gap-2">
+                            <strong>Search:</strong>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search product..." name="search"
+                                    value="{{ request('search') }}" width="300">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -121,6 +126,38 @@
                 } else {
                     alertify.error(response.message);
                 }
+            });
+        });
+        const selectFilters = document.querySelectorAll('.select-filter');
+
+        // Apply default values to selects from current URL query parameters
+        (function applySelectDefaults() {
+            const url = new URL(window.location.href);
+            selectFilters.forEach(select => {
+                const paramValue = url.searchParams.get(select.name);
+                if (paramValue !== null) {
+                    // Only set if an option with that value exists
+                    const optionExists = Array.from(select.options).some(opt => opt.value === paramValue);
+                    if (optionExists) select.value = paramValue;
+                }
+            });
+        })();
+
+        selectFilters.forEach(selectFilter => {
+
+            selectFilter.addEventListener('change', function() {
+                const url = new URL(window.location.href);
+                // Update the filter parameter in the URL
+                url.searchParams.set(this.name, this.value);
+
+                // Optionally, preserve the search input value
+                const searchInput = document.querySelector('input[name="search"]');
+                if (searchInput && searchInput.value) {
+                    url.searchParams.set('search', searchInput.value);
+                }
+
+                // Redirect to the new URL
+                window.location.href = url.toString();
             });
         });
     </script>
