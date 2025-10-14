@@ -84,6 +84,7 @@ namespace App\Models{
 /**
  * @property string $id
  * @property string $user_id
+ * @property bool $is_default
  * @property string $firstname
  * @property string $lastname
  * @property string|null $email
@@ -94,7 +95,7 @@ namespace App\Models{
  * @property string $card_name
  * @property string $card_number
  * @property string $card_expiration
- * @property int $card_cvv
+ * @property string $card_cvv
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
@@ -111,6 +112,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereIsDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail wherePaymentMethod($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereUpdatedAt($value)
@@ -123,23 +125,37 @@ namespace App\Models{
 namespace App\Models{
 /**
  * @property int $id
+ * @property string|null $category
+ * @property string|null $subcategory
+ * @property string|null $type
+ * @property string|null $variant
+ * @property string|null $brand
+ * @property string|null $size
+ * @property string|null $unit
  * @property string $name
  * @property int $stock
  * @property int $price
  * @property string|null $description
- * @property string $img
+ * @property string|null $img
  * @property string|null $search_vector
  * @property-read mixed $img_path
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereBrand($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereCategory($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereImg($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSearchVector($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereStock($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSubcategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUnit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereVariant($value)
  */
 	class Product extends \Eloquent {}
 }
@@ -175,8 +191,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property bool $is_admin
+ * @property-read mixed $default_payment_detail
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PaymentDetail> $paymentDetail
+ * @property-read int|null $payment_detail_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])

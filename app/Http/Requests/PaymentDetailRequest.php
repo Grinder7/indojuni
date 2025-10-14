@@ -34,7 +34,7 @@ class PaymentDetailRequest extends FormRequest
             'card_name' => 'required|string|max:255',
             'card_number' => 'required|string|max:30',
             'card_expiration' => 'required|date_format:m/y|after_or_equal:now',
-            'card_cvv' => 'required|integer|digits_between:3,4',
+            'card_cvv' => 'required|string|min:3|max:4',
         ];
     }
 }
