@@ -27,7 +27,6 @@ class PaymentDetail extends Model
         'card_expiration',
         'card_cvv',
         'zip',
-        'remember_detail'
     ];
     public function user()
     {
