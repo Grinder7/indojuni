@@ -53,7 +53,7 @@ class ProductService
     {
         return $this->productRepository->getAllProducts($limit, $page, $filter);
     }
-    public function searchSimiliarProductByName(string $productName): Collection
+    public function searchSimilarProductByName(string $productName): Collection
     {
         return $this->productRepository->searchSimilarProductByName($productName);
     }
