@@ -36,6 +36,9 @@
                                 </li>
                             @endcan
                             <li>
+                                <a href="{{ route('app.profile.page') }}" class="dropdown-item">Profile</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('app.invoice.page') }}" class="dropdown-item">Transaction</a>
                             </li>
                             <li>
