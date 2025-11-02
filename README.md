@@ -1,61 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Indojuni
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+An e-commerce web application built with Laravel that serves both a traditional web storefront and a JSON API. The platform lets shoppers browse a catalog, manage carts, place orders, and review invoices, while giving administrators tools to curate products and monitor transactions.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Product catalog** with rich filtering (category, subcategory, brand, type, variant, size, unit, price, stock, description) and fuzzy search to handle partial matches or similarity lookups.
+-   **Authentication with Laravel Sanctum**, offering classic web sessions and personal access tokens for API usage.
+-   **Shopping cart management** that keeps carts tied to users, supports bulk modifications, and enforces inventory limits.
+-   **Checkout pipeline** that captures billing data, decrements product stock, generates order and payment records, and issues invoices.
+-   **Invoice center** where customers and admins can review transaction history and retrieve detailed invoices.
+-   **Admin dashboard** for maintaining product data (create, update, upload images) and reviewing sales activity.
+-   **Chatbot integration** that proxies authenticated user conversations to an external agent API while keeping a short-lived history.
+-   **Operational SQL query endpoint** guarded by a shared secret and banned keyword list for quick diagnostics.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Web Experience
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Route                 | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `/`                   | Landing page.                                                |
+| `/catalogue`          | Product catalogue with search and filters.                   |
+| `/checkout`           | Checkout page showing cart contents and totals.              |
+| `/invoice`            | List of a user's transactions.                               |
+| `/invoice/{id}`       | Detailed invoice for a specific order.                       |
+| `/login`, `/register` | Authentication pages.                                        |
+| `/admin`              | Admin dashboard for catalog management (`admin` middleware). |
 
-## Learning Laravel
+Related routes cover logout, cart actions, admin invoice views, and chatbot messaging (`/chatbot/*`).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Overview
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+All API endpoints are under `/api/v1`. Authentication uses Laravel Sanctum tokens unless noted.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Method & Path                              | Auth       | Purpose                                                           |
+| ------------------------------------------ | ---------- | ----------------------------------------------------------------- |
+| `GET /api/ping`                            | Public     | Health check.                                                     |
+| `POST /api/v1/auth/login`                  | Guest      | Issue Sanctum token and shopping session.                         |
+| `POST /api/v1/auth/logout`                 | Auth       | Revoke current token.                                             |
+| `GET /api/v1/auth/user`                    | Auth       | Retrieve the authenticated user profile.                          |
+| `GET /api/v1/product/all`                  | Public     | List products with pagination and filtering query params.         |
+| `POST /api/v1/product/detail`              | Public     | Fetch a single product by ID.                                     |
+| `POST /api/v1/product/search-similar-name` | Public     | Similarity search by product name.                                |
+| `POST /api/v1/product/search-contain-name` | Public     | Substring search by product name.                                 |
+| `GET /api/v1/product/filter-options`       | Public     | Retrieve available catalog facets.                                |
+| `GET /api/v1/cart/current`                 | Auth       | Get shopping session and cart items.                              |
+| `POST /api/v1/cart/modify`                 | Auth       | Bulk update cart quantities.                                      |
+| `POST /api/v1/cart/add`                    | Auth       | Add multiple items in one call.                                   |
+| `POST /api/v1/checkout`                    | Auth       | Complete checkout and create order.                               |
+| `GET /api/v1/invoice`                      | Auth       | List invoices for the authenticated user.                         |
+| `GET /api/v1/invoice/{id}`                 | Auth       | Retrieve a specific invoice (admins can access any invoice).      |
+| `POST /api/v1/query`                       | Secret key | Execute read-only SQL for diagnostics (write operations blocked). |
 
-## Laravel Sponsors
+## Architecture Highlights
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **Modules**: Domain logic lives in `app/Modules/*`, each pairing repositories and services (e.g., `Product`, `ShoppingSession`, `OrderDetail`).
+-   **HTTP Controllers**: `app/Http/Controllers` orchestrate both web views and API responses.
+-   **Resources**: API payloads use Laravel resources (`app/Http/Resources`) for consistent serialization.
+-   **Database**: Eloquent models (such as `Product` and `ShoppingSession`) backed by migrations in `database/migrations`.
+-   **Frontend**: Blade templates under `resources/views` with assets built by Vite (`resources/js`, `resources/css`).
+-   **Containers**: Dockerfiles and a compose definition are available for local and production deployments.
 
-### Premium Partners
+## Local Development
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. Install dependencies:
+    ```bash
+    composer install
+    npm install
+    ```
+2. Copy `.env.example` to `.env` and configure database, cache, filesystem, and chatbot API settings.
+3. Generate an application key and run migrations:
+    ```bash
+    php artisan key:generate
+    php artisan migrate
+    ```
+4. (Optional) Seed data or use factories in `database/factories`.
+5. Start services:
+    ```bash
+    php artisan serve
+    npm run dev
+    ```
 
-## Contributing
+### Docker
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Dockerfiles (`Dockerfile.dev`, `Dockerfile.prod`, etc.) and `docker-compose.yml` are provided. To boot the stack locally:
 
-## Code of Conduct
+```bash
+docker compose up --build
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Adjust your `.env` variables to match containerized services.
 
-## Security Vulnerabilities
+## Testing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The project uses Pest. Run the suite with:
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan test
+```
