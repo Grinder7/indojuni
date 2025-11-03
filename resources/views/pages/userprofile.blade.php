@@ -22,11 +22,14 @@
         .separator{
             width: 0.5rem;
         }
+        .tiny-form{
+            width: 4em;
+        }
         .small-form{
-            width: 7rem;
+            width: 10em;
         }
         .medium-form{
-            width: 20rem;
+            width: 16em;
         }
         .long-form{
             width: 60rem;
@@ -48,7 +51,7 @@
                         <p class="separator mb-0">:</p>
                     </div>
                     <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="address" disabled>
+                        <input type="text" class="form-control" id="username" value="{{ old('email', $userdata->username) }}" disabled>
                     </div>
                 </div>
 
@@ -58,8 +61,8 @@
                         <p class="separator mb-0">:</p>
                     </div>
                     <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="firstname" placeholder="firstname">
-                        <input type="text" class="form-control" id="lastname" placeholder="lastname">
+                        <input type="text" class="form-control" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}">
+                        <input type="text" class="form-control" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}">
                     </div>
                 </div>
 
@@ -69,7 +72,7 @@
                         <p class="separator mb-0">:</p>
                     </div>
                     <div class="input-group mb-0 medium-form">
-                        <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                        <input type="email" class="form-control" id="email" placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mb-5 mt-4 me-5">
@@ -91,17 +94,28 @@
                         <p class="separator mb-0">:</p>
                     </div>
                     <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="address" placeholder="address">
+                        <input type="text" class="form-control" id="address" placeholder="address" value="{{ old('address', $userdata->address) }}">
                     </div>
                 </div>
 
                 <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Alternate Address</p>
-                        <p class="separator mb-0">:</p>
+                    <div class="d-flex me-5">
+                        <div class="d-flex">
+                            <p class="labels mb-0">City</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0 small-form">
+                            <input type="text" class="form-control" id="city" placeholder="kota ... / kab. ..." value="{{ old('city', $userdata->city) }}">
+                        </div>
                     </div>
-                    <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="alt-address" placeholder="alternate address">
+                    <div class="d-flex me-5">
+                        <div class="d-flex">
+                            <p class="medium-labels mb-0">Province</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0 small-form">
+                            <input type="text" class="form-control" id="city" placeholder="Province" value="{{ old('province', $userdata->province) }}">
+                        </div>
                     </div>
                 </div>
 
@@ -110,8 +124,8 @@
                         <p class="labels mb-0">Postal Code</p>
                         <p class="separator mb-0">:</p>
                     </div>
-                    <div class="input-group mb-0 small-form">
-                        <input type="text" class="form-control" id="postcode" placeholder="xxxxxx">
+                    <div class="input-group mb-0 tiny-form">
+                        <input type="text" class="form-control" id="postcode" placeholder="xxxxxx" value="{{ old('postcode', $userdata->postcode) }}">
                     </div>
                 </div>
 
@@ -132,7 +146,7 @@
                         <p class="separator mb-0">:</p>
                     </div>
                     <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="card-name" placeholder="card holder name">
+                        <input type="text" class="form-control" id="card-name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}">
                     </div>
                 </div>
                 <div class="d-flex">
@@ -142,7 +156,7 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 medium-form">
-                            <input type="text" class="form-control" id="card-number" placeholder="xxxx xxxx xxxx xxxx">
+                            <input type="text" class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}">
                         </div>
                     </div>
 
@@ -152,10 +166,10 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0">
-                            <select class="form-select" id="inputGroupSelect01">
-                                <option selected disabled hidden>Choose Card Type</option>
-                                <option value="1">Credit Card</option>
-                                <option value="2">Debit Card</option>
+                            <select class="form-select" id="card_type">
+                                <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
+                                <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
+                                <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
                             </select>
                         </div>
                     </div>
@@ -167,9 +181,9 @@
                             <p class="labels mb-0">Expiration Date</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 small-form ">
-                            <input type="text" class="form-control datepicker" id="cc-expiration"
-                                placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration') }}"
+                        <div class="input-group mb-0 tiny-form ">
+                            <input type="text" class="form-control datepicker" style="padding-left:0.8em;" id="cc-expiration"
+                                placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
                                 required>
                         </div>
                     </div>
@@ -179,8 +193,8 @@
                             <p class="short-labels mb-0">CVV</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 small-form">
-                            <input type="text" class="form-control" id="cvv" placeholder="xxx">
+                        <div class="input-group mb-0 tiny-form">
+                            <input type="text" class="form-control" id="cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}">
                         </div>
                     </div>
                 </div>
@@ -215,5 +229,23 @@
             startView: "months",
             minViewMode: "months"
         });
+        // card number formatter
+        function formatGroups(value) {
+            // remove non-digits
+            value = value.replace(/\D/g, '');
+
+            // group every 4 digits
+            return value.replace(/(.{4})/g, '$1 ').trim();
+        }
+
+        const card_no = document.getElementById('card_number');
+
+        // Format on input
+        card_no.addEventListener('input', function (e) {
+            e.target.value = formatGroups(e.target.value);
+        });
+
+        // ✅ Format initial value when page loads
+        card_no.value = formatGroups(card_no.value);
     </script>
 @endsection
