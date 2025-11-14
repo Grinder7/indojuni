@@ -16,6 +16,17 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'firstname',
+        'lastname',
+        'address',
+        'city',
+        'province',
+        'postcode',
+        'card_name',
+        'card_no',
+        'card_type',
+        'card_expiration',
+        'card_cvv',
     ];
     protected $hidden = [
         'password',
@@ -25,7 +36,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $guarded = [
-        'id'
+        'is_admin',
+        'id',
     ];
 
     protected $appends = ['default_payment_detail'];

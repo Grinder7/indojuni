@@ -105,7 +105,7 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 small-form">
-                            <input type="text" class="form-control" id="city" placeholder="kota ... / kab. ..." value="{{ old('city', $userdata->city) }}">
+                            <input type="text" class="form-control" id="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}">
                         </div>
                     </div>
                     <div class="d-flex me-5">
