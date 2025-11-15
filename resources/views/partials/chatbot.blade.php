@@ -1,6 +1,6 @@
 @auth
     <style>
-        .chatbot-agent-message {
+        .chatbot-assistant-message {
             text-align: left;
             background-color: #f1f1f1;
             padding: 0.5rem;
@@ -66,8 +66,8 @@
             if (messageElem === null) {
                 messageElem = document.createElement('p');
             }
-            if (role === 'agent') {
-                messageElem.className = 'chatbot-agent-message';
+            if (role === 'assistant') {
+                messageElem.className = 'chatbot-assistant-message';
             } else if (role === 'user') {
                 messageElem.className = 'chatbot-user-message';
             } else {
@@ -79,7 +79,7 @@
         }
 
         async function initializeChat() {
-            appendChatDOM("agent", "Hello! How can I assist you today?");
+            appendChatDOM("assistant", "Hello! How can I assist you today?");
             // const chatInput = document.getElementById('chatbot-input');
             // chatInput.disabled = true;
             // chatInput.placeholder = 'Initializing chat...';
@@ -98,7 +98,7 @@
             //     return {
             //         status: 'error',
             //         chats: [{
-            //             role: 'agent',
+            //             role: 'assistant',
             //             content: 'Error: Unable to initialize chat.'
             //         }]
             //     };
@@ -120,8 +120,8 @@
             });
             const chatArea = document.getElementById('chatbot-messages');
             appendChatDOM('user', message);
-            const agentMessageElem = document.createElement('p');
-            appendChatDOM('agent', '[Generating Response...]', agentMessageElem);
+            const assistantMessageElem = document.createElement('p');
+            appendChatDOM('assistant', '[Generating Response...]', assistantMessageElem);
             fetch("{{ route('chat.send') }}", {
                 method: 'POST',
                 headers: {
@@ -132,14 +132,14 @@
                     message
                 })
             }).then((response) => {
-                agentMessageElem.remove();
+                assistantMessageElem.remove();
                 return response.json()
             }).then(data => {
-                appendChatDOM('agent', data.chat.content);
+                appendChatDOM('assistant', data.chat.content);
             }).catch(error => {
                 console.error('Error:', error);
-                agentMessageElem.remove();
-                appendChatDOM('agent', 'Error: Unable to get response from agent.');
+                assistantMessageElem.remove();
+                appendChatDOM('assistant', 'Error: Unable to get response from assistant.');
             });
 
         }
