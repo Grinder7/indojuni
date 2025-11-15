@@ -79,37 +79,38 @@
         }
 
         async function initializeChat() {
-            const chatInput = document.getElementById('chatbot-input');
-            chatInput.disabled = true;
-            chatInput.placeholder = 'Initializing chat...';
-            const sendButton = document.getElementById('chatbot-send');
-            sendButton.disabled = true;
-            const response = await fetch("{{ route('chat.init') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({})
-            });
-            const data = await response.json().catch(error => {
-                console.error('Error:', error);
-                return {
-                    status: 'error',
-                    chats: [{
-                        role: 'agent',
-                        content: 'Error: Unable to initialize chat.'
-                    }]
-                };
-            });
-            if (data.status === 'error') {
-                chatInput.placeholder = 'Error initializing chat.';
-            } else {
-                chatInput.disabled = false;
-                chatInput.placeholder = 'Type your message...';
-                sendButton.disabled = false;
-            }
-            return data;
+            appendChatDOM("agent", "Hello! How can I assist you today?");
+            // const chatInput = document.getElementById('chatbot-input');
+            // chatInput.disabled = true;
+            // chatInput.placeholder = 'Initializing chat...';
+            // const sendButton = document.getElementById('chatbot-send');
+            // sendButton.disabled = true;
+            // const response = await fetch("{{ route('chat.init') }}", {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            //     },
+            //     body: JSON.stringify({})
+            // });
+            // const data = await response.json().catch(error => {
+            //     console.error('Error:', error);
+            //     return {
+            //         status: 'error',
+            //         chats: [{
+            //             role: 'agent',
+            //             content: 'Error: Unable to initialize chat.'
+            //         }]
+            //     };
+            // });
+            // if (data.status === 'error') {
+            //     chatInput.placeholder = 'Error initializing chat.';
+            // } else {
+            //     chatInput.disabled = false;
+            //     chatInput.placeholder = 'Type your message...';
+            //     sendButton.disabled = false;
+            // }
+            // return data;
         }
 
         function sendMessage(message) {
@@ -144,54 +145,54 @@
         }
 
         const chats = @json(session('chats', []));
-        if (chats === null) {
-            chats = [];
-        } else if (!Array.isArray(chats)) {
-            const chatInput = document.getElementById('chatbot-input');
-            chatInput.disabled = true;
-            chatInput.placeholder = 'Clearing chat...';
-            const sendButton = document.getElementById('chatbot-send');
-            sendButton.disabled = true;
-            fetch("{{ route('chat.clear') }}", {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({})
-            }).then((response) => {
-                return response.json()
-            }).then(data => {
-                if (data.status === 'success') {
-                    chats.length = 0; // Clear local chat history
-                    chatArea.innerHTML = ''; // Clear chat area
-                    initializeChat().then(response => {
-                        chats.push(...response.chats);
-                        const chatArea = document.getElementById('chatbot-messages');
-                        response.chats.forEach(chat => {
-                            appendChatDOM(chat.role, chat.content);
-                        });
-                    })
-                } else {
-                    alert('Error clearing chat history.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                chatInput.placeholder = 'Failed to clear chat.';
-                alert('Error clearing chat history.');
-            });
-        }
-        if (chats.length === 0 || (chats[0].role !== 'system' && chats[0].content !==
-                'This is the beginning of the chat.')) {
-            initializeChat().then(response => {
-                chats.push(...response.chats);
-                const chatArea = document.getElementById('chatbot-messages');
-                response.chats.forEach(chat => {
-                    appendChatDOM(chat.role, chat.content);
-                });
-            })
-        }
+        // if (chats === null) {
+        //     chats = [];
+        // } else if (!Array.isArray(chats)) {
+        //     const chatInput = document.getElementById('chatbot-input');
+        //     chatInput.disabled = true;
+        //     chatInput.placeholder = 'Clearing chat...';
+        //     const sendButton = document.getElementById('chatbot-send');
+        //     sendButton.disabled = true;
+        //     fetch("{{ route('chat.clear') }}", {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        //         },
+        //         body: JSON.stringify({})
+        //     }).then((response) => {
+        //         return response.json()
+        //     }).then(data => {
+        //         if (data.status === 'success') {
+        //             chats.length = 0; // Clear local chat history
+        //             chatArea.innerHTML = ''; // Clear chat area
+        //             initializeChat().then(response => {
+        //                 chats.push(...response.chats);
+        //                 const chatArea = document.getElementById('chatbot-messages');
+        //                 response.chats.forEach(chat => {
+        //                     appendChatDOM(chat.role, chat.content);
+        //                 });
+        //             })
+        //         } else {
+        //             alert('Error clearing chat history.');
+        //         }
+        //     }).catch(error => {
+        //         console.error('Error:', error);
+        //         chatInput.placeholder = 'Failed to clear chat.';
+        //         alert('Error clearing chat history.');
+        //     });
+        // }
         const chatArea = document.getElementById('chatbot-messages');
+        if (chats.length === 0) {
+            initializeChat();
+            // initializeChat().then(response => {
+            //     chats.push(...response.chats);
+            //     const chatArea = document.getElementById('chatbot-messages');
+            //     response.chats.forEach(chat => {
+            //         appendChatDOM(chat.role, chat.content);
+            //     });
+            // })
+        }
         chats.forEach(chat => {
             appendChatDOM(chat.role, chat.content);
         });
@@ -245,13 +246,14 @@
                     if (data.status === 'success') {
                         chats.length = 0; // Clear local chat history
                         chatArea.innerHTML = ''; // Clear chat area
-                        initializeChat().then(response => {
-                            chats.push(...response.chats);
-                            const chatArea = document.getElementById('chatbot-messages');
-                            response.chats.forEach(chat => {
-                                appendChatDOM(chat.role, chat.content);
-                            });
-                        })
+                        initializeChat();
+                        // initializeChat().then(response => {
+                        //     chats.push(...response.chats);
+                        //     const chatArea = document.getElementById('chatbot-messages');
+                        //     response.chats.forEach(chat => {
+                        //         appendChatDOM(chat.role, chat.content);
+                        //     });
+                        // })
                     } else {
                         alert('Error clearing chat history.');
                     }
