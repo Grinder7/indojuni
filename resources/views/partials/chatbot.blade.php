@@ -254,6 +254,8 @@
                         //         appendChatDOM(chat.role, chat.content);
                         //     });
                         // })
+                        chatInput.disabled = false;
+                        chatInput.placeholder = 'Type your message...';
                     } else {
                         alert('Error clearing chat history.');
                     }
