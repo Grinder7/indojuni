@@ -35,7 +35,7 @@ class ChatbotController extends Controller
             $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', $payload);
             if ($response->failed()) {
                 error_log('Failed to initialize chat: ' . $response->body());
-                $chats[] = ['role' => 'agent', 'content' => 'Error occurred while initializing chat. Please try again.'];
+                $chats[] = ['role' => 'assistant', 'content' => 'Error occurred while initializing chat. Please try again.'];
                 return response()->json(['status' => 'error', 'chats' => $chats, 'message' => 'Failed to initialize chat.', 'error' => $response->body()], 500);
             }
             $responseMessages = $response->json()['messages'] ?? [];
@@ -43,7 +43,7 @@ class ChatbotController extends Controller
             return response()->json(['status' => 'success', 'chats' => $responseMessages]);
         } catch (\Throwable $th) {
             error_log($th->getMessage());
-            $chats[] = ['role' => 'agent', 'content' => 'Error occurred while initializing chat. Please try again.'];
+            $chats[] = ['role' => 'assistant', 'content' => 'Error occurred while initializing chat. Please try again.'];
             return response()->json(['status' => 'error', 'chats' => $chats, 'message' => 'Error occurred while initializing chat: ' . $th->getMessage()], 500);
         }
     }
@@ -66,27 +66,19 @@ class ChatbotController extends Controller
                 "user_prompt" => $message
             ]);
             if ($response->failed()) {
-                $chat = ['role' => 'agent', 'content' => 'Failed to get response from agent.'];
+                $chat = ['role' => 'assistant', 'content' => 'Failed to get response from assistant.'];
                 $chats[] = $chat;
                 $request->session()->put('chats', $chats);
-                return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Failed to get response from agent.', 'error' => $response->body()], 500);
+                return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Failed to get response from assistant.', 'error' => $response->body()], 500);
             }
-            $responseMessages = $response->json()['messages'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
+            $responseMessages = $response->json()['messages'] ?? ['role' => 'assistant', 'content' => 'Sorry, I am unable to respond right now.'];
             // $chats = array_merge($chats, $responseMessages);
             $request->session()->put('chats', $responseMessages);
-            $chat = [];
-            for ($i = count($responseMessages) - 1; $i >= 0; $i--) {
-                if ($responseMessages[$i]['role'] === 'agent') {
-                    $chat = $responseMessages[$i];
-                    break;
-                }
-            }
-            if ($chat === []) {
-                $chat = ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
-            }
+            $lastIndex = count($responseMessages) - 1;
+            $chat = $responseMessages[$lastIndex];
             return response()->json(['status' => 'success', 'chat' => $chat]);
         } catch (\Throwable $th) {
-            $chat = ['role' => 'agent', 'content' => 'Error occurred while processing your request.'];
+            $chat = ['role' => 'assistant', 'content' => 'Error occurred while processing your request.'];
             $chats[] = $chat;
             $request->session()->put('chats', $chats);
             error_log($th->getMessage());
