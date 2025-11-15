@@ -21,6 +21,7 @@ class ChatbotController extends Controller
         return response()->json(['status' => 'success', 'chats' => $chats]);
     }
 
+    // nda pake
     public function initChat(Request $request)
     {
         $token = $request->user()->createToken('chatbot_token', ['*'], now()->addMinutes(5))->plainTextToken;
@@ -52,12 +53,16 @@ class ChatbotController extends Controller
         $token = $request->user()->createToken('chatbot_token', ['*'], now()->addMinutes(5))->plainTextToken;
         $message = $request->input('message');
         $chats = $request->session()->get('chats', []);
-        $chats[] = ['role' => 'user', 'content' => $message];
+        // $chats[] = ['role' => 'user', 'content' => $message];
         $request->session()->put('chats', $chats);
+        $firstMessage = false;
+        if (count($chats) === 0) {
+            $firstMessage = true;
+        }
         try {
             $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', [
                 "messages" => $chats,
-                "flag" => true,
+                "flag" => $firstMessage,
                 "user_prompt" => $message
             ]);
             if ($response->failed()) {
@@ -67,8 +72,8 @@ class ChatbotController extends Controller
                 return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Failed to get response from agent.', 'error' => $response->body()], 500);
             }
             $responseMessages = $response->json()['messages'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
-            $chats = array_merge($chats, $responseMessages);
-            $request->session()->put('chats', $chats);
+            // $chats = array_merge($chats, $responseMessages);
+            $request->session()->put('chats', $responseMessages);
             $chat = [];
             for ($i = count($responseMessages) - 1; $i >= 0; $i--) {
                 if ($responseMessages[$i]['role'] === 'agent') {
