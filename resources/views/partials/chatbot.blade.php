@@ -183,18 +183,21 @@
         //     });
         // }
         const chatArea = document.getElementById('chatbot-messages');
-        if (chats.length === 0) {
-            initializeChat();
-            // initializeChat().then(response => {
-            //     chats.push(...response.chats);
-            //     const chatArea = document.getElementById('chatbot-messages');
-            //     response.chats.forEach(chat => {
-            //         appendChatDOM(chat.role, chat.content);
-            //     });
-            // })
-        }
+        initializeChat();
+        // if (chats.length === 0) {
+        // initializeChat().then(response => {
+        //     chats.push(...response.chats);
+        //     const chatArea = document.getElementById('chatbot-messages');
+        //     response.chats.forEach(chat => {
+        //         appendChatDOM(chat.role, chat.content);
+        //     });
+        // })
+        // }
         chats.forEach(chat => {
-            appendChatDOM(chat.role, chat.content);
+            if (chat.role !== 'assistant' || chat.role !== 'user') {
+                return;
+            }
+            appendChatDOM(chat.role, chat.content, null);
         });
 
         document.getElementById('chatbot-toggle').addEventListener('click', function() {
@@ -256,6 +259,7 @@
                         // })
                         chatInput.disabled = false;
                         chatInput.placeholder = 'Type your message...';
+                        sendButton.disabled = false;
                     } else {
                         alert('Error clearing chat history.');
                     }
