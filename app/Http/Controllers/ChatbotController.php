@@ -27,17 +27,19 @@ class ChatbotController extends Controller
         $request->session()->forget('chats');
 
         try {
-            $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/init', []);
+            $payload = [];
+            $payload["messages"] = [];
+            $payload["flag"] = false;
+            $payload["user_prompt"] = "";
+            $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', $payload);
             if ($response->failed()) {
                 error_log('Failed to initialize chat: ' . $response->body());
                 $chats[] = ['role' => 'agent', 'content' => 'Error occurred while initializing chat. Please try again.'];
                 return response()->json(['status' => 'error', 'chats' => $chats, 'message' => 'Failed to initialize chat.'], 500);
             }
-            $responseData = $response->json()['data'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
-            $beginingFlag = ['role' => 'system', 'content' => 'This is the beginning of the chat.'];
-            $chats = array_merge([$beginingFlag], $responseData);
-            $request->session()->put('chats', $chats);
-            return response()->json(['status' => 'success', 'chats' => $chats]);
+            $responseMessages = $response->json()['messages'] ?? [];
+            $request->session()->put('chats', $responseMessages);
+            return response()->json(['status' => 'success', 'chats' => $responseMessages]);
         } catch (\Throwable $th) {
             error_log($th->getMessage());
             $chats[] = ['role' => 'agent', 'content' => 'Error occurred while initializing chat. Please try again.'];
@@ -54,7 +56,9 @@ class ChatbotController extends Controller
         $request->session()->put('chats', $chats);
         try {
             $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', [
-                'data' => $chats
+                "messages" => $chats,
+                "flag" => true,
+                "user_prompt" => $message
             ]);
             if ($response->failed() || !isset($response->json()['data'])) {
                 $chat = ['role' => 'agent', 'content' => 'Failed to get response from agent.'];
@@ -62,13 +66,13 @@ class ChatbotController extends Controller
                 $request->session()->put('chats', $chats);
                 return response()->json(['status' => 'error', 'chat' => $chat], 500);
             }
-            $responseData = $response->json()['data'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
-            $chats = array_merge($chats, $responseData);
+            $responseMessages = $response->json()['messages'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
+            $chats = array_merge($chats, $responseMessages);
             $request->session()->put('chats', $chats);
             $chat = [];
-            for ($i = count($responseData) - 1; $i >= 0; $i--) {
-                if ($responseData[$i]['role'] === 'agent') {
-                    $chat = $responseData[$i];
+            for ($i = count($responseMessages) - 1; $i >= 0; $i--) {
+                if ($responseMessages[$i]['role'] === 'agent') {
+                    $chat = $responseMessages[$i];
                     break;
                 }
             }
