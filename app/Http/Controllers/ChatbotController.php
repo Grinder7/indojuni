@@ -55,14 +55,14 @@ class ChatbotController extends Controller
         $chats = $request->session()->get('chats', []);
         // $chats[] = ['role' => 'user', 'content' => $message];
         $request->session()->put('chats', $chats);
-        $firstMessage = false;
+        $chatHistoryExists = true;
         if (count($chats) === 0) {
-            $firstMessage = true;
+            $chatHistoryExists = false;
         }
         try {
             $response = Http::withToken($token)->post(config('app.chatbot_api_url') . '/chat', [
                 "messages" => $chats,
-                "flag" => $firstMessage,
+                "flag" => $chatHistoryExists,
                 "user_prompt" => $message
             ]);
             if ($response->failed()) {
