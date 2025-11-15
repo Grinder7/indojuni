@@ -35,7 +35,7 @@ class ChatbotController extends Controller
             if ($response->failed()) {
                 error_log('Failed to initialize chat: ' . $response->body());
                 $chats[] = ['role' => 'agent', 'content' => 'Error occurred while initializing chat. Please try again.'];
-                return response()->json(['status' => 'error', 'chats' => $chats, 'message' => 'Failed to initialize chat.'], 500);
+                return response()->json(['status' => 'error', 'chats' => $chats, 'message' => 'Failed to initialize chat.', 'error' => $response->body()], 500);
             }
             $responseMessages = $response->json()['messages'] ?? [];
             $request->session()->put('chats', $responseMessages);
@@ -60,11 +60,11 @@ class ChatbotController extends Controller
                 "flag" => true,
                 "user_prompt" => $message
             ]);
-            if ($response->failed() || !isset($response->json()['data'])) {
+            if ($response->failed()) {
                 $chat = ['role' => 'agent', 'content' => 'Failed to get response from agent.'];
                 $chats[] = $chat;
                 $request->session()->put('chats', $chats);
-                return response()->json(['status' => 'error', 'chat' => $chat], 500);
+                return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Failed to get response from agent.', 'error' => $response->body()], 500);
             }
             $responseMessages = $response->json()['messages'] ?? ['role' => 'agent', 'content' => 'Sorry, I am unable to respond right now.'];
             $chats = array_merge($chats, $responseMessages);
