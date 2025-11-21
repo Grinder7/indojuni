@@ -34,181 +34,204 @@
         .long-form{
             width: 60rem;
         }
+        /* Chrome, Safari, Edge, Opera */
+        .no-spin::-webkit-outer-spin-button,
+        .no-spin::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        .no-spin {
+            -moz-appearance: textfield;
+        }
     </style>
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container" style="margin-top:6rem">
         <main style="font-size:1.2em;">
             <h1>My Profile</h1>
 
             <hr>
-            <div class="tab">
-                <h2 class="mb-4">Credentials</h2>
+            <form class="needs-validation" method="POST" action="{{ route('app.profile.store') }}" novalidate>
+                @csrf
+                <div class="tab">
+                    <h2 class="mb-4">Credentials</h2>
 
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Username</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="username" value="{{ old('email', $userdata->username) }}" disabled>
-                    </div>
-                </div>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Name</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}">
-                        <input type="text" class="form-control" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}">
-                    </div>
-                </div>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Email</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 medium-form">
-                        <input type="email" class="form-control" id="email" placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mb-5 mt-4 me-5">
-                    <button type="button" class="btn btn-danger align-right buttons">Change Password</button>
-                </div>
-
-            </div>
-
-            <hr>
-
-            <div class="tab" id="defaultBilling">
-                <h2 class="mb-4">
-                    Address
-                </h2>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Address</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="address" placeholder="address" value="{{ old('address', $userdata->address) }}">
-                    </div>
-                </div>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex me-5">
-                        <div class="d-flex">
-                            <p class="labels mb-0">City</p>
-                            <p class="separator mb-0">:</p>
-                        </div>
-                        <div class="input-group mb-0 small-form">
-                            <input type="text" class="form-control" id="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}">
-                        </div>
-                    </div>
-                    <div class="d-flex me-5">
-                        <div class="d-flex">
-                            <p class="medium-labels mb-0">Province</p>
-                            <p class="separator mb-0">:</p>
-                        </div>
-                        <div class="input-group mb-0 small-form">
-                            <input type="text" class="form-control" id="city" placeholder="Province" value="{{ old('province', $userdata->province) }}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Postal Code</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 tiny-form">
-                        <input type="text" class="form-control" id="postcode" placeholder="xxxxxx" value="{{ old('postcode', $userdata->postcode) }}">
-                    </div>
-                </div>
-
-                <div class="mb-5"></div>
-
-            </div>
-            
-            <hr>
-
-            <div class="tab">
-                <h2 class="mb-4">
-                    Billing
-                </h2>
-
-                <div class="tab d-flex mb-3">
-                    <div class="d-flex">
-                        <p class="labels mb-0">Card Holder Name</p>
-                        <p class="separator mb-0">:</p>
-                    </div>
-                    <div class="input-group mb-0 long-form">
-                        <input type="text" class="form-control" id="card-name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}">
-                    </div>
-                </div>
-                <div class="d-flex">
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Card Number</p>
+                            <p class="labels mb-0">Username</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0 long-form">
+                            <input type="text" class="form-control" id="username" value="{{ old('email', $userdata->username) }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="tab d-flex mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Name</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0 long-form">
+                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}">
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}">
+                        </div>
+                    </div>
+
+                    <div class="tab d-flex mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Email</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 medium-form">
-                            <input type="text" class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-5 mt-4 me-5">
+                        <button type="button" class="btn btn-danger align-right buttons">Change Password</button>
                     </div>
 
-                    <div class="tab d-flex mb-3 ms-5">
-                        <div class="d-flex">
-                            <p class="medium-labels mb-0">Card Type</p>
-                            <p class="separator mb-0">:</p>
-                        </div>
-                        <div class="input-group mb-0">
-                            <select class="form-select" id="card_type">
-                                <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
-                                <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
-                                <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="d-flex">
+                <hr>
+
+                <div class="tab" id="defaultBilling">
+                    <h2 class="mb-4">
+                        Address
+                    </h2>
+
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Expiration Date</p>
+                            <p class="labels mb-0">Address</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 tiny-form ">
-                            <input type="text" class="form-control datepicker" style="padding-left:0.8em;" id="cc-expiration"
-                                placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
-                                required>
+                        <div class="input-group mb-0 long-form">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="address" value="{{ old('address', $userdata->address) }}">
                         </div>
                     </div>
-    
-                    <div class="tab d-flex mb-3 ms-5">
+
+                    <div class="tab d-flex mb-3">
+                        <div class="d-flex me-5">
+                            <div class="d-flex">
+                                <p class="labels mb-0">City</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0 small-form">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}">
+                            </div>
+                        </div>
+                        <div class="d-flex me-5">
+                            <div class="d-flex">
+                                <p class="medium-labels mb-0">Province</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0 small-form">
+                                <input type="text" class="form-control" id="province" name="province" placeholder="Province" value="{{ old('province', $userdata->province) }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="short-labels mb-0">CVV</p>
+                            <p class="labels mb-0">Zip Code</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 tiny-form">
-                            <input type="text" class="form-control" id="cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}">
+                            <input type="number" class="form-control no-spin" id="zip" name="zip" placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}">
                         </div>
                     </div>
+
+                    <div class="mb-5"></div>
+
                 </div>
                 
-                <div class="mb-5"></div>
+                <hr>
 
-            </div>
+                <div class="tab">
+                    <h2 class="mb-4">
+                        Billing
+                    </h2>
 
-            <hr>
-            
-            <div class="d-flex justify-content-end" style="margin-bottom:1rem;margin-top:5rem;">
-                <button type="button" class="btn btn-danger buttons me-4">Abort Changes</button>
-                <button type="button" class="btn btn-primary buttons">Save Changes</button>
-            </div>
+                    <div class="tab d-flex mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Card Holder Name</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0 long-form">
+                            <input type="text" class="form-control" id="card-name" name="card_name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}">
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="tab d-flex mb-3">
+                            <div class="d-flex">
+                                <p class="labels mb-0">Card Number</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0 medium-form">
+                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}">
+                            </div>
+                        </div>
+
+                        <div class="tab d-flex mb-3 ms-5">
+                            <div class="d-flex">
+                                <p class="medium-labels mb-0">Card Type</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0">
+                                <select class="form-select" id="card_type" name="card_type">
+                                    <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
+                                    <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
+                                    <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="tab d-flex mb-3">
+                            <div class="d-flex">
+                                <p class="labels mb-0">Expiration Date</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0 tiny-form ">
+                                <input type="text" class="form-control datepicker" style="padding-left:0.8em;" id="card_expiration"
+                                    placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
+                                    required>
+                            </div>
+                        </div>
+        
+                        <div class="tab d-flex mb-3 ms-5">
+                            <div class="d-flex">
+                                <p class="short-labels mb-0">CVV</p>
+                                <p class="separator mb-0">:</p>
+                            </div>
+                            <div class="input-group mb-0 tiny-form">
+                                <input type="text" class="form-control" id="card_cvv" name="card_cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5"></div>
+
+                </div>
+
+                <hr>
+                
+                <div class="d-flex justify-content-end" style="margin-bottom:1rem;margin-top:5rem;">
+                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Abort Changes</a>
+                    <button type="submit" class="btn btn-primary buttons">Save Changes</button>
+                </div>
+            </form>
 
         </main>
     </div>

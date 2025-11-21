@@ -104,7 +104,7 @@
                                 <div class="col-sm-6">
                                     <label for="firstName" class="form-label">Nama Depan</label>
                                     <input type="text" class="form-control" id="firstName" name="firstname"
-                                        placeholder="" value="{{ old('firstname') }}" required>
+                                        placeholder="" value="{{ old('firstname', $userdata->firstname) }}" required>
                                     <div class="invalid-feedback">
                                         Nama depan harus valid.
                                     </div>
@@ -113,7 +113,7 @@
                                 <div class="col-sm-6">
                                     <label for="lastName" class="form-label">Nama Belakang</label>
                                     <input type="text" class="form-control" id="lastName" placeholder=""
-                                        value="{{ old('lastname') }}" name="lastname" required>
+                                        value="{{ old('lastname', $userdata->lastname) }}" name="lastname" required>
                                     <div class="invalid-feedback">
                                         Nama belakang harus valid.
                                     </div>
@@ -123,7 +123,7 @@
                                     <label for="email" class="form-label">Email <span
                                             class="text-body-secondary">(Opsional)</span></label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        value="{{ old('name') }}" name="email">
+                                        value="{{ old('name', $userdata->email) }}" name="email">
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -132,23 +132,34 @@
                                 <div class="col-12">
                                     <label for="address" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                        value="{{ old('address') }}" name="address" required>
+                                        value="{{ old('address', $userdata->address) }}" name="address" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
                                 </div>
 
-                                <div class="col-md-9">
-                                    <label for="address2" class="form-label">Alamat 2 <span
-                                            class="text-body-secondary">(Opsional)</span></label>
-                                    <input type="text" class="form-control" id="address2"
-                                        placeholder="Apartment or suite" value="{{ old('address2') }}" name="address2">
+                                <div class="col-md-5">
+                                    <label for="province" class="form-label">Provinsi</label>
+                                    <input type="text" class="form-control" id="province" placeholder="Provinsi"
+                                        value="{{ old('province', $userdata->province) }}" name="province" required>
+                                        <div class="invalid-feedback">
+                                            Mohon masukkan provinsi pengiriman anda.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        <label for="city" class="form-label">Kota / Kabupaten</label>
+                                        <input type="text" class="form-control" id="city"
+                                        placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" name="city">
+                                        <div class="invalid-feedback">
+                                            Mohon masukkan kota pengiriman anda.
+                                        </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <label for="zip" class="form-label">Kode Pos</label>
                                     <input type="text" class="form-control" id="zip" placeholder="" name="zip"
-                                        value="{{ old('zip') }}"required>
+                                        value="{{ old('zip', $userdata->zip) }}"required>
                                     <div class="invalid-feedback">
                                         Kode pos diperlukan.
                                     </div>
@@ -160,23 +171,20 @@
                             <h4 class="mb-3">Pembayaran</h4>
 
                             <div class="my-3">
-                                <div class="form-check">
-                                    <input id="credit" name="payment_method" type="radio" class="form-check-input"
-                                        value="kredit" checked required>
-                                    <label class="form-check-label" for="credit">Kartu Kredit</label>
-                                </div>
-                                <div class="form-check">
-                                    <input id="debit" name="payment_method" type="radio" class="form-check-input"
-                                        value="debit" required>
-                                    <label class="form-check-label" for="debit">Kartu Debit</label>
-                                </div>
+                                <select class="form-select" id="card_type">
+                                    <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
+                                    <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
+                                    <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
+                                </select>
                             </div>
+
+
 
                             <div class="row gy-3">
                                 <div class="col-md-6">
                                     <label for="cc-name" class="form-label">Nama pada kartu</label>
                                     <input type="text" class="form-control" id="cc-name" placeholder=""
-                                        name="card_name" value="{{ old('card_name') }}" required>
+                                        name="card_name" value="{{ old('card_name', $userdata->card_name) }}" required>
                                     <small class="text-body-secondary">Nama Lengkap sesuai kartu</small>
                                     <div class="invalid-feedback">
                                         Nama pada kartu diperlukan
@@ -187,7 +195,7 @@
                                     <label for="cc-number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" value="{{ old('card_number') }}" required>
+                                        name="card_number" value="{{ old('card_no', $userdata->card_no) }}" required>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
@@ -195,8 +203,8 @@
 
                                 <div class="col-md-3">
                                     <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control datepicker" id="cc-expiration"
-                                        placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration') }}"
+                                    <input type="text" class="form-control datepicker" id="cc-expiration" style="padding-left:0.8em;"
+                                        placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
                                         required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
@@ -204,8 +212,8 @@
                                 </div>
                                 {{-- <div class="col-md-3">
                                     <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="mm/yy"
-                                        name="card_expiration"value="{{ old('card_expiration') }}" required>
+                                    <input type="text" class="form-control" id="cc-expiration" placeholder="mm/yy" style="padding-left:0.8em;"
+                                        name="card_expiration"value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
@@ -214,7 +222,7 @@
                                 <div class="col-md-3">
                                     <label for="cc-cvv" class="form-label">CVV</label>
                                     <input type="text" class="form-control" id="cc-cvv" placeholder="xxx"
-                                        name="card_cvv" value="{{ old('card_cvv') }}"required>
+                                        name="card_cvv" value="{{ old('card_cvv', $userdata->card_cvv) }}"required>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
                                     </div>
@@ -509,5 +517,25 @@
                     template: "xxxxx",
                 });
             };
+
+            // card number formatter
+            function formatGroups(value) {
+                // remove non-digits
+                value = value.replace(/\D/g, '');
+
+                // group every 4 digits
+                return value.replace(/(.{4})/g, '$1 ').trim();
+            }
+
+            const card_no = document.getElementById('cc-number');
+
+            // Format on input
+            card_no.addEventListener('input', function (e) {
+                e.target.value = formatGroups(e.target.value);
+            });
+
+            // ✅ Format initial value when page loads
+            card_no.value = formatGroups(card_no.value);
         </script>
+
     @endsection

@@ -3,15 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class PaymentDetailRequest extends FormRequest
+class UserProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,16 +28,17 @@ class PaymentDetailRequest extends FormRequest
             'lastname' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'address' => 'required|string|max:255',
-            'address2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
             'zip' => 'required|integer|digits:5',
-            'payment_method' => 'required|integer|digits:1',
             'card_name' => 'required|string|max:255',
             'card_number' => 'required|string|max:30',
+            'card_type' => 'required|integer|digits:1',
             'card_expiration' => 'required|date_format:m/y|after_or_equal:now',
             'card_cvv' => 'required|string|min:3|max:4',
         ];
     }
-    
+
     protected function prepareForValidation(){
         $this->merge([
             'card_number' => preg_replace('/[^\d]/', '', $this->card_number),
@@ -45,4 +46,14 @@ class PaymentDetailRequest extends FormRequest
         ]);
     }
 
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'All forms must be filled')
+        );
+    }
 }
