@@ -171,7 +171,7 @@
                             <h4 class="mb-3">Pembayaran</h4>
 
                             <div class="my-3">
-                                <select class="form-select" id="card_type">
+                                <select class="form-select" id="card_type" name="card_type">
                                     <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
                                     <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
                                     <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
