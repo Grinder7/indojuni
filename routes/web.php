@@ -6,6 +6,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShoppingController;
@@ -33,6 +34,8 @@ Route::middleware('enable')->group(function () {
     Route::get('catalogue', [ProductController::class, 'index'])->name('app.catalogue.page');
     Route::get('aboutus', [AppController::class, 'aboutus'])->name('app.aboutus.page');
     Route::middleware('auth')->group(function () {
+        Route::get('profile', [ProfileController::class, 'index'])->name('app.profile.page');
+        Route::post('profile', [ProfileController::class, 'store'])->name('app.profile.store');
         Route::get('checkout', [CheckoutController::class, 'index'])->name('app.checkout.page');
         Route::get('invoice', [InvoiceController::class, 'index'])->name('app.invoice.page');
         Route::get('invoice/{id}', [InvoiceController::class, 'invoice'])->name('app.invoice.invoice');
