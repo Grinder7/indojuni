@@ -7,7 +7,6 @@ use App\Modules\Product\ProductService;
 use App\Modules\CartItem\CartItemService;
 use App\Modules\ShoppingSession\ShoppingSessionService;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -42,9 +41,7 @@ class CheckoutController extends Controller
         $totalItems = count($items);
 
         # Billing
-        $userID = Auth::id();
-        $query_result = User::where('id', $userID)->first();
-        $userdata = $query_result;
+        $userdata = Auth::user();
 
         return view('pages.checkout')->with(compact('shoppingSession'))->with(compact('items'))->with(compact('totalItems'))->with(compact('userdata'));
     }
