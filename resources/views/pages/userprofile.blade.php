@@ -48,15 +48,6 @@
     </style>
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container" style="margin-top:6rem">
         <main style="font-size:1.2em;">
             <h1>My Profile</h1>
@@ -83,8 +74,8 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}">
-                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}">
+                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}" required>
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}" required>
                         </div>
                     </div>
 
@@ -116,7 +107,7 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="address" value="{{ old('address', $userdata->address) }}">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="address" value="{{ old('address', $userdata->address) }}" required>
                         </div>
                     </div>
 
@@ -127,7 +118,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 small-form">
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
                             </div>
                         </div>
                         <div class="d-flex me-5">
@@ -136,7 +127,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 small-form">
-                                <input type="text" class="form-control" id="province" name="province" placeholder="Province" value="{{ old('province', $userdata->province) }}">
+                                <input type="text" class="form-control" id="province" name="province" placeholder="Province" value="{{ old('province', $userdata->province) }}" required>
                             </div>
                         </div>
                     </div>
@@ -147,7 +138,7 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 tiny-form">
-                            <input type="number" class="form-control no-spin" id="zip" name="zip" placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}">
+                            <input type="number" class="form-control no-spin" id="zip" name="zip" placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}" required>
                         </div>
                     </div>
 
@@ -168,7 +159,7 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" id="card-name" name="card_name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}">
+                            <input type="text" class="form-control" id="card-name" name="card_name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}" required>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -178,7 +169,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 medium-form">
-                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}">
+                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}" required>
                             </div>
                         </div>
 
@@ -188,7 +179,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0">
-                                <select class="form-select" id="card_type" name="card_type">
+                                <select class="form-select" id="card_type" name="card_type" required>
                                     <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
                                     <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
                                     <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
@@ -216,7 +207,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 tiny-form">
-                                <input type="text" class="form-control" id="card_cvv" name="card_cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}">
+                                <input type="text" class="form-control" id="card_cvv" name="card_cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
                             </div>
                         </div>
                     </div>

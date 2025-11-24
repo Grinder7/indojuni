@@ -150,7 +150,7 @@
                                     <div class="col-md-4">
                                         <label for="city" class="form-label">Kota / Kabupaten</label>
                                         <input type="text" class="form-control" id="city"
-                                        placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" name="city">
+                                        placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" name="city" required>
                                         <div class="invalid-feedback">
                                             Mohon masukkan kota pengiriman anda.
                                         </div>
