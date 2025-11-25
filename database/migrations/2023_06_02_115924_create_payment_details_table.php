@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('payment_details', function (Blueprint $table) {
             $table->ulid('id')->unique();
             $table->foreignUlid('user_id');
-            $table->boolean('is_default')->default(false);
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->nullable();
             $table->string('address');
-            $table->string('address2')->nullable();
-            $table->string('zip');
-            $table->string('payment_method');
+            $table->string('city');
+            $table->string('province');
+            $table->string('postcode');
+            $table->string('card_type');
             $table->string('card_name');
-            $table->string('card_number');
+            $table->string('card_no');
             $table->string('card_expiration');
             $table->string('card_cvv');
             $table->timestamps();

@@ -18,15 +18,15 @@ class PaymentDetail extends Model
         'is_default',
         'firstname',
         'lastname',
-        'email',
         'address',
-        'address2',
-        'payment_method',
+        'city',
+        'province',
+        'postcode',
         'card_name',
-        'card_number',
+        'card_no',
+        'card_type',
         'card_expiration',
         'card_cvv',
-        'zip',
     ];
     public function user()
     {
