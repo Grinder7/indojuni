@@ -60,7 +60,7 @@
                                             <td>{{ $transaction->payment()->first()['address'] }} &nbsp;
                                                 {{ $transaction->payment()->first()['city'] }},
                                                 {{ $transaction->payment()->first()['province'] }},
-                                                {{ $transaction->payment()->first()['zip'] }}</td>
+                                                {{ $transaction->payment()->first()['postcode'] }}</td>
                                             <td> Rp{{ number_format($transaction['total'] + floor($transaction['total'] * 0.11), 2, ',', '.') }}
                                             </td>
                                         </tr>

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             "province" => "Jawa Timur",
             "postcode" => 65535,
             "card_name" => "Calvin Farrellino",
-            "card_no" => 3141592653589793,
+            "card_number" => "3141 5926 5358 9793",
             "card_type" => 1,
             "card_expiration" => "03/14",
             "card_cvv" => "271",

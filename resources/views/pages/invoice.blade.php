@@ -57,7 +57,7 @@
                                     <p class="mb-1">
                                         indojuni@gmail.com
                                     </p>
-                                    <p><i class="uil uil-phone me-1"></i> (+62) 26 1884 857</p>
+                                    <p><i class="uil uil-phone me-1"></i> (+62) 812 3456 7980</p>
                                 </div>
                             </div>
                             <hr class="my-4" />
@@ -73,6 +73,11 @@
                                             {{ $invoiceData['payment_detail']->postcode }}</p>
                                         <p class="mb-1">
                                             {{ $invoiceData['payment_detail']->email }}
+                                        </p>
+                                        <p class="mb-1">
+                                            Pembayaran dengan:
+                                            {{ $invoiceData['payment_detail']->card_type === 1 ? 'Kartu Kredit' : 'Kartu Debit' }}
+                                            {{ substr(preg_replace('/\D/', '', $invoiceData['payment_detail']->card_number ?? ''), -4) }}
                                         </p>
                                     </div>
                                 </div>

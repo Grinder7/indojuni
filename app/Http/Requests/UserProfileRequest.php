@@ -30,7 +30,7 @@ class UserProfileRequest extends FormRequest
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'province' => 'required|string|max:255',
-            'zip' => 'required|integer|digits:5',
+            'postcode' => 'required|integer|digits:5',
             'card_name' => 'required|string|max:255',
             'card_number' => 'required|string|max:30',
             'card_type' => 'required|integer|in:1,2',
@@ -39,7 +39,8 @@ class UserProfileRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation(){
+    protected function prepareForValidation()
+    {
         $this->merge([
             'card_number' => preg_replace('/[^\d]/', '', $this->card_number),
             // or whatever field you need to clean
@@ -53,7 +54,7 @@ class UserProfileRequest extends FormRequest
                 ->back()
                 ->withErrors($validator)
                 ->withInput()
-                ->with('error', 'All forms must be filled')
+                ->with('error', 'Terdapat kesalahan pada data yang Anda masukkan.')
         );
     }
 }

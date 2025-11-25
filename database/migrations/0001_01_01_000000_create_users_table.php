@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('postcode')->nullable();
             $table->string('card_name')->nullable();
-            $table->string('card_no')->nullable();
+            $table->string('card_number')->nullable();
             $table->tinyInteger('card_type')->nullable();
             $table->string('card_expiration', 5)->nullable();
             $table->string('card_cvv', 3)->nullable();

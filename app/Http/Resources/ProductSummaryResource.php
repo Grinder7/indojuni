@@ -15,17 +15,17 @@ class ProductSummaryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "product_id" => $this->id,
-            "category" => $this->category,
-            "subcategory" => $this->subcategory,
-            "type" => $this->type,
-            "variant" => $this->variant,
-            "brand" => $this->brand,
-            "size" => $this->size,
-            "unit" => $this->unit,
-            "name" => $this->name,
-            "price" => $this->price,
-            "stock" => $this->stock,
+            'product_id' => $this->id,
+            'category' => $this->category,
+            'subcategory' => $this->subcategory,
+            'type' => $this->type,
+            'variant' => $this->variant,
+            'brand' => $this->brand,
+            'size' => $this->size,
+            'unit' => $this->unit,
+            'name' => $this->name,
+            'price' => $this->price,
+            'stock' => $this->stock,
         ];
     }
 }

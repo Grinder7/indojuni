@@ -203,7 +203,8 @@
                                     <label for="cc-number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" value="{{ old('card_no', $userdata->card_no) }}" required>
+                                        name="card_number" value="{{ old('card_number', $userdata->card_number) }}"
+                                        required>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
@@ -518,8 +519,8 @@
                     template: "xxx",
                 });
             };
-            const zip = document.querySelector('#zip');
-            zip.oninput = (e) => {
+            const postcode = document.querySelector('#postcode');
+            postcode.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxxx",
@@ -535,15 +536,15 @@
                 return value.replace(/(.{4})/g, '$1 ').trim();
             }
 
-            const card_no = document.getElementById('cc-number');
+            const card_number = document.getElementById('cc-number');
 
             // Format on input
-            card_no.addEventListener('input', function(e) {
+            card_number.addEventListener('input', function(e) {
                 e.target.value = formatGroups(e.target.value);
             });
 
             // ✅ Format initial value when page loads
-            card_no.value = formatGroups(card_no.value);
+            card_number.value = formatGroups(card_number.value);
         </script>
 
     @endsection
