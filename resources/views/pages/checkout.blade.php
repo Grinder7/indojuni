@@ -519,8 +519,8 @@
                     template: "xxx",
                 });
             };
-            const zip = document.querySelector('#zip');
-            zip.oninput = (e) => {
+            const postcode = document.querySelector('#postcode');
+            postcode.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxxx",

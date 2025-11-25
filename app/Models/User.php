@@ -74,7 +74,7 @@ class User extends Authenticatable
             'postcode' => $this->postcode,
             'card_name' => $this->card_name,
             'card_number' => $this->card_number,
-            'card_type' => $this->card_type === 1 ? 'Kartu Kredit' : 'Kartu Debit',
+            'card_type' => $this->card_type,
             'card_expiration' => $this->card_expiration,
             'card_cvv' => $this->card_cvv,
         ];

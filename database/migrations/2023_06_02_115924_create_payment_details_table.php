@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('province');
             $table->string('postcode');
-            $table->string('card_type');
+            $table->tinyInteger('card_type');
             $table->string('card_name');
             $table->string('card_number');
             $table->string('card_expiration');
