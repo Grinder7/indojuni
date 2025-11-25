@@ -1,4 +1,3 @@
-<?php
 @extends('layouts.app')
 @section('title', 'Profil - IndoJuni')
 @section('styles')
@@ -63,7 +62,6 @@
     <div class="container" style="margin-top:6rem">
         <main style="font-size:1.2em;">
             <h1>Profil Saya</h1>
-
             <hr>
             <form class="needs-validation" method="POST" action="{{ route('app.profile.store') }}" novalidate>
                 @csrf
@@ -89,8 +87,8 @@
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" name="firstname" id="firstname"
                                 placeholder="Nama Depan" value="{{ old('firstname', $userdata->firstname) }}" required>
-                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nama Belakang"
-                                value="{{ old('lastname', $userdata->lastname) }}" required>
+                            <input type="text" class="form-control" name="lastname" id="lastname"
+                                placeholder="Nama Belakang" value="{{ old('lastname', $userdata->lastname) }}" required>
                         </div>
                     </div>
 
@@ -204,7 +202,8 @@
                             <div class="input-group mb-0">
                                 <select class="form-select" id="card_type" name="card_type" required>
                                     <option disabled hidden
-                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe Kartu</option>
+                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
+                                        Kartu</option>
                                     <option value='1'
                                         {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu Kredit
                                     </option>
@@ -248,7 +247,8 @@
                 <hr>
 
                 <div class="d-flex justify-content-end" style="margin-bottom:1rem;margin-top:5rem;">
-                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Batal Perubahan</a>
+                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Batal
+                        Perubahan</a>
                     <button type="submit" class="btn btn-primary buttons">Simpan Perubahan</button>
                 </div>
             </form>
