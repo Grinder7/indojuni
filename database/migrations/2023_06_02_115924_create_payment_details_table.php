@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUlid('user_id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('address');
             $table->string('city');
             $table->string('province');

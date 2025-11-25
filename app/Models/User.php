@@ -68,6 +68,7 @@ class User extends Authenticatable
         return [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
+            'email' => $this->email,
             'address' => $this->address,
             'city' => $this->city,
             'province' => $this->province,
