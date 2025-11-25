@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Profile - IndoJuni')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/alertify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
