@@ -190,7 +190,7 @@
                             <div class="input-group medium-form mb-0">
                                 <input type="text" class="form-control" id="card_number" name="card_number"
                                     placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                    value="{{ old('card_no', $userdata->card_no) }}" required>
+                                    value="{{ old('card_number', $userdata->card_number) }}" required>
                             </div>
                         </div>
 
@@ -281,14 +281,14 @@
             return value.replace(/(.{4})/g, '$1 ').trim();
         }
 
-        const card_no = document.getElementById('card_number');
+        const card_number = document.getElementById('card_number');
 
         // Format on input
-        card_no.addEventListener('input', function(e) {
+        card_number.addEventListener('input', function(e) {
             e.target.value = formatGroups(e.target.value);
         });
 
         // ✅ Format initial value when page loads
-        card_no.value = formatGroups(card_no.value);
+        card_number.value = formatGroups(card_number.value);
     </script>
 @endsection

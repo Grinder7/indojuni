@@ -15,17 +15,18 @@ class BillingAddressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "firstname" => $this->firstname,
-            "lastname" => $this->lastname,
-            "address" => $this->address,
-            "address2" => $this->address2,
-            "email" => $this->email,
-            "zip" => $this->zip,
-            "payment_method" => $this->payment_method,
-            "card_name" => $this->card_name,
-            "card_number" => $this->card_number,
-            "card_expiration" => $this->card_expiration,
-            "card_cvv" => $this->card_cvv
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'address' => $this->address,
+            'city' => $this->city,
+            'province' => $this->province,
+            'postcode' => $this->postcode,
+            'card_type' => $this->card_type === 1 ? 'Kartu Kredit' : 'Kartu Debit',
+            'card_name' => $this->card_name,
+            'card_number' => $this->card_number,
+            'card_expiration' => $this->card_expiration,
+            'card_cvv' => $this->card_cvv,
         ];
     }
 }

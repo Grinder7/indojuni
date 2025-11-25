@@ -23,7 +23,7 @@ class User extends Authenticatable
         'province',
         'postcode',
         'card_name',
-        'card_no',
+        'card_number',
         'card_type',
         'card_expiration',
         'card_cvv',
@@ -39,7 +39,7 @@ class User extends Authenticatable
         'province',
         'postcode',
         'card_name',
-        'card_no',
+        'card_number',
         'card_type',
         'card_expiration',
         'card_cvv',
@@ -62,7 +62,7 @@ class User extends Authenticatable
     // Add this accessor
     public function getDefaultPaymentDetailAttribute()
     {
-        if (!$this->card_no) {
+        if (!$this->card_number) {
             return null;
         }
         return [
@@ -73,8 +73,8 @@ class User extends Authenticatable
             'province' => $this->province,
             'postcode' => $this->postcode,
             'card_name' => $this->card_name,
-            'card_no' => $this->card_no,
-            'card_type' => $this->card_type,
+            'card_number' => $this->card_number,
+            'card_type' => $this->card_type === 1 ? 'Kartu Kredit' : 'Kartu Debit',
             'card_expiration' => $this->card_expiration,
             'card_cvv' => $this->card_cvv,
         ];

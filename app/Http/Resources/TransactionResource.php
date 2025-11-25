@@ -15,10 +15,10 @@ class TransactionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "created_at" => $this->created_at,
-            "billing_address" => new BillingAddressResource($this->payment),
-            "total" => $this->total,
+            'id' => $this->id,
+            'created_at' => $this->created_at,
+            'billing_address' => new BillingAddressResource($this->payment),
+            'total' => $this->total,
         ];
     }
 }

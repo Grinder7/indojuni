@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('postcode');
             $table->string('card_type');
             $table->string('card_name');
-            $table->string('card_no');
+            $table->string('card_number');
             $table->string('card_expiration');
             $table->string('card_cvv');
             $table->timestamps();

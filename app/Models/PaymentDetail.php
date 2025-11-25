@@ -23,7 +23,7 @@ class PaymentDetail extends Model
         'province',
         'postcode',
         'card_name',
-        'card_no',
+        'card_number',
         'card_type',
         'card_expiration',
         'card_cvv',
