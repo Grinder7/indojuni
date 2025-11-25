@@ -12,7 +12,7 @@ class ChatbotController extends Controller
     {
         session()->forget('chats');
         session()->forget('chat_fe_log');
-        return response()->json(['status' => 'success', 'message' => 'Chat history cleared.']);
+        return response()->json(['status' => 'success', 'message' => 'Riwayat obrolan telah dihapus.']);
     }
 
     public function getChats(Request $request)
@@ -38,12 +38,12 @@ class ChatbotController extends Controller
                 'user_prompt' => $message,
             ]);
             if ($response->failed()) {
-                $chat = ['role' => 'assistant', 'content' => 'Failed to get response from assistant.'];
+                $chat = ['role' => 'assistant', 'content' => 'Gagal mendapatkan respon dari asisten.'];
                 $chat_fe_log[] = $chat;
                 $request->session()->put('chat_fe_log', $chat_fe_log);
-                return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Failed to get response from assistant.', 'error' => $response->body()], 500);
+                return response()->json(['status' => 'error', 'chat' => $chat, 'message' => 'Gagal mendapatkan respon dari asisten.', 'error' => $response->body()], 500);
             }
-            $responseMessages = $response->json()['messages'] ?? ['role' => 'assistant', 'content' => 'Sorry, I am unable to respond right now.'];
+            $responseMessages = $response->json()['messages'] ?? ['role' => 'assistant', 'content' => 'Maaf, saya tidak dapat merespons saat ini.'];
             $request->session()->put('chats', $responseMessages);
             $lastIndex = count($responseMessages) - 1;
             $chat = $responseMessages[$lastIndex];
@@ -53,7 +53,7 @@ class ChatbotController extends Controller
             $request->session()->put('chat_fe_log', $chat_fe_log);
             return response()->json(['status' => 'success', 'chat' => $chat]);
         } catch (\Throwable $th) {
-            $chat = ['role' => 'assistant', 'content' => 'Error occurred while processing your request.'];
+            $chat = ['role' => 'assistant', 'content' => 'Terjadi kesalahan saat memproses permintaan Anda.'];
             $chat_fe_log[] = $chat;
             $request->session()->put('chat_fe_log', $chat_fe_log);
             error_log($th->getMessage());

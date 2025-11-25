@@ -91,7 +91,10 @@
                 <div class="py-5 text-center">
                     <h2>Checkout</h2>
                     <p class="lead">Lengkapi Formulir di Bawah Sesuai Identitas Anda</p>
-                    <h1 class="text-warning">DO NOT INPUT SENSITIVE INFORMATION, THIS IS A TEST</h1>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Perhatian:</strong> Situs ini hanya untuk demonstrasi e-commerce. Jangan masukkan data
+                        pribadi atau sensitif (mis. nomor kartu asli, alamat lengkap, KTP). Gunakan data contoh saja.
+                    </div>
                 </div>
 
                 <div class="row g-5">
@@ -120,10 +123,9 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="email" class="form-label">Email <span
-                                            class="text-body-secondary">(Opsional)</span></label>
+                                    <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        value="{{ old('name', $userdata->email) }}" name="email">
+                                        value="{{ old('email', $userdata->email) }}" name="email" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -142,24 +144,24 @@
                                     <label for="province" class="form-label">Provinsi</label>
                                     <input type="text" class="form-control" id="province" placeholder="Provinsi"
                                         value="{{ old('province', $userdata->province) }}" name="province" required>
-                                        <div class="invalid-feedback">
-                                            Mohon masukkan provinsi pengiriman anda.
-                                        </div>
+                                    <div class="invalid-feedback">
+                                        Mohon masukkan provinsi pengiriman anda.
                                     </div>
-                                    
-                                    <div class="col-md-4">
-                                        <label for="city" class="form-label">Kota / Kabupaten</label>
-                                        <input type="text" class="form-control" id="city"
-                                        placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" name="city" required>
-                                        <div class="invalid-feedback">
-                                            Mohon masukkan kota pengiriman anda.
-                                        </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="city" class="form-label">Kota / Kabupaten</label>
+                                    <input type="text" class="form-control" id="city" placeholder="Kota / Kab."
+                                        value="{{ old('city', $userdata->city) }}" name="city" required>
+                                    <div class="invalid-feedback">
+                                        Mohon masukkan kota pengiriman anda.
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="zip" class="form-label">Kode Pos</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" name="zip"
-                                        value="{{ old('zip', $userdata->zip) }}"required>
+                                    <label for="postcode" class="form-label">Kode Pos</label>
+                                    <input type="text" class="form-control" id="postcode" placeholder="" name="postcode"
+                                        value="{{ old('postcode', $userdata->postcode) }}"required>
                                     <div class="invalid-feedback">
                                         Kode pos diperlukan.
                                     </div>
@@ -172,9 +174,15 @@
 
                             <div class="my-3">
                                 <select class="form-select" id="card_type" name="card_type">
-                                    <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
-                                    <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
-                                    <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
+                                    <option disabled hidden
+                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Jenis
+                                        Kartu</option>
+                                    <option value='1'
+                                        {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu Kredit
+                                    </option>
+                                    <option value='2'
+                                        {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Kartu Debit
+                                    </option>
                                 </select>
                             </div>
 
@@ -203,9 +211,9 @@
 
                                 <div class="col-md-3">
                                     <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control datepicker" id="cc-expiration" style="padding-left:0.8em;"
-                                        placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
-                                        required>
+                                    <input type="text" class="form-control datepicker" id="cc-expiration"
+                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
+                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
@@ -530,7 +538,7 @@
             const card_no = document.getElementById('cc-number');
 
             // Format on input
-            card_no.addEventListener('input', function (e) {
+            card_no.addEventListener('input', function(e) {
                 e.target.value = formatGroups(e.target.value);
             });
 

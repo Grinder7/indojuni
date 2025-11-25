@@ -44,7 +44,7 @@ class ShoppingController extends Controller
                 'data' => $response["data"]
             ], 200);
         }
-        return redirect()->back()->with('success', true)->with('data', $response["data"])->with('message', 'Shopping cart updated successfully');
+        return redirect()->back()->with('success', true)->with('data', $response["data"])->with('message', 'Berhasil memperbarui keranjang belanja');
     }
 
     public function addShoppingCart(ModifyCartItemRequest $request)
@@ -61,7 +61,7 @@ class ShoppingController extends Controller
             $product = $this->productService->getProductByID((int)$item["product_id"]);
             $shoppingSession->total += $item["quantity"] * $product->price;
             if (!$shoppingSession->save()) {
-                throw new \Exception("Failed to update shopping session");
+                throw new \Exception("Gagal memperbarui sesi belanja.");
             }
         }
 
@@ -75,7 +75,7 @@ class ShoppingController extends Controller
                 ]
             ], 200);
         }
-        return redirect()->back()->with('success', 'Shopping cart updated successfully');
+        return redirect()->back()->with('success', 'Berhasil memperbarui keranjang belanja');
     }
 
     public function getUserCartItems()

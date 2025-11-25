@@ -22,6 +22,13 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status' => 403,
+                        'message' => 'Already authenticated',
+                        'data' => null
+                    ], 403);
+                }
                 return redirect("/");
             }
         }
