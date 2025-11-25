@@ -1,4 +1,6 @@
+<?php
 @extends('layouts.app')
+@section('title', 'Profil - IndoJuni')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/alertify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
@@ -60,13 +62,13 @@
 @section('content')
     <div class="container" style="margin-top:6rem">
         <main style="font-size:1.2em;">
-            <h1>My Profile</h1>
+            <h1>Profil Saya</h1>
 
             <hr>
             <form class="needs-validation" method="POST" action="{{ route('app.profile.store') }}" novalidate>
                 @csrf
                 <div class="tab">
-                    <h2 class="mb-4">Credentials</h2>
+                    <h2 class="mb-4">Kredensial</h2>
 
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
@@ -75,19 +77,19 @@
                         </div>
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" id="username"
-                                value="{{ old('email', $userdata->username) }}" disabled>
+                                value="{{ old('username', $userdata->username) }}" disabled>
                         </div>
                     </div>
 
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Name</p>
+                            <p class="labels mb-0">Nama</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" name="firstname" id="firstname"
-                                placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}" required>
-                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname"
+                                placeholder="Nama Depan" value="{{ old('firstname', $userdata->firstname) }}" required>
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nama Belakang"
                                 value="{{ old('lastname', $userdata->lastname) }}" required>
                         </div>
                     </div>
@@ -99,7 +101,7 @@
                         </div>
                         <div class="input-group medium-form mb-0">
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
+                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}">
                         </div>
                     </div>
                     {{-- <div class="d-flex justify-content-end mb-5 mt-4 me-5">
@@ -111,16 +113,16 @@
 
                 <div class="tab" id="defaultBilling">
                     <h2 class="mb-4">
-                        Address
+                        Alamat
                     </h2>
 
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Address</p>
+                            <p class="labels mb-0">Alamat</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group long-form mb-0">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="address"
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Alamat"
                                 value="{{ old('address', $userdata->address) }}" required>
                         </div>
                     </div>
@@ -128,7 +130,7 @@
                     <div class="tab d-flex mb-3">
                         <div class="d-flex me-5">
                             <div class="d-flex">
-                                <p class="labels mb-0">City</p>
+                                <p class="labels mb-0">Kota</p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group small-form mb-0">
@@ -138,24 +140,24 @@
                         </div>
                         <div class="d-flex me-5">
                             <div class="d-flex">
-                                <p class="medium-labels mb-0">Province</p>
+                                <p class="medium-labels mb-0">Provinsi</p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group small-form mb-0">
                                 <input type="text" class="form-control" id="province" name="province"
-                                    placeholder="Province" value="{{ old('province', $userdata->province) }}" required>
+                                    placeholder="Provinsi" value="{{ old('province', $userdata->province) }}" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Zip Code</p>
+                            <p class="labels mb-0">Kode Pos</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group tiny-form mb-0">
-                            <input type="number" class="form-control no-spin" id="zip" name="zip"
-                                placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}" required>
+                            <input type="number" class="form-control no-spin" id="postcode" name="postcode"
+                                placeholder="xxxxxx" value="{{ old('postcode', $userdata->postcode) }}" required>
                         </div>
                     </div>
 
@@ -167,24 +169,24 @@
 
                 <div class="tab">
                     <h2 class="mb-4">
-                        Billing
+                        Penagihan
                     </h2>
 
                     <div class="tab d-flex mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Card Holder Name</p>
+                            <p class="labels mb-0">Nama Pemegang Kartu</p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" id="card-name" name="card_name"
-                                placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}"
+                                placeholder="Nama pemegang kartu" value="{{ old('card_name', $userdata->card_name) }}"
                                 required>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="tab d-flex mb-3">
                             <div class="d-flex">
-                                <p class="labels mb-0">Card Number</p>
+                                <p class="labels mb-0">Nomor Kartu</p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group medium-form mb-0">
@@ -196,19 +198,18 @@
 
                         <div class="tab d-flex mb-3 ms-5">
                             <div class="d-flex">
-                                <p class="medium-labels mb-0">Card Type</p>
+                                <p class="medium-labels mb-0">Tipe Kartu</p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0">
                                 <select class="form-select" id="card_type" name="card_type" required>
                                     <option disabled hidden
-                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card
-                                        Type</option>
+                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe Kartu</option>
                                     <option value='1'
-                                        {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card
+                                        {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu Kredit
                                     </option>
                                     <option value='2'
-                                        {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card
+                                        {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Kartu Debit
                                     </option>
                                 </select>
                             </div>
@@ -218,7 +219,7 @@
                     <div class="d-flex">
                         <div class="tab d-flex mb-3">
                             <div class="d-flex">
-                                <p class="labels mb-0">Expiration Date</p>
+                                <p class="labels mb-0">Tanggal Kadaluarsa</p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group tiny-form mb-0">
@@ -247,9 +248,8 @@
                 <hr>
 
                 <div class="d-flex justify-content-end" style="margin-bottom:1rem;margin-top:5rem;">
-                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Abort
-                        Changes</a>
-                    <button type="submit" class="btn btn-primary buttons">Save Changes</button>
+                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Batal Perubahan</a>
+                    <button type="submit" class="btn btn-primary buttons">Simpan Perubahan</button>
                 </div>
             </form>
 

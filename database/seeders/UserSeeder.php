@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             "address" => "Somewhere in Sidoarjo",
             "city" => "Kab. Sidoarjo",
             "province" => "Jawa Timur",
-            "zip" => 65535,
+            "postcode" => 65535,
             "card_name" => "Calvin Farrellino",
             "card_no" => 3141592653589793,
             "card_type" => 1,

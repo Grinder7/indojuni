@@ -66,8 +66,4 @@ Route::prefix("v1")->group(function () {
         Route::get("", [InvoiceController::class, "index"])->name("api.v1.invoice.list");
         Route::get("{id}", [InvoiceController::class, "invoice"])->name("api.v1.invoice.detail");
     });
-
-    Route::prefix("query")->middleware("secretkey")->group(function () {
-        Route::post("", [\App\Http\Controllers\QueryController::class, "query"])->name("api.v1.query");
-    });
 });

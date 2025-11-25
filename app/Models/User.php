@@ -31,6 +31,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'is_admin',
+        'firstname',
+        'lastname',
+        'address',
+        'city',
+        'province',
+        'postcode',
+        'card_name',
+        'card_no',
+        'card_type',
+        'card_expiration',
+        'card_cvv',
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -50,6 +62,9 @@ class User extends Authenticatable
     // Add this accessor
     public function getDefaultPaymentDetailAttribute()
     {
+        if (!$this->card_no) {
+            return null;
+        }
         return [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,

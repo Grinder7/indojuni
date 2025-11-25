@@ -30,7 +30,7 @@ class RegisterController extends Controller
                         'message' => 'Register failed',
                         'data' => null
                     ], 400)
-                    : back()->withErrors(['register' => 'Register failed'])->withInput();
+                    : back()->withErrors(['register' => 'Pendaftaran gagal'])->withInput();
             }
         } catch (\Exception $e) {
             return $request->expectsJson()
@@ -39,7 +39,7 @@ class RegisterController extends Controller
                     'message' => 'An error occurred: ' . $e->getMessage(),
                     'data' => null
                 ], 400)
-                : back()->withErrors(['register' => 'An error occurred: ' . $e->getMessage()])->withInput();
+                : back()->withErrors(['register' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
         }
 
         return $request->expectsJson()
@@ -48,6 +48,6 @@ class RegisterController extends Controller
                 'message' => 'Successfully registered',
                 'data' => null
             ], 200)
-            : redirect()->route('app.login.page')->with('success', 'Successfully registered');
+            : redirect()->route('app.login.page')->with('success', 'Berhasil mendaftar, silakan login.');
     }
 }

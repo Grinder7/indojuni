@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
-            $table->string('zip')->nullable();
+            $table->string('postcode')->nullable();
             $table->string('card_name')->nullable();
             $table->string('card_no')->nullable();
             $table->tinyInteger('card_type')->nullable();
