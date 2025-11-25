@@ -13,9 +13,9 @@
 
                     <form action="{{ route('app.catalogue.page') }}" method="GET">
                         <div class="d-flex flex-md-column align-items-center align-items-md-start flex-row gap-2">
-                            <strong>Search:</strong>
+                            <strong>Cari:</strong>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search product..." name="search"
+                                <input type="text" class="form-control" placeholder="Cari produk..." name="search"
                                     value="{{ request('search') }}" width="300">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-search">
                                     <i class="fa-solid fa-magnifying-glass"></i>

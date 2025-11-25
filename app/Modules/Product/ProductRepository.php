@@ -123,8 +123,8 @@ class ProductRepository
         $results = Product::select('category', 'subcategory', 'brand')->get();
 
         $data = [
-            'categoriy' => $results->pluck('category')->filter()->unique()->values()->all(),
-            'subcategory' => $results->pluck('subcategory')->filter()->unique()->values()->all(),
+            'kategori' => $results->pluck('category')->filter()->unique()->values()->all(),
+            'sub kategori' => $results->pluck('subcategory')->filter()->unique()->values()->all(),
             'brand' => $results->pluck('brand')->filter()->unique()->values()->all(),
         ];
 
