@@ -3,7 +3,7 @@
         <div class="d-flex flex-column">
             <strong>{{ ucfirst($key) }}:</strong>
             <select class="form-select select-filter" name="{{ $key }}">
-                <option value="">All</option>
+                <option value="">Semua</option>
                 @foreach ($values as $value)
                     <option value="{{ $value }}">{{ $value }}</option>
                 @endforeach
