@@ -84,7 +84,7 @@
         <form action="{{ route('register') }}" method="POST">
             @csrf
             <img class="mb-4" src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="" height="57">
-            <h1 class="h3 mb-3 fw-normal">Register</h1>
+            <h1 class="h3 fw-normal mb-3">Register</h1>
             <div class="form-floating">
                 <input type="text" class="form-control @error('username') is-invalid @enderror" id="floatingUsername"
                     placeholder="Username" name="username" value="{{ old('username') }}">
@@ -106,7 +106,7 @@
                 <label for="floatingPasswordConfirmation">Password Confirmation</label>
             </div>
             <div class="d-flex float-end pb-3">
-                Already have an account? <span><a href="{{ route('login.page') }}" class="ps-1"> Login</a></span>
+                Already have an account? <span><a href="{{ route('app.login.page') }}" class="ps-1"> Login</a></span>
             </div>
             <div class="checkbox mb-3">
                 <label>
@@ -128,7 +128,7 @@
                 </div>
             @enderror
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; 2023 IndoJuni, Inc</p>
+            <p class="text-body-secondary mb-3 mt-5">&copy; 2023 IndoJuni, Inc</p>
         </form>
     </main>
 @endsection
