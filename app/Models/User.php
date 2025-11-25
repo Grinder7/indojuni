@@ -50,6 +50,18 @@ class User extends Authenticatable
     // Add this accessor
     public function getDefaultPaymentDetailAttribute()
     {
-        return $this->paymentDetail()->where('is_default', true)->first();
+        return [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'address' => $this->address,
+            'city' => $this->city,
+            'province' => $this->province,
+            'postcode' => $this->postcode,
+            'card_name' => $this->card_name,
+            'card_no' => $this->card_no,
+            'card_type' => $this->card_type,
+            'card_expiration' => $this->card_expiration,
+            'card_cvv' => $this->card_cvv,
+        ];
     }
 }

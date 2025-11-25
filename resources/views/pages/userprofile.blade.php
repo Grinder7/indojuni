@@ -4,36 +4,46 @@
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vendor/ajax/bootstrap-datepicker.min.css') }}">
     <style>
-        .buttons{
-            width:10rem;
+        .buttons {
+            width: 10rem;
         }
-        .tab{
-            margin-left:1rem;
+
+        .tab {
+            margin-left: 1rem;
         }
-        .labels{
-            width:12rem;
+
+        .labels {
+            width: 12rem;
         }
-        .short-labels{
-            width:4rem;
+
+        .short-labels {
+            width: 4rem;
         }
-        .medium-labels{
-            width:8rem;
+
+        .medium-labels {
+            width: 8rem;
         }
-        .separator{
+
+        .separator {
             width: 0.5rem;
         }
-        .tiny-form{
+
+        .tiny-form {
             width: 4em;
         }
-        .small-form{
+
+        .small-form {
             width: 10em;
         }
-        .medium-form{
+
+        .medium-form {
             width: 16em;
         }
-        .long-form{
+
+        .long-form {
             width: 60rem;
         }
+
         /* Chrome, Safari, Edge, Opera */
         .no-spin::-webkit-outer-spin-button,
         .no-spin::-webkit-inner-spin-button {
@@ -63,8 +73,9 @@
                             <p class="labels mb-0">Username</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" id="username" value="{{ old('email', $userdata->username) }}" disabled>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="username"
+                                value="{{ old('email', $userdata->username) }}" disabled>
                         </div>
                     </div>
 
@@ -73,9 +84,11 @@
                             <p class="labels mb-0">Name</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}" required>
-                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname" value="{{ old('lastname', $userdata->lastname) }}" required>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" name="firstname" id="firstname"
+                                placeholder="firstname" value="{{ old('firstname', $userdata->firstname) }}" required>
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname"
+                                value="{{ old('lastname', $userdata->lastname) }}" required>
                         </div>
                     </div>
 
@@ -84,14 +97,14 @@
                             <p class="labels mb-0">Email</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 medium-form">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
+                        <div class="input-group medium-form mb-0">
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="email@example.com" value="{{ old('email', $userdata->email) }}">
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end mb-5 mt-4 me-5">
+                    {{-- <div class="d-flex justify-content-end mb-5 mt-4 me-5">
                         <button type="button" class="btn btn-danger align-right buttons">Change Password</button>
-                    </div>
-
+                    </div> --}}
                 </div>
 
                 <hr>
@@ -106,8 +119,9 @@
                             <p class="labels mb-0">Address</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="address" value="{{ old('address', $userdata->address) }}" required>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="address"
+                                value="{{ old('address', $userdata->address) }}" required>
                         </div>
                     </div>
 
@@ -117,8 +131,9 @@
                                 <p class="labels mb-0">City</p>
                                 <p class="separator mb-0">:</p>
                             </div>
-                            <div class="input-group mb-0 small-form">
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
+                            <div class="input-group small-form mb-0">
+                                <input type="text" class="form-control" id="city" name="city"
+                                    placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
                             </div>
                         </div>
                         <div class="d-flex me-5">
@@ -126,8 +141,9 @@
                                 <p class="medium-labels mb-0">Province</p>
                                 <p class="separator mb-0">:</p>
                             </div>
-                            <div class="input-group mb-0 small-form">
-                                <input type="text" class="form-control" id="province" name="province" placeholder="Province" value="{{ old('province', $userdata->province) }}" required>
+                            <div class="input-group small-form mb-0">
+                                <input type="text" class="form-control" id="province" name="province"
+                                    placeholder="Province" value="{{ old('province', $userdata->province) }}" required>
                             </div>
                         </div>
                     </div>
@@ -137,15 +153,16 @@
                             <p class="labels mb-0">Zip Code</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 tiny-form">
-                            <input type="number" class="form-control no-spin" id="zip" name="zip" placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}" required>
+                        <div class="input-group tiny-form mb-0">
+                            <input type="number" class="form-control no-spin" id="zip" name="zip"
+                                placeholder="xxxxxx" value="{{ old('zip', $userdata->zip) }}" required>
                         </div>
                     </div>
 
                     <div class="mb-5"></div>
 
                 </div>
-                
+
                 <hr>
 
                 <div class="tab">
@@ -158,8 +175,10 @@
                             <p class="labels mb-0">Card Holder Name</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group mb-0 long-form">
-                            <input type="text" class="form-control" id="card-name" name="card_name" placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}" required>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="card-name" name="card_name"
+                                placeholder="card holder name" value="{{ old('card_name', $userdata->card_name) }}"
+                                required>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -168,8 +187,10 @@
                                 <p class="labels mb-0">Card Number</p>
                                 <p class="separator mb-0">:</p>
                             </div>
-                            <div class="input-group mb-0 medium-form">
-                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" value="{{ old('card_no', $userdata->card_no) }}" required>
+                            <div class="input-group medium-form mb-0">
+                                <input type="text" class="form-control" id="card_number" name="card_number"
+                                    placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
+                                    value="{{ old('card_no', $userdata->card_no) }}" required>
                             </div>
                         </div>
 
@@ -180,9 +201,15 @@
                             </div>
                             <div class="input-group mb-0">
                                 <select class="form-select" id="card_type" name="card_type" required>
-                                    <option disabled hidden {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card Type</option>
-                                    <option value='1' {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card</option>
-                                    <option value='2' {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card</option>
+                                    <option disabled hidden
+                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Choose Card
+                                        Type</option>
+                                    <option value='1'
+                                        {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Credit Card
+                                    </option>
+                                    <option value='2'
+                                        {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Debit Card
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -194,32 +221,34 @@
                                 <p class="labels mb-0">Expiration Date</p>
                                 <p class="separator mb-0">:</p>
                             </div>
-                            <div class="input-group mb-0 tiny-form ">
-                                <input type="text" class="form-control datepicker" style="padding-left:0.8em;" id="card_expiration"
-                                    placeholder="mm/yy" name="card_expiration" value="{{ old('card_expiration', $userdata->card_expiration) }}"
-                                    required>
+                            <div class="input-group tiny-form mb-0">
+                                <input type="text" class="form-control datepicker" style="padding-left:0.8em;"
+                                    id="card_expiration" placeholder="mm/yy" name="card_expiration"
+                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                             </div>
                         </div>
-        
+
                         <div class="tab d-flex mb-3 ms-5">
                             <div class="d-flex">
                                 <p class="short-labels mb-0">CVV</p>
                                 <p class="separator mb-0">:</p>
                             </div>
-                            <div class="input-group mb-0 tiny-form">
-                                <input type="text" class="form-control" id="card_cvv" name="card_cvv" placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
+                            <div class="input-group tiny-form mb-0">
+                                <input type="text" class="form-control" id="card_cvv" name="card_cvv"
+                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="mb-5"></div>
 
                 </div>
 
                 <hr>
-                
+
                 <div class="d-flex justify-content-end" style="margin-bottom:1rem;margin-top:5rem;">
-                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Abort Changes</a>
+                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Abort
+                        Changes</a>
                     <button type="submit" class="btn btn-primary buttons">Save Changes</button>
                 </div>
             </form>
@@ -255,7 +284,7 @@
         const card_no = document.getElementById('card_number');
 
         // Format on input
-        card_no.addEventListener('input', function (e) {
+        card_no.addEventListener('input', function(e) {
             e.target.value = formatGroups(e.target.value);
         });
 
