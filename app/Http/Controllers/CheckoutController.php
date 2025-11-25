@@ -39,7 +39,11 @@ class CheckoutController extends Controller
             }
         }
         $totalItems = count($items);
-        return view('pages.checkout')->with(compact('shoppingSession'))->with(compact('items'))->with(compact('totalItems'));
+
+        # Billing
+        $userdata = Auth::user();
+
+        return view('pages.checkout')->with(compact('shoppingSession'))->with(compact('items'))->with(compact('totalItems'))->with(compact('userdata'));
     }
 
     public function checkout(PaymentDetailRequest $request)
