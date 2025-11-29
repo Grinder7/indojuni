@@ -14,7 +14,7 @@
         }
 
         .labels {
-            width: 12rem;
+            width: 14rem;
         }
 
         .short-labels {
