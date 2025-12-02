@@ -9,7 +9,11 @@
         <div class="album bg-body-tertiary">
             <div class="my-3">
                 @include('components.catalogue-filters', [
-                    'filters' => $productFilters,
+                    'filters' => [
+                        'kategori' => $productFilters['category'] ?? [],
+                        'sub kategori' => $productFilters['subcategory'] ?? [],
+                        'brand' => $productFilters['brand'] ?? [],
+                    ],
                     'route' => route('app.catalogue.page'),
                 ])
             </div>
