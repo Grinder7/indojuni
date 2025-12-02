@@ -26,8 +26,8 @@ return new class extends Migration
             $table->tinyInteger('card_type');
             $table->string('card_name');
             $table->string('card_number');
-            $table->string('card_expiration');
-            $table->string('card_cvv');
+            $table->string('card_expiration', 5);
+            $table->string('card_cvv', 3);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });

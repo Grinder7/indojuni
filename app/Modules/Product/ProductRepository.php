@@ -7,12 +7,13 @@ namespace App\Modules\Product;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
     public function getProductByName(string $name): Product | null
     {
-        return Product::where('name', $name)->first();
+        return Product::where('is_active', true)->where('name', $name)->first();
     }
     public function createProduct(array $data): Product
     {
@@ -20,7 +21,7 @@ class ProductRepository
     }
     public function getProductByID(int $productID): Product | null
     {
-        return Product::find($productID);
+        return Product::where('is_active', true)->find($productID);
     }
     public function subtractQuantityByID(int $productID, int $quantity): bool
     {
@@ -46,6 +47,7 @@ class ProductRepository
     {
         if ($searchKeyword === null || trim($searchKeyword) === '') {
             $query = Product::query();
+            $query->where('is_active', true);
             // Apply filters
             if (isset($filter['category']) && !empty($filter['category'])) {
                 $query->where('category', $filter['category']);
@@ -56,71 +58,130 @@ class ProductRepository
             if (isset($filter['brand']) && !empty($filter['brand'])) {
                 $query->where('brand', $filter['brand']);
             }
-            return $query->orderby($column, 'asc')->paginate($page);
+            return $query->orderBy($column, 'asc')->paginate($page);
         }
         return Product::searchBySimilarityPaginated("name", $searchKeyword, $page, $filter);
     }
     public function getAllProducts(int|null $limit, int|null $page, array $filter): Collection
     {
-        $query = Product::query();
+        $params = [];
+        $nameParams = [];
+        $otherParams = [];
 
-        // Apply filters
-        if (isset($filter['category']) && !empty($filter['category'])) {
-            $query->where('category', $filter['category']);
+        $nameQuery = null;
+        $otherQuery = null;
+        if (!empty($filter['name'])) {
+            $name = $filter['name'];
+            $wordCount = str_word_count($name);
+            $threshold = match ($wordCount) {
+                1 => 0.1,
+                2 => 0.275,
+                3 => 0.375,
+                default => 0.45,
+            };
+            $nameQuery = "
+            SELECT
+                p.*
+            FROM products p
+            WHERE
+                p.search_vector @@ (
+                    websearch_to_tsquery('indonesian', ?) ||
+                    websearch_to_tsquery('english', ?)
+                )
+                OR similarity(name, ?) >= {$threshold}
+            ORDER BY ts_rank_cd(p.search_vector, websearch_to_tsquery('indonesian', ?) || websearch_to_tsquery('english', ?))
+        ";
+            $nameParams = [$name, $name, $name, $name, $name];
         }
-        if (isset($filter['subcategory']) && !empty($filter['subcategory'])) {
-            $query->where('subcategory', $filter['subcategory']);
+        $otherQuery = "SELECT p.* FROM products p";
+        $otherWhere = [];
+        $otherWhere[] = "p.is_active = true";
+        if (!empty($filter['category'])) {
+            $otherWhere[] = "p.category = ?";
+            $otherParams[] = $filter['category'];
         }
-        if (isset($filter['type']) && !empty($filter['type'])) {
-            $query->where('type', $filter['type']);
+        if (!empty($filter['subcategory'])) {
+            $otherWhere[] = "p.subcategory = ?";
+            $otherParams[] = $filter['subcategory'];
         }
-        if (isset($filter['variant']) && !empty($filter['variant'])) {
-            $query->where('variant', $filter['variant']);
+        if (!empty($filter['type'])) {
+            $otherWhere[] = "p.type = ?";
+            $otherParams[] = $filter['type'];
         }
-        if (isset($filter['brand']) && !empty($filter['brand'])) {
-            $query->where('brand', $filter['brand']);
+        if (!empty($filter['variant'])) {
+            $otherWhere[] = "p.variant = ?";
+            $otherParams[] = $filter['variant'];
         }
-        if (isset($filter['size']) && !empty($filter['size'])) {
-            $query->where('size', $filter['size']);
+        if (!empty($filter['brand'])) {
+            $otherWhere[] = "p.brand = ?";
+            $otherParams[] = $filter['brand'];
         }
-        if (isset($filter['unit']) && !empty($filter['unit'])) {
-            $query->where('unit', $filter['unit']);
+        if (!empty($filter['size'])) {
+            $otherWhere[] = "p.size = ?";
+            $otherParams[] = $filter['size'];
         }
-        if (isset($filter['name']) && !empty($filter['name'])) {
-            $query->where('name', 'ILIKE', '%' . $filter['name'] . '%');
+        if (!empty($filter['unit'])) {
+            $otherWhere[] = "p.unit = ?";
+            $otherParams[] = $filter['unit'];
         }
-        if (isset($filter['stock_min']) && is_numeric($filter['stock_min'])) {
-            $query->where('quantity', '>=', $filter['stock_min']);
+        if (isset($filter['stock_min'])) {
+            $otherWhere[] = "p.quantity >= ?";
+            $otherParams[] = $filter['stock_min'];
         }
-        if (isset($filter['stock_max']) && is_numeric($filter['stock_max'])) {
-            $query->where('quantity', '<=', $filter['stock_max']);
+        if (isset($filter['stock_max'])) {
+            $otherWhere[] = "p.quantity <= ?";
+            $otherParams[] = $filter['stock_max'];
         }
-        if (isset($filter['price_min']) && is_numeric($filter['price_min'])) {
-            $query->where('price', '>=', $filter['price_min']);
+        if (isset($filter['price_min'])) {
+            $otherWhere[] = "p.price >= ?";
+            $otherParams[] = $filter['price_min'];
         }
-        if (isset($filter['price_max']) && is_numeric($filter['price_max'])) {
-            $query->where('price', '<=', $filter['price_max']);
+        if (isset($filter['price_max'])) {
+            $otherWhere[] = "p.price <= ?";
+            $otherParams[] = $filter['price_max'];
         }
-        if (isset($filter['description']) && !empty($filter['description'])) {
-            $query->where('description', 'ILIKE', '%' . $filter['description'] . '%');
+        if (!empty($filter['description'])) {
+            $otherWhere[] = "p.description ILIKE ?";
+            $otherParams[] = '%' . $filter['description'] . '%';
         }
 
+        if (!empty($otherWhere)) {
+            $otherQuery .= " WHERE " . implode(" AND ", $otherWhere);
+        }
+        if ($nameQuery !== null && !empty($otherWhere)) {
+            $query = "
+            ($nameQuery)
+            UNION
+            ($otherQuery)
+        ";
+            $params = array_merge($nameParams, $otherParams);
+        } elseif ($nameQuery !== null) {
+            $query = $nameQuery;
+            $params = $nameParams;
+        } else {
+            $query = $otherQuery;
+            $params = $otherParams;
+        }
         if ($limit !== null && $page !== null) {
-            return $query->orderby('id', 'asc')->paginate($limit, ['*'], 'page', $page)->getCollection();
+            $offset = ($page - 1) * $limit;
+            $query .= " LIMIT {$limit} OFFSET {$offset}";
         }
-        return $query->get();
+        $rows = DB::select($query, $params);
+        return Product::hydrate($rows);
     }
+
+
     public function searchSimilarProductByName(string $productName): Collection
     {
         return Product::searchBySimilarity("name", $productName);
     }
     public function searchContainProductByName(string $productName): Collection
     {
-        return Product::where("name", 'ILIKE', '%' . $productName . '%')->get();
+        return Product::where('is_active', true)->where("name", 'ILIKE', '%' . $productName . '%')->get();
     }
     public function getProductFilterOptions(): array
     {
-        $results = Product::select('category', 'subcategory', 'brand')->get();
+        $results = Product::select('category', 'subcategory', 'brand')->where('is_active', true)->get();
 
         $data = [
             'kategori' => $results->pluck('category')->filter()->unique()->values()->all(),

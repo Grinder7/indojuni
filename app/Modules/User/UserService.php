@@ -31,7 +31,7 @@ class UserService
         $success = Auth::attempt($credentials, $rememberMe);
         if (!$success) {
             $throttleKey && RateLimiter::hit($throttleKey);
-            throw new \Exception('Invalid Credentials');
+            throw new \Exception('Kredensial tidak valid');
         }
         $shoppingSession = $this->shoppingSessionRepository->getShoppingSessionByUserID(Auth::id());
         if (!$shoppingSession) {
@@ -48,7 +48,7 @@ class UserService
     {
         $user = $this->userRepository->getUserByEmail($data['email']);
         if ($user) {
-            throw new \Exception('Email already exists');
+            throw new \Exception('Email sudah terdaftar');
         }
         $data['password'] = Hash::make($data['password']);
         $createdUser = $this->userRepository->createUser($data);

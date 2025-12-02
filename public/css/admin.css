@@ -1,42 +1,13 @@
-#mainBox{
-    height: 90%;
-    width: 90%;
-    position:fixed;
-    margin-top: 5vh;
-    margin-left: 5vw;
-    z-index: 99999999;
-    --bs-bg-opacity: .95;
-    visibility: hidden;
-    animation-duration: 250ms; 
-}
-
-#invoiceBox{
+#invoiceBox {
     height: 90%;
     width: 95%;
-    position:fixed;
+    position: fixed;
     margin-top: 5vh;
     margin-left: 2.5vw;
     z-index: 99999999;
     visibility: hidden;
     animation-duration: 250ms;
 }
-
-#imgBox{
-    height: 50vh;
-    width: 50vh;
-    --bs-border-opacity: .5;
-    --bs-bg-opacity: .4;
+body {
+    scrollbar-gutter: stable both-edges;
 }
-
-.squareButton{
-    height: 5vh;
-    width: 5vh;
-}
-
-.centerItem{
-    position:relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-

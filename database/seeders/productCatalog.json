@@ -11,7 +11,7 @@
     "name": "Indomie Goreng Jumbo",
     "stock": 15,
     "price": 4500,
-    "description": "Indomie Goreng Jumbo adalah varian mie instan dengan porsi lebih besar, memberikan kepuasan makan berganda dalam setiap suapan. Tekstur mi yang pipih berpadu sempurna dengan bumbu goreng special yang menggugah selera. [1]",
+    "description": "Indomie Goreng Jumbo adalah varian mie instan dengan porsi lebih besar, memberikan kepuasan makan berganda dalam setiap suapan. Tekstur mi yang pipih berpadu sempurna dengan bumbu goreng special yang menggugah selera.",
     "img": "Iyo3eLTieosZSvRJTGQl.jpg"
   },
   {
@@ -26,8 +26,8 @@
     "name": "Indomie Kuah Rasa Kaldu Ayam",
     "stock": 20,
     "price": 3500,
-    "description": "Rasakan kehangatan sejati dalam setiap tegukan dengan Indomie Kuah Rasa Kaldu Ayam. Kuahnya kaya akan aroma kaldu ayam alami, lembut di lidah, dan sempurna untuk menghangatkan tubuh di hari hujan. [1]",
-    "img": "HJpiy51TDS6Be8q2v8LE.jpg"
+    "description": "Rasakan kehangatan sejati dalam setiap tegukan dengan Indomie Kuah Rasa Kaldu Ayam. Kuahnya kaya akan aroma kaldu ayam alami, lembut di lidah, dan sempurna untuk menghangatkan tubuh di hari hujan.",
+    "img": "692ae19f765d44x62558.jpg"
   },
   {
     "product_id": 1004,
@@ -41,7 +41,7 @@
     "name": "Indomie Kuah Rasa Ayam Bawang",
     "stock": 18,
     "price": 3500,
-    "description": "Nikmati harmoni gurih kaldu ayam berpadu aroma bawang renyah dengan Indomie Kuah Rasa Ayam Bawang. Setiap sendok menghadirkan cita rasa otentik dan memanjakan lidah Anda. [1]",
+    "description": "Nikmati harmoni gurih kaldu ayam berpadu aroma bawang renyah dengan Indomie Kuah Rasa Ayam Bawang. Setiap sendok menghadirkan cita rasa otentik dan memanjakan lidah Anda.",
     "img": "zw34JULbUEUB3us1VzcW.jpg"
   },
   {
@@ -56,7 +56,7 @@
     "name": "Mie Sedaap Goreng Original",
     "stock": 25,
     "price": 3100,
-    "description": "Mie Sedaap Goreng adalah mi goreng instan pertama dengan kriuk-kriuk bawang goreng asli. Teksturnya lebih tebal, renyah, dan dipadu dengan kecap istimewa yang membuat setiap gigitan begitu menggoda. [1]"
+    "description": "Mie Sedaap Goreng adalah mi goreng instan pertama dengan kriuk-kriuk bawang goreng asli. Teksturnya lebih tebal, renyah, dan dipadu dengan kecap istimewa yang membuat setiap gigitan begitu menggoda."
   },
   {
     "product_id": 1006,
@@ -70,7 +70,7 @@
     "name": "Mie Sedaap Soto",
     "stock": 18,
     "price": 3500,
-    "description": "Mie Sedaap Soto menyajikan kelezatan mi kuah instan rasa soto pertama dengan serbuk koya gurih dan aroma segar jeruk limau. Kuahnya ringan, namun kaya rempah, sempurna dipadukan dengan sambal tambahan. [1]"
+    "description": "Mie Sedaap Soto menyajikan kelezatan mi kuah instan rasa soto pertama dengan serbuk koya gurih dan aroma segar jeruk limau. Kuahnya ringan, namun kaya rempah, sempurna dipadukan dengan sambal tambahan."
   },
   {
     "product_id": 1007,
@@ -84,7 +84,7 @@
     "name": "Sarimi Goreng Isi Dua Ayam Kremes",
     "stock": 12,
     "price": 4000,
-    "description": "Sarimi Goreng Isi Dua Ayam Kremes menghadirkan porsi ganda dengan cita rasa ayam kremes gurih. Taburan kremes renyah menambah sensasi tekstur, membuat momen makan Anda semakin istimewa. [1]"
+    "description": "Sarimi Goreng Isi Dua Ayam Kremes menghadirkan porsi ganda dengan cita rasa ayam kremes gurih. Taburan kremes renyah menambah sensasi tekstur, membuat momen makan Anda semakin istimewa."
   },
   {
     "product_id": 1008,
@@ -98,7 +98,7 @@
     "name": "Supermi Mi Instan Ayam Bawang",
     "stock": 20,
     "price": 3000,
-    "description": "Supermi Mi Instan Ayam Bawang memadukan mie kenyal dengan kaldu ayam bawang yang gurih. Kuahnya lembut, bumbunya kaya, dan setiap suapan terasa nikmat tiada duanya. [1]"
+    "description": "Supermi Mi Instan Ayam Bawang memadukan mie kenyal dengan kaldu ayam bawang yang gurih. Kuahnya lembut, bumbunya kaya, dan setiap suapan terasa nikmat tiada duanya."
   },
   {
     "product_id": 1009,
@@ -112,7 +112,7 @@
     "name": "ABC Mie Rebus Ayam Bawang",
     "stock": 15,
     "price": 2100,
-    "description": "ABC Mie Rebus Ayam Bawang menawarkan sensasi kaldu ayam bawang yang lezat. Mi-nya lembut, bumbunya pas, cocok dinikmati seluruh keluarga kapan saja. [1]"
+    "description": "ABC Mie Rebus Ayam Bawang menawarkan sensasi kaldu ayam bawang yang lezat. Mi-nya lembut, bumbunya pas, cocok dinikmati seluruh keluarga kapan saja."
   },
   {
     "product_id": 1010,
@@ -126,7 +126,7 @@
     "name": "Lemonilo Mie Goreng Alami",
     "stock": 12,
     "price": 6800,
-    "description": "Lemonilo Mie Goreng Alami dibuat dari saripati sayuran dan dipanggang, bukan digoreng, sehingga bebas pengawet dan pewarna. Mi-nya renyah, warna hijau alami dari bayam, sehat tanpa MSG, sempurna untuk gaya hidup modern. [1]"
+    "description": "Lemonilo Mie Goreng Alami dibuat dari saripati sayuran dan dipanggang, bukan digoreng, sehingga bebas pengawet dan pewarna. Mi-nya renyah, warna hijau alami dari bayam, sehat tanpa MSG, sempurna untuk gaya hidup modern."
   },
   {
     "product_id": 1011,
@@ -140,7 +140,7 @@
     "name": "Pop Mie Goreng Spesial",
     "stock": 14,
     "price": 4500,
-    "description": "Pop Mie Goreng Spesial menggabungkan mie kenyal dengan potongan daging ayam asli dan sayuran segar, dipadu bumbu goreng spesial yang gurih dan kaya rempah. [1]"
+    "description": "Pop Mie Goreng Spesial menggabungkan mie kenyal dengan potongan daging ayam asli dan sayuran segar, dipadu bumbu goreng spesial yang gurih dan kaya rempah."
   },
   {
     "product_id": 1012,
@@ -154,7 +154,7 @@
     "name": "Pop Mie Goreng Pedas",
     "stock": 20,
     "price": 6200,
-    "description": "Pop Mie Goreng Pedas memadukan mie kenyal dengan bumbu pedas menggigit, menghasilkan sensasi panas dan gurih yang menggugah selera. [1]"
+    "description": "Pop Mie Goreng Pedas memadukan mie kenyal dengan bumbu pedas menggigit, menghasilkan sensasi panas dan gurih yang menggugah selera."
   },
   {
     "product_id": 1013,
@@ -168,7 +168,7 @@
     "name": "Pop Mie Rasa Kari Ayam",
     "stock": 18,
     "price": 5100,
-    "description": "Pop Mie Rasa Kari Ayam menyajikan kuah kari ayam kental dan gurih, dilengkapi potongan ayam dan serbuk koya yang renyah untuk sensasi rasa yang otentik. [1]"
+    "description": "Pop Mie Rasa Kari Ayam menyajikan kuah kari ayam kental dan gurih, dilengkapi potongan ayam dan serbuk koya yang renyah untuk sensasi rasa yang otentik."
   },
   {
     "product_id": 1014,
@@ -182,7 +182,7 @@
     "name": "Pop Mie Rasa Soto Ayam",
     "stock": 22,
     "price": 3400,
-    "description": "Pop Mie Rasa Soto Ayam menawarkan kuah soto ayam ringan namun kaya bumbu, diperkaya serbuk koya gurih dan aroma jeruk limau yang menyegarkan. [1]"
+    "description": "Pop Mie Rasa Soto Ayam menawarkan kuah soto ayam ringan namun kaya bumbu, diperkaya serbuk koya gurih dan aroma jeruk limau yang menyegarkan."
   },
   {
     "product_id": 1015,
@@ -196,7 +196,7 @@
     "name": "Sarimi Mie Kuah Isi Dua Baso Sapi",
     "stock": 12,
     "price": 3500,
-    "description": "Sarimi Mie Kuah Isi Dua Baso Sapi menggabungkan dua keping mie kenyal dengan kuah kaldu sapi gurih, dilengkapi potongan bakso sapi dan sayuran kering yang menambah kenikmatan. [1]"
+    "description": "Sarimi Mie Kuah Isi Dua Baso Sapi menggabungkan dua keping mie kenyal dengan kuah kaldu sapi gurih, dilengkapi potongan bakso sapi dan sayuran kering yang menambah kenikmatan."
   },
   {
     "product_id": 1016,
@@ -210,7 +210,7 @@
     "name": "Sarimi Mie Kuah Isi Dua Ayam Bawang",
     "stock": 16,
     "price": 3400,
-    "description": "Sarimi Mie Kuah Isi Dua Ayam Bawang memadukan empuknya dua lapis mie dengan kuah ayam bawang aromatik, disempurnakan taburan bawang goreng yang renyah. [1]"
+    "description": "Sarimi Mie Kuah Isi Dua Ayam Bawang memadukan empuknya dua lapis mie dengan kuah ayam bawang aromatik, disempurnakan taburan bawang goreng yang renyah."
   },
   {
     "product_id": 1017,
@@ -224,7 +224,7 @@
     "name": "Indomie Mi Goreng Rendang",
     "stock": 25,
     "price": 2700,
-    "description": "Indomie Mi Goreng Rendang menghadirkan cita rasa rendang pedas autentik dengan bumbu rempah Minang dan topping rendang kering yang gurih. [1]"
+    "description": "Indomie Mi Goreng Rendang menghadirkan cita rasa rendang pedas autentik dengan bumbu rempah Minang dan topping rendang kering yang gurih."
   },
   {
     "product_id": 1018,
@@ -238,7 +238,7 @@
     "name": "Indomie Mi Goreng Aceh",
     "stock": 22,
     "price": 3500,
-    "description": "Indomie Mi Goreng Aceh dibuat dari tepung terigu pilihan dan dipadu bumbu rempah khas Aceh, menyajikan kombinasi kari pedas dan gurih yang menggugah selera. [1]"
+    "description": "Indomie Mi Goreng Aceh dibuat dari tepung terigu pilihan dan dipadu bumbu rempah khas Aceh, menyajikan kombinasi kari pedas dan gurih yang menggugah selera."
   },
   {
     "product_id": 1101,
@@ -252,7 +252,7 @@
     "name": "Cimory Susu UHT Chocolate (250 ml)",
     "stock": 36,
     "price": 5900,
-    "description": "Bebas laktosa. [1]"
+    "description": "Bebas laktosa."
   },
   {
     "product_id": 1102,
@@ -266,7 +266,7 @@
     "name": "Ultra Milk UHT Full Cream (750 ml)",
     "stock": 59,
     "price": 12500,
-    "description": "UHT full cream. [1]"
+    "description": "UHT full cream."
   },
   {
     "product_id": 1103,
@@ -280,7 +280,7 @@
     "name": "Ultra Milk UHT Chocolate (1 L)",
     "stock": 11,
     "price": 14490,
-    "description": "UHT full cream rasa cokelat. [1]"
+    "description": "UHT full cream rasa cokelat."
   },
   {
     "product_id": 1104,
@@ -294,7 +294,7 @@
     "name": "Greenfields UHT Strawberry (125 ml)",
     "stock": 23,
     "price": 3900,
-    "description": "UHT rasa stroberi kemasan kotak. [1]"
+    "description": "UHT rasa stroberi kemasan kotak."
   },
   {
     "product_id": 1105,
@@ -308,7 +308,7 @@
     "name": "Greenfields Fresh Milk Pasteurisasi Full Cream (500 ml)",
     "stock": 98,
     "price": 17000,
-    "description": "Susu segar pasteurisasi full cream. [1]"
+    "description": "Susu segar pasteurisasi full cream."
   },
   {
     "product_id": 1106,
@@ -322,7 +322,7 @@
     "name": "Frisian Flag UHT Purefarm Full Cream (946 ml)",
     "stock": 3,
     "price": 18800,
-    "description": "UHT full cream Purefarm. [1]"
+    "description": "UHT full cream Purefarm."
   },
   {
     "product_id": 1107,
@@ -336,7 +336,7 @@
     "name": "Dancow FortiGro UHT (110 ml)",
     "stock": 59,
     "price": 2500,
-    "description": "Mini UHT diperkaya omega-3 & omega-6 untuk anak 6-12 tahun. [1]"
+    "description": "Mini UHT diperkaya omega-3 & omega-6 untuk anak 6-12 tahun."
   },
   {
     "product_id": 1108,
@@ -350,7 +350,7 @@
     "name": "Diamond Milk Low Fat High Calcium (1 L)",
     "stock": 11,
     "price": 22200,
-    "description": "Susu rendah lemak tinggi kalsium. [1]"
+    "description": "Susu rendah lemak tinggi kalsium."
   },
   {
     "product_id": 1109,
@@ -364,7 +364,7 @@
     "name": "Indomilk UHT Plain (1 L)",
     "stock": 0,
     "price": 17600,
-    "description": "UHT plain. [1]"
+    "description": "UHT plain."
   },
   {
     "product_id": 1110,
@@ -378,7 +378,7 @@
     "name": "Bear Brand Susu Steril Tube (189 ml)",
     "stock": 56,
     "price": 9000,
-    "description": "Susu steril tube. [1]"
+    "description": "Susu steril tube."
   },
   {
     "product_id": 1111,
@@ -392,7 +392,7 @@
     "name": "Sustagen Kid UHT Vanilla (235 ml)",
     "stock": 12,
     "price": 12000,
-    "description": "UHT rasa vanila. [1]"
+    "description": "UHT rasa vanila."
   },
   {
     "product_id": 1112,
@@ -406,7 +406,7 @@
     "name": "Milagros Susu Kambing Bubuk (200 g)",
     "stock": 6,
     "price": 50000,
-    "description": "Susu kambing bubuk. [1]"
+    "description": "Susu kambing bubuk."
   },
   {
     "product_id": 1113,
@@ -420,7 +420,7 @@
     "name": "Greenfields Yogurt Original 1 kg",
     "stock": 61,
     "price": 95900,
-    "description": "Plain yoghurt dari susu segar, sumber serat pangan. [1]"
+    "description": "Plain yoghurt dari susu segar, sumber serat pangan."
   },
   {
     "product_id": 1114,
@@ -434,7 +434,7 @@
     "name": "Yoforia Berry Smooth 200 ml",
     "stock": 3,
     "price": 9700,
-    "description": "Refreshing yogurt drink. [1]"
+    "description": "Refreshing yogurt drink."
   },
   {
     "product_id": 1115,
@@ -448,7 +448,8 @@
     "name": "Biokul Yogurt Blueberry 1 L",
     "stock": 1,
     "price": 79400,
-    "description": "Flavoured yoghurt blueberry rendah lemak. [1]"
+    "description": "Flavoured yoghurt blueberry rendah lemak.",
+    "img": "692f05c7cec9c9L74089.jpg"
   },
   {
     "product_id": 1116,
@@ -462,7 +463,8 @@
     "name": "Biokul Yogurt Greek Strawberry 473 ml",
     "stock": 69,
     "price": 72000,
-    "description": "Greek yoghurt rasa strawberry, sumber kalsium. [1]"
+    "description": "Greek yoghurt rasa strawberry, sumber kalsium.",
+    "img": "692f0f6e817ca5636269.jpg"
   },
   {
     "product_id": 1117,
@@ -476,7 +478,7 @@
     "name": "Greenfields Yogurt Mixed Berry (4x125 g)",
     "stock": 4,
     "price": 50900,
-    "description": "Yoghurt campuran berry dari susu segar. [1]"
+    "description": "Yoghurt campuran berry dari susu segar."
   },
   {
     "product_id": 1118,
@@ -490,7 +492,7 @@
     "name": "Cimory Yogurt Drink Blueberry 250 ml",
     "stock": 33,
     "price": 9500,
-    "description": "Drinkable yoghurt blueberry dari susu segar. [1]"
+    "description": "Drinkable yoghurt blueberry dari susu segar."
   },
   {
     "product_id": 1119,
@@ -504,7 +506,7 @@
     "name": "Greenfields Yogurt Mango Pouch 80 g",
     "stock": 42,
     "price": 9900,
-    "description": "Yoghurt pouch rasa mangga. [1]"
+    "description": "Yoghurt pouch rasa mangga."
   },
   {
     "product_id": 1120,
@@ -518,7 +520,7 @@
     "name": "Cimory Yoghurt Strawberry 240 ml",
     "stock": 12,
     "price": 9500,
-    "description": "Yoghurt rasa stroberi. [1]"
+    "description": "Yoghurt rasa stroberi."
   },
   {
     "product_id": 1121,
@@ -532,7 +534,7 @@
     "name": "Heavenly Blush Greek Yoghurt Drink 200 ml",
     "stock": 63,
     "price": 19500,
-    "description": "Greek yoghurt drink premium. [1]"
+    "description": "Greek yoghurt drink premium."
   },
   {
     "product_id": 1122,
@@ -546,7 +548,7 @@
     "name": "Greenfields Yogurt Original Pouch 80 g",
     "stock": 35,
     "price": 9900,
-    "description": "Plain yoghurt pouch praktis. [1]"
+    "description": "Plain yoghurt pouch praktis."
   },
   {
     "product_id": 1123,
@@ -560,7 +562,7 @@
     "name": "Biokul Yogurt Original 1 L",
     "stock": 19,
     "price": 79400,
-    "description": "Plain yoghurt rendah lemak. [1]"
+    "description": "Plain yoghurt rendah lemak."
   },
   {
     "product_id": 2001,
