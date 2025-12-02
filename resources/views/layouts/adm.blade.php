@@ -69,18 +69,40 @@
                 -webkit-overflow-scrolling: touch;
             }
         </style>
-
-
     </head>
 
-    <body>
-
+    <body class="d-flex flex-column min-vh-100">
+        <header class="w-full">
+            <div class="navbar navbar-dark bg-dark shadow-sm">
+                <div class="container">
+                    <a href="#" class="navbar-brand d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <strong>&nbsp;Admin Page</strong>
+                    </a>
+                    <li><a href="/" class="text-white">Log Out</a></li>
+                </div>
+            </div>
+        </header>
         @yield('content')
+        <footer class="d-flex border-top mx-3 mb-3 mt-auto border-black">
+            <div class="container-fluid mt-1">
+                <a href="https://getbootstrap.com/" target="_blank" class="mb-md-0 text-decoration-none lh-1 mb-3 me-2">
+                    <i class="fa-brands fa-bootstrap"></i>
+                </a>
+                <span>&copy; 2023 IndoJuni, Inc</span>
+            </div>
+        </footer>
 
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
+    @yield('script')
     @include('partials.sweet-alert')
     </body>
 

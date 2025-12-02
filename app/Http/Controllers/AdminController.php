@@ -26,7 +26,7 @@ class AdminController extends Controller
         $this->user = $user;
     }
 
-    public function adminHome(Request $request)
+    public function dashboard(Request $request)
     {
         $searchQuery = $request->query('search');
         if ($searchQuery === null) $searchQuery = '';
@@ -37,7 +37,7 @@ class AdminController extends Controller
         // dd($filter);
         $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery, $filter);
         $productFilters = $this->productService->getProductFilterOptions();
-        return view('pages.admin.admin')->with(compact("products", "productFilters"));
+        return view('pages.admin.dashboard')->with(compact("products", "productFilters"));
     }
 
     public function modify(ModifyProductRequest $request)

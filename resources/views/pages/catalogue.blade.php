@@ -7,10 +7,12 @@
 @section('content')
     <div class="container-fluid" style="margin-top: 80px;">
         <div class="album bg-body-tertiary">
-            @include('components.catalogue-filters', [
-                'filters' => $productFilters,
-                'route' => route('app.catalogue.page'),
-            ])
+            <div class="my-3">
+                @include('components.catalogue-filters', [
+                    'filters' => $productFilters,
+                    'route' => route('app.catalogue.page'),
+                ])
+            </div>
             <div class="row p-3">
                 <div class="col">
                     {{ $products->appends(request()->query())->links() }}

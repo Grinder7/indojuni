@@ -1,4 +1,4 @@
-<div class="row p-3">
+<div class="row">
     <div class="col d-flex flex-column flex-md-row justify-content-between gap-3">
 
         {{-- FILTER SECTION --}}
