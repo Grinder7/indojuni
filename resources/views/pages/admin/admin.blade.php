@@ -1,7 +1,6 @@
 @extends('layouts.adm')
 
 @section('content')
-
     <div class="card bg-light border-secondary align-self-middle p-3" id="mainBox">
         <div class="d-flex justify-content-between mb-5">
             <h1 id="randomText">Create New Data</h1>
@@ -14,7 +13,7 @@
                     <img src="" class="centerItem" id="display-inp" alt="cover" style="object-fit: cover">
                 </div>
 
-                <div class="ms-5 w-50">
+                <div class="w-50 ms-5">
                     <div class="input-group mb-3">
                         <span class="input-group-text w-25">Name</span>
                         <input type="text" class="form-control" id="name-inp" value="" name="name"
@@ -44,19 +43,18 @@
                             accept="image/jpeg, image/png" onchange="fileProcess(event)">
                     </div>
 
-                    <input type="hidden" value="" id="id-inp" name="product_id">
+                    <input type="hidden" value=0 id="id-inp" name="id">
 
                 </div>
             </div>
 
-            <div class="bottom-0 end-0 position-absolute" style="transform: translate(-90%, -75%);">
+            <div class="position-absolute bottom-0 end-0" style="transform: translate(-90%, -75%);">
                 <button class="btn btn-outline-success btn-lg align-right" id="confirmButton"
                     type="submit">Confirm</button>
             </div>
 
         </form>
     </div>
-
     <header>
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
@@ -75,40 +73,90 @@
     </header>
 
     <main>
-
-        <section class="py-5 text-center container">
+        <section class="container py-5 text-center">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Hello, Admin</h1>
                     <p>
-                        <a href="/admin/invoice" class="btn btn-secondary my-2">View invoices</a>
-                    </p>
-                    <p class="lead text-muted"><br><br><br></p>
-                    <p>
-                        <button class="btn btn-primary my-2 showSidebar" value="0">Add new data</button>
+                        <button class="btn btn-primary showSidebar my-2" value="0">Add new data</button>
                     </p>
                 </div>
             </div>
         </section>
 
-        <div class="album py-5 bg-light">
-            <div class="container">
-
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="container-fluid">
+            <div class="album bg-light py-5">
+                @include('components.catalogue-filters', [
+                    'filters' => $productFilters,
+                    'route' => route('app.catalogue.page'),
+                ])
+                <div class="row p-3">
+                    <div class="col">
+                        {{ $products->appends(request()->query())->links() }}
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($products as $product)
+                        <div class="col-12 col-sm-4 col-md-3 col-xxl-2 d-flex align-items-stretch mb-3">
+                            <div class="card shadow-sm" style="width: 100%">
+                                @if ($product->img)
+                                    <img src="{{ $product->img_path }}" alt="productimg"
+                                        height="200"style="object-fit: contain">
+                                @else
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
+                                        xmlns="http://www.w3.org/2000/svg" role="img"
+                                        aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                        focusable="false">
+                                        <title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="#55595c" /><text text-anchor="middle"
+                                            x="50%" y="50%" fill="#eceeef" dy=".3em">Image</text>
+                                    </svg>
+                                @endif
+                                <div class="card-body d-flex flex-column">
+                                    <p class="card-text fw-bolder name-src">{{ $product->name }}</p>
+                                    <p class="card-text text-body-secondary desc-src mb-4">{{ $product->description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                        <small
+                                            class="text-body-secondary price-src">Rp{{ number_format($product->price, 2, ',', '.') }}</small>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <div>
+                                                <small class="text-muted stock-src">{{ $product->stock }}</small>
+                                                <span class="text-muted me-1">item(s)</span>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button type="button"
+                                                    class="btn btn-sm btn-outline-secondary showSidebar editButton"
+                                                    value="{{ $product->id }}">Edit</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary delButton"
+                                                    value="{{ $product->id }}">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="row p-3">
+                    <div class="col">
+                        {{ $products->links() }}
+                    </div>
+                </div>
+                {{-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     @if ($products)
                         @foreach ($products as $product)
                             <div class="col-lg-4 d-flex align-items-stretch mb-3">
                                 <div class="card shadow-sm">
-                                    <img class="img-src" src="{{ asset($product->img) }}" alt="cover" height="225"
-                                        style="object-fit: contain" data-imgsrc="{{ asset($product->img) }}">
+                                    <img class="img-src" src="{{ asset('images/products/' . $product->img) }}"
+                                        alt="cover" height="225" style="object-fit: contain"
+                                        data-imgsrc="{{ asset($product->img) }}">
 
                                     <div class="card-body d-flex flex-column">
                                         <b>
-                                            <a class="card-text text-black name-src"
+                                            <a class="card-text name-src text-black"
                                                 style="text-decoration: none;">{{ $product->name }}</a>
                                             <br>
                                             <a class="text-black" style="text-decoration: none;">( Rp</a>
-                                            <a class="card-text price-src text-black price-src"
+                                            <a class="card-text price-src price-src text-black"
                                                 style="text-decoration: none;">{{ number_format($product->price, 0, ',', '.') }}</a>
                                             <a class="text-black" style="text-decoration: none;">)</a>
                                         </b>
@@ -133,7 +181,7 @@
                             </div>
                         @endforeach
                     @endif
-                </div>
+                </div> --}}
             </div>
         </div>
     </main>

@@ -29,7 +29,7 @@ class ModifyProductRequest extends FormRequest
             'stock' => 'required|integer',
             'price' => 'required|integer',
             'img' => 'nullable|file|image',
-            'product_id' => 'nullable|string|exists:products,id',
+            'id' => 'required|integer|exists:products,id',
         ];
     }
 }

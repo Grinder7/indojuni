@@ -15,9 +15,9 @@ class PaymentDetail extends Model
     ];
     protected $fillable = [
         'user_id',
-        'is_default',
         'firstname',
         'lastname',
+        'email',
         'address',
         'city',
         'province',
