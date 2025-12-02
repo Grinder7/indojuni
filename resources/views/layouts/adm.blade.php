@@ -1,21 +1,14 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.104.2">
         <meta name="robots" content="NOINDEX, NOFOLLOW">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Admin Home Page</title>
-
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/album/">
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
+        <title>@yield('title')</title>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
         <style>
             .bd-placeholder-img {
@@ -39,21 +32,19 @@
         </style>
     </head>
 
-    <body class="d-flex flex-column min-vh-100">
-        <header class="w-full">
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container">
-                    <a href="#" class="navbar-brand d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                            class="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                            <path fill-rule="evenodd"
-                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                        </svg>
-                        <strong>&nbsp;Admin Page</strong>
-                    </a>
-                    <li><a href="/" class="text-white">Log Out</a></li>
-                </div>
+    <body class="d-flex flex-column min-vh-100 bg-light">
+        <header class="w-100">
+            <div class="navbar navbar-dark bg-dark px-3 shadow-sm">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                    <strong>&nbsp;Admin Page</strong>
+                </a>
+                <li><a href="/" class="text-white">Log Out</a></li>
             </div>
         </header>
         @yield('content')
@@ -65,13 +56,8 @@
                 <span>&copy; 2023 IndoJuni, Inc</span>
             </div>
         </footer>
-
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-    </script>
-    @yield('script')
-    @include('partials.sweet-alert')
+        @yield('script')
+        @include('partials.sweet-alert')
     </body>
 
 </html>

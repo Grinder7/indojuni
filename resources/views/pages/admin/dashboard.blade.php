@@ -1,4 +1,5 @@
 @extends('layouts.adm')
+@section('title', 'Admin Dashboard')
 
 @section('content')
     <div class="modal fade modal-dialog-scrollable modal-xl" id="mainBox" tabindex="-1" aria-labelledby="mainBoxLabel"
@@ -10,11 +11,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form_inp" action="{{ route('adm.edit') }}" method="POST" enctype="multipart/form-data"
-                        class="d-flex gap-4">
+                    <form id="form-inp" action="{{ route('adm.edit') }}" method="POST" enctype="multipart/form-data"
+                        class="d-flex w-100 gap-4">
                         @csrf
-                        <div id="imgBox" class="h-full w-1/2"></div>
-                        <div class="d-flex flex-column w-1/2">
+                        <div id="imgBox"
+                            style="width:40%; max-height:600px; display:flex;place-items:center;overflow:hidden;  background: #f8f8f8">
+                        </div>
+                        <div class="d-flex flex-column" style="width:60%">
                             <input type="hidden" value=0 id="id-inp" name="id">
                             <div class="mb-3">
                                 <label for="name-inp" class="form-label">Product Name</label>
@@ -43,16 +46,12 @@
                                     accept="image/jpeg, image/png" onchange="fileProcess(event)">
                             </div>
                         </div>
-                        {{-- <div class="position-absolute bottom-0 end-0" style="transform: translate(-90%, -75%);">
-                            <button class="btn btn-outline-success btn-lg align-right" id="confirmButton"
-                                type="submit">Confirm</button>
-                        </div> --}}
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-outline-success btn-lg align-right" id="confirmButton"
-                        type="submit">Confirm</button>
+                    <button id="closeModalBtn" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button id="submitFormRef" class="btn btn-outline-success" type="submit">Confirm</button>
                 </div>
             </div>
 
@@ -60,7 +59,7 @@
     </div>
 
     <main class="container-fluid">
-        <div class="album bg-light">
+        <div class="album">
             <button class="btn btn-primary open-modal my-3" value="0" data-bs-modalType="Create"
                 data-bs-target="#mainBox" data-bs-toggle="modal">Create product</button>
             <div class="mb-3">
@@ -76,7 +75,7 @@
             </div>
             <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-12 col-sm-4 col-md-3 col-xxl-2 d-flex align-items-stretch mb-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-xl-3 col-xxl-2 d-flex align-items-stretch mb-3">
                         <div class="card shadow-sm" style="width: 100%">
                             @if ($product->img)
                                 <img src="{{ $product->img_path }}" alt="productimg" height="200"
@@ -86,8 +85,8 @@
                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                                     preserveAspectRatio="xMidYMid slice" focusable="false">
                                     <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text text-anchor="middle" x="50%"
-                                        y="50%" fill="#eceeef" dy=".3em">Image</text>
+                                    <rect width="100%" height="100%" fill="#55595c" /><text text-anchor="middle"
+                                        x="50%" y="50%" fill="#eceeef" dy=".3em">Image</text>
                                 </svg>
                             @endif
                             <div class="card-body d-flex flex-column">
@@ -129,17 +128,25 @@
 @section('script')
     <script>
         const datas = @json($products, JSON_UNESCAPED_UNICODE).data || [];
-        const formRef = document.getElementById("form_inp");
+        const formRef = document.getElementById("form-inp");
+        const nameInputRef = document.getElementById("name-inp");
+        const descInputRef = document.getElementById("desc-inp");
+        const stockInputRef = document.getElementById("stock-inp");
+        const priceInputRef = document.getElementById("price-inp");
+        const idInputRef = document.getElementById("id-inp");
+        const imageInputRef = document.getElementById("img-inp");
+
         const editButton = document.getElementsByClassName("editButton");
         const delButton = document.getElementsByClassName("delButton");
-        const confirmButton = document.getElementById("confirmButton");
+        const submitFormRef = document.getElementById("submitFormRef");
+        const closeModalBtnRef = document.getElementById("closeModalBtn");
+
         const mainBox = document.getElementById("mainBox");
-        const image = document.getElementById("image-inp");
         const imgBox = document.getElementById("imgBox");
         const svgPlaceholder = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svgPlaceholder.setAttribute("class", "bd-placeholder-img card-img-top");
         svgPlaceholder.setAttribute("width", "100%");
-        svgPlaceholder.setAttribute("height", "200");
+        svgPlaceholder.setAttribute("height", "100%");
         svgPlaceholder.setAttribute("xmlns", "http://www.w3.org/2000/svg");
         svgPlaceholder.setAttribute("role", "img");
         svgPlaceholder.setAttribute("aria-label", "Placeholder: Thumbnail");
@@ -176,24 +183,66 @@
                     const imgDOM = document.createElement("img");
                     imgDOM.src = data.img_path;
                     imgDOM.alt = "cover";
-                    imgDOM.style.objectFit = "cover";
+
+                    imgDOM.style.width = "100%";
+                    imgDOM.style.height = "100%";
+                    imgDOM.style.objectFit = "contain"; // maintain aspect ratio + leave blank space
+                    imgDOM.style.objectPosition = "center";
+
                     imgBox.innerHTML = '';
                     imgBox.appendChild(imgDOM);
                 } else {
                     imgBox.innerHTML = '';
                     imgBox.appendChild(svgPlaceholder);
                 }
+
+            })
+            mainBox.addEventListener('hidden.bs.modal', e => {
+                imgBox.innerHTML = '';
+                imgBox.appendChild(svgPlaceholder);
+                formRef.reset();
             })
         }
 
-        for (let i = 0; i < editButton.length; i++) {
-            editButton[i].addEventListener("click", () => {
-                const data = datas.find(item => item.id == editButton[i].value) || {};
-                document.getElementById("name-inp").value = data.name || '';
-                document.getElementById("desc-inp").value = data.description || '';
-                document.getElementById("stock-inp").value = data.stock || '';
-                document.getElementById("price-inp").value = data.price || '';
-                document.getElementById("id-inp").value = editButton[i].value;
+        if (editButton?.length) {
+            for (let i = 0; i < editButton.length; i++) {
+                const button = editButton[i];
+                button.addEventListener("click", (e) => {
+                    const data = datas.find(item => item.id == e.target.value) || {};
+                    nameInputRef.value = data.name || '';
+                    descInputRef.value = data.description || '';
+                    stockInputRef.value = data.stock || '';
+                    priceInputRef.value = data.price || '';
+                    idInputRef.value = data.id || '0';
+                });
+            }
+        }
+
+        if (submitFormRef) {
+            submitFormRef.addEventListener("click", (e) => {
+                e.preventDefault();
+                // validate inputs
+                if (nameInputRef.value.trim() == '') {
+                    Swal.fire('Error', 'Product name is required', 'error');
+                    return;
+                }
+                if (descInputRef.value.trim() == '') {
+                    Swal.fire('Error', 'Product description is required', 'error');
+                    return;
+                }
+                if (stockInputRef.value.trim() == '' || isNaN(stockInputRef.value) || Number(stockInputRef.value) <
+                    0) {
+                    Swal.fire('Error', 'Product stock must be a non-negative number', 'error');
+                    return;
+                }
+                if (priceInputRef.value.trim() == '' || isNaN(priceInputRef.value) || Number(priceInputRef.value) <
+                    0) {
+                    Swal.fire('Error', 'Product price must be a non-negative number', 'error');
+                    return;
+                }
+                submitFormRef.disabled = true;
+                closeModalBtnRef.disabled = true;
+                formRef.submit();
             });
         }
 
@@ -203,12 +252,17 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 const imgSrc = e.target.result;
-                const imagePreview = document.createElement("img");
-                imagePreview.src = imgSrc;
-                imagePreview.id = "display-inp";
-                imagePreview.style.objectFit = "cover";
+                const imgDOM = document.createElement("img");
+                imgDOM.src = imgSrc;
+                imgDOM.alt = "cover";
+
+                imgDOM.style.width = "100%";
+                imgDOM.style.height = "100%";
+                imgDOM.style.objectFit = "contain";
+                imgDOM.style.objectPosition = "center";
+
                 imgBox.innerHTML = "";
-                imgBox.appendChild(imagePreview);
+                imgBox.appendChild(imgDOM);
             };
             reader.readAsDataURL(file);
         }
@@ -267,32 +321,5 @@
                 })
             })
         }
-        const input = {
-            name: document.getElementById("name-inp"),
-            desc: document.getElementById("desc-inp"),
-            stock: document.getElementById("stock-inp"),
-            price: document.getElementById("price-inp"),
-            display: document.getElementById("display-inp"),
-            id: document.getElementById("id-inp"),
-            clearInputValue: function() {
-                this.name.value = "";
-                this.desc.value = "";
-                this.stock.value = "";
-                this.price.value = "";
-                this.display.src = "";
-                this.id.value = "";
-            },
-        };
-
-        confirmButton.addEventListener("click", () => {
-            const inputData = {
-                name: input.name.value,
-                desc: input.desc.value,
-                stock: input.stock.value,
-                price: input.price.value,
-                display: image.src,
-            }
-            editData(inputData);
-        });
     </script>
 @endsection

@@ -13,7 +13,7 @@ class ProductRepository
 {
     public function getProductByName(string $name): Product | null
     {
-        return Product::where('name', $name)->first();
+        return Product::where('is_active', true)->where('name', $name)->first();
     }
     public function createProduct(array $data): Product
     {
@@ -21,7 +21,7 @@ class ProductRepository
     }
     public function getProductByID(int $productID): Product | null
     {
-        return Product::find($productID);
+        return Product::where('is_active', true)->find($productID);
     }
     public function subtractQuantityByID(int $productID, int $quantity): bool
     {
@@ -47,6 +47,7 @@ class ProductRepository
     {
         if ($searchKeyword === null || trim($searchKeyword) === '') {
             $query = Product::query();
+            $query->where('is_active', true);
             // Apply filters
             if (isset($filter['category']) && !empty($filter['category'])) {
                 $query->where('category', $filter['category']);
@@ -57,7 +58,7 @@ class ProductRepository
             if (isset($filter['brand']) && !empty($filter['brand'])) {
                 $query->where('brand', $filter['brand']);
             }
-            return $query->orderby($column, 'asc')->paginate($page);
+            return $query->orderBy($column, 'asc')->paginate($page);
         }
         return Product::searchBySimilarityPaginated("name", $searchKeyword, $page, $filter);
     }
@@ -94,6 +95,7 @@ class ProductRepository
         }
         $otherQuery = "SELECT p.* FROM products p";
         $otherWhere = [];
+        $otherWhere[] = "p.is_active = true";
         if (!empty($filter['category'])) {
             $otherWhere[] = "p.category = ?";
             $otherParams[] = $filter['category'];
@@ -175,11 +177,11 @@ class ProductRepository
     }
     public function searchContainProductByName(string $productName): Collection
     {
-        return Product::where("name", 'ILIKE', '%' . $productName . '%')->get();
+        return Product::where('is_active', true)->where("name", 'ILIKE', '%' . $productName . '%')->get();
     }
     public function getProductFilterOptions(): array
     {
-        $results = Product::select('category', 'subcategory', 'brand')->get();
+        $results = Product::select('category', 'subcategory', 'brand')->where('is_active', true)->get();
 
         $data = [
             'kategori' => $results->pluck('category')->filter()->unique()->values()->all(),

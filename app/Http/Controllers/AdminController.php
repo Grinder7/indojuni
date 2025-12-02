@@ -149,8 +149,8 @@ class AdminController extends Controller
         if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
             Storage::disk('admin_img_upload')->delete($product->img);
         }
-        $result = $product->delete();
-
+        $product->is_active = false;
+        $result = $product->save();
         return response()->json(['success' => (bool)$result]);
     }
 }

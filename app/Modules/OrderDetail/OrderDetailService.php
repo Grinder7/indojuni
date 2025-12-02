@@ -36,7 +36,7 @@ class OrderDetailService
                 "quantity" => $item['quantity'],
             ]);
             if (!$success) {
-                throw new \Exception("Failed to create order item");
+                throw new \Exception("Gagal menambahkan item pesanan");
             }
         }
         return $orderDetail;

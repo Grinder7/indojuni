@@ -71,7 +71,7 @@
     </main>
 @endsection
 @section('scripts')
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    {{-- <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script> --}}
     <script>
         async function fetchData(product_id) {
             const res = await fetch("{{ route('app.cart.add') }}", {

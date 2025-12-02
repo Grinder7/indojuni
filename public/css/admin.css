@@ -8,3 +8,6 @@
     visibility: hidden;
     animation-duration: 250ms;
 }
+body {
+    scrollbar-gutter: stable both-edges;
+}
