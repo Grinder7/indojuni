@@ -303,7 +303,7 @@
                         if (response.success == true) {
                             Swal.fire(
                                     'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Product has been deleted.',
                                     'success'
                                 )
                                 .then(() => {

@@ -138,19 +138,23 @@ class AdminController extends Controller
 
     public function deleteData(Request $request)
     {
-        $validated = $request->validate([
-            'product_id' => "required|integer",
-        ]);
-        $product = $this->productService->getProductById($validated['product_id']);
-        if (!$product) {
-            return response()->json(['success' => false, 'message' => 'Product not found']);
+        try {
+            $validated = $request->validate([
+                'product_id' => "required|integer",
+            ]);
+            $product = $this->productService->getProductById($validated['product_id']);
+            if (!$product) {
+                return response()->json(['success' => false, 'message' => 'Product not found']);
+            }
+            // delete file
+            if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
+                Storage::disk('admin_img_upload')->delete($product->img);
+            }
+            $product->is_active = false;
+            $result = $product->save();
+            return response()->json(['success' => (bool)$result]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()]);
         }
-        // delete file
-        if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
-            Storage::disk('admin_img_upload')->delete($product->img);
-        }
-        $product->is_active = false;
-        $result = $product->save();
-        return response()->json(['success' => (bool)$result]);
     }
 }
