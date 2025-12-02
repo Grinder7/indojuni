@@ -23,12 +23,6 @@ RUN npm run build
 FROM indojuni:prod-base AS app
 WORKDIR /app
 
-# Copy Composer manifests
-COPY composer.json composer.lock ./
-
-# Install PHP dependencies
-RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
-
 # Copy application source
 COPY . .
 

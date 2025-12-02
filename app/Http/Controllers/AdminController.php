@@ -43,14 +43,8 @@ class AdminController extends Controller
     public function modify(ModifyProductRequest $request)
     {
         $validate = $request->validated();
-        $inputData = [
-            'id' => intval($validate['id']),
-            'name' => $validate['name'],
-            'description' => $validate['description'],
-            'stock' => $validate['stock'],
-            'price' => $validate['price'],
-            'img' => $validate['img'] ?? null
-        ];
+        $inputData = $validate;
+        $inputData['id'] = intval($inputData['id']);
         $product = $this->productService->getProductById($inputData['id']);
         if ($request->hasFile('img')) {
             $uploaded = $request->file('img');
@@ -74,7 +68,7 @@ class AdminController extends Controller
             $this->productService->updateProduct($inputData);
         } catch (\Throwable $th) {
             error_log($th->getMessage());
-            if ($inputData['img'] && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
+            if (isset($inputData['img']) && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
                 Storage::disk('admin_img_upload')->delete($inputData['img']);
             }
             if ($request->expectsJson()) {
@@ -138,19 +132,23 @@ class AdminController extends Controller
 
     public function deleteData(Request $request)
     {
-        $validated = $request->validate([
-            'product_id' => "required|integer",
-        ]);
-        $product = $this->productService->getProductById($validated['product_id']);
-        if (!$product) {
-            return response()->json(['success' => false, 'message' => 'Product not found']);
+        try {
+            $validated = $request->validate([
+                'product_id' => "required|integer",
+            ]);
+            $product = $this->productService->getProductById($validated['product_id']);
+            if (!$product) {
+                return response()->json(['success' => false, 'message' => 'Product not found']);
+            }
+            // delete file
+            if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
+                Storage::disk('admin_img_upload')->delete($product->img);
+            }
+            $product->is_active = false;
+            $result = $product->save();
+            return response()->json(['success' => (bool)$result]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()]);
         }
-        // delete file
-        if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
-            Storage::disk('admin_img_upload')->delete($product->img);
-        }
-        $product->is_active = false;
-        $result = $product->save();
-        return response()->json(['success' => (bool)$result]);
     }
 }

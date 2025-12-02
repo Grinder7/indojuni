@@ -11,3 +11,29 @@
 body {
     scrollbar-gutter: stable both-edges;
 }
+.autocomplete-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover {
+    background: #f0f0f0;
+}
+
+.autocomplete {
+    position: relative;
+}

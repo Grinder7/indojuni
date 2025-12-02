@@ -181,12 +181,14 @@ class ProductRepository
     }
     public function getProductFilterOptions(): array
     {
-        $results = Product::select('category', 'subcategory', 'brand')->where('is_active', true)->get();
+        $results = Product::select('category', 'subcategory', 'type', 'brand', 'unit')->where('is_active', true)->get();
 
         $data = [
-            'kategori' => $results->pluck('category')->filter()->unique()->values()->all(),
-            'sub kategori' => $results->pluck('subcategory')->filter()->unique()->values()->all(),
+            'category' => $results->pluck('category')->filter()->unique()->values()->all(),
+            'subcategory' => $results->pluck('subcategory')->filter()->unique()->values()->all(),
+            'type' => $results->pluck('type')->filter()->unique()->values()->all(),
             'brand' => $results->pluck('brand')->filter()->unique()->values()->all(),
+            'unit' => $results->pluck('unit')->filter()->unique()->values()->all(),
         ];
 
         return $data;

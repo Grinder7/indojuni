@@ -19,25 +19,56 @@
                         </div>
                         <div class="d-flex flex-column" style="width:60%">
                             <input type="hidden" value=0 id="id-inp" name="id">
+                            <div class="row align-items-center mb-3">
+                                <div class="col-6 autocomplete mb-3">
+                                    <label for="category-inp" class="form-label">Category</label>
+                                    <input id="category-inp" name="category" class="form-control" autocomplete="off">
+                                </div>
+                                <div class="col-6 autocomplete mb-3">
+                                    <label for="subcategory-inp" class="form-label">Sub Category</label>
+                                    <input id="subcategory-inp" name="subcategory" class="form-control" autocomplete="off">
+                                </div>
+                                <div class="col-6 autocomplete mb-3">
+                                    <label for="type-inp" class="form-label">Type</label>
+                                    <input id="type-inp" name="type" class="form-control" autocomplete="off">
+                                </div>
+                                <div class="col-6 autocomplete mb-3">
+                                    <label for="brand-inp" class="form-label">Brand</label>
+                                    <input id="brand-inp" name="brand" class="form-control" autocomplete="off">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="size-inp" class="form-label">Size</label>
+                                    <input id="size-inp" name="size" class="form-control">
+                                </div>
+                                <div class="col-6 autocomplete mb-3">
+                                    <label for="unit-inp" class="form-label">Unit</label>
+                                    <input id="unit-inp" name="unit" class="form-control" autocomplete="off">
+                                </div>
+                            </div>
                             <div class="mb-3">
-                                <label for="name-inp" class="form-label">Product Name</label>
+                                <label for="variant-inp" class="form-label">Variant</label>
+                                <input id="variant-inp" name="variant" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="name-inp" class="form-label">Name</label>
                                 <input class="form-control" id="name-inp" name="name" @required(true)>
                             </div>
 
                             <div class="mb-3">
-                                <label for="desc-inp" class="form-label">Product Description</label>
+                                <label for="desc-inp" class="form-label">Description</label>
                                 <textarea class="form-control" id="desc-inp" rows="5" name="description" @required(true)></textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label for="stock-inp" class="form-label">Product Stock</label>
+                                <label for="stock-inp" class="form-label">Stock</label>
                                 <input type="number" class="form-control" id="stock-inp" name="stock" min="0"
                                     @required(true)>
                             </div>
 
                             <div class="mb-3">
-                                <label for="price-inp" class="form-label">Product Price</label>
-                                <input type="number" class="form-control" id="price-inp" name="price" @required(true)>
+                                <label for="price-inp" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="price-inp" name="price"
+                                    @required(true)>
                             </div>
 
                             <div class="mb-3">
@@ -64,7 +95,11 @@
                 data-bs-target="#mainBox" data-bs-toggle="modal">Create product</button>
             <div class="mb-3">
                 @include('components.catalogue-filters', [
-                    'filters' => $productFilters,
+                    'filters' => [
+                        'kategori' => $productFilters['category'] ?? [],
+                        'sub kategori' => $productFilters['subcategory'] ?? [],
+                        'brand' => $productFilters['brand'] ?? [],
+                    ],
                     'route' => route('app.catalogue.page'),
                 ])
             </div>
@@ -129,6 +164,13 @@
     <script>
         const datas = @json($products, JSON_UNESCAPED_UNICODE).data || [];
         const formRef = document.getElementById("form-inp");
+        const categoryInputRef = document.getElementById("category-inp");
+        const subcategoryInputRef = document.getElementById("subcategory-inp");
+        const typeInputRef = document.getElementById("type-inp");
+        const brandInputRef = document.getElementById("brand-inp");
+        const sizeInputRef = document.getElementById("size-inp");
+        const unitInputRef = document.getElementById("unit-inp");
+        const variantInputRef = document.getElementById("variant-inp");
         const nameInputRef = document.getElementById("name-inp");
         const descInputRef = document.getElementById("desc-inp");
         const stockInputRef = document.getElementById("stock-inp");
@@ -143,31 +185,36 @@
 
         const mainBox = document.getElementById("mainBox");
         const imgBox = document.getElementById("imgBox");
-        const svgPlaceholder = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svgPlaceholder.setAttribute("class", "bd-placeholder-img card-img-top");
-        svgPlaceholder.setAttribute("width", "100%");
-        svgPlaceholder.setAttribute("height", "100%");
-        svgPlaceholder.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svgPlaceholder.setAttribute("role", "img");
-        svgPlaceholder.setAttribute("aria-label", "Placeholder: Thumbnail");
-        svgPlaceholder.setAttribute("preserveAspectRatio", "xMidYMid slice");
-        svgPlaceholder.setAttribute("focusable", "false");
-        const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-        title.textContent = "Placeholder";
-        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        rect.setAttribute("width", "100%");
-        rect.setAttribute("height", "100%");
-        rect.setAttribute("fill", "#55595c");
-        const textSvg = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textSvg.setAttribute("text-anchor", "middle");
-        textSvg.setAttribute("x", "50%");
-        textSvg.setAttribute("y", "50%");
-        textSvg.setAttribute("fill", "#eceeef");
-        textSvg.setAttribute("dy", ".3em");
-        textSvg.textContent = "Image";
-        svgPlaceholder.appendChild(title);
-        svgPlaceholder.appendChild(rect);
-        svgPlaceholder.appendChild(textSvg);
+
+        function createSvgPlaceholder() {
+            const svgPlaceholder = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgPlaceholder.setAttribute("class", "bd-placeholder-img card-img-top");
+            svgPlaceholder.setAttribute("width", "100%");
+            svgPlaceholder.setAttribute("height", "100%");
+            svgPlaceholder.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgPlaceholder.setAttribute("role", "img");
+            svgPlaceholder.setAttribute("aria-label", "Placeholder: Thumbnail");
+            svgPlaceholder.setAttribute("preserveAspectRatio", "xMidYMid slice");
+            svgPlaceholder.setAttribute("focusable", "false");
+            const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+            title.textContent = "Placeholder";
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("width", "100%");
+            rect.setAttribute("height", "100%");
+            rect.setAttribute("fill", "#55595c");
+            const textSvg = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textSvg.setAttribute("text-anchor", "middle");
+            textSvg.setAttribute("x", "50%");
+            textSvg.setAttribute("y", "50%");
+            textSvg.setAttribute("fill", "#eceeef");
+            textSvg.setAttribute("dy", ".3em");
+            textSvg.textContent = "Image";
+            svgPlaceholder.appendChild(title);
+            svgPlaceholder.appendChild(rect);
+            svgPlaceholder.appendChild(textSvg);
+            return svgPlaceholder;
+        };
+        const svgPlaceholder = createSvgPlaceholder();
 
         if (mainBox) {
             mainBox.addEventListener('show.bs.modal', e => {
@@ -209,6 +256,13 @@
                 const button = editButton[i];
                 button.addEventListener("click", (e) => {
                     const data = datas.find(item => item.id == e.target.value) || {};
+                    categoryInputRef.value = data.category || '';
+                    subcategoryInputRef.value = data.subcategory || '';
+                    typeInputRef.value = data.type || '';
+                    brandInputRef.value = data.brand || '';
+                    sizeInputRef.value = data.size || '';
+                    unitInputRef.value = data.unit || '';
+                    variantInputRef.value = data.variant || '';
                     nameInputRef.value = data.name || '';
                     descInputRef.value = data.description || '';
                     stockInputRef.value = data.stock || '';
@@ -303,7 +357,7 @@
                         if (response.success == true) {
                             Swal.fire(
                                     'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Product has been deleted.',
                                     'success'
                                 )
                                 .then(() => {
@@ -321,5 +375,79 @@
                 })
             })
         }
+
+        const filterOptions = @json($productFilters, JSON_UNESCAPED_UNICODE) || {};
+
+        function attachAutocomplete(input, options) {
+            const wrapper = input.parentElement;
+            let list = document.createElement("div");
+            list.className = "autocomplete-items";
+            wrapper.appendChild(list);
+
+            function renderList(value = "") {
+                list.innerHTML = "";
+                const v = value.toLowerCase().trim();
+
+                const filtered = v ?
+                    options.filter(item => item.toLowerCase().includes(v)) :
+                    options; // show all options if no value
+
+                if (!filtered.length) {
+                    list.style.display = "none";
+                    return;
+                }
+
+                filtered.forEach(option => {
+                    const div = document.createElement("div");
+                    div.className = "autocomplete-item";
+                    div.textContent = option;
+
+                    div.addEventListener("click", () => {
+                        input.value = option;
+                        list.style.display = "none";
+                    });
+
+                    list.appendChild(div);
+                });
+
+                list.style.display = "block";
+            }
+
+            // Show all options when input is clicked
+            input.addEventListener("focus", () => {
+                renderList(input.value);
+            });
+
+            // Filter while typing
+            input.addEventListener("input", () => {
+                renderList(input.value);
+            });
+
+            // Hide when clicking outside
+            document.addEventListener("click", (e) => {
+                if (!wrapper.contains(e.target)) {
+                    list.style.display = "none";
+                }
+            });
+        }
+
+        // Map filterOptions
+        const autocompleteMap = {
+            "category-inp": filterOptions.category || [],
+            "subcategory-inp": filterOptions.subcategory || [],
+            "type-inp": filterOptions.type || [],
+            "variant-inp": filterOptions.variant || [],
+            "brand-inp": filterOptions.brand || [],
+            "size-inp": filterOptions.size || [],
+            "unit-inp": filterOptions.unit || [],
+        };
+
+        // Attach autocomplete
+        Object.keys(autocompleteMap).forEach(id => {
+            const inp = document.getElementById(id);
+            if (inp) {
+                attachAutocomplete(inp, autocompleteMap[id]);
+            }
+        });
     </script>
 @endsection
