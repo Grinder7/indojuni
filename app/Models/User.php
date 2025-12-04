@@ -23,7 +23,7 @@ class User extends Authenticatable
         'province',
         'postcode',
         'card_name',
-        'card_no',
+        'card_number',
         'card_type',
         'card_expiration',
         'card_cvv',
@@ -31,6 +31,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'is_admin',
+        'firstname',
+        'lastname',
+        'address',
+        'city',
+        'province',
+        'postcode',
+        'card_name',
+        'card_number',
+        'card_type',
+        'card_expiration',
+        'card_cvv',
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -50,6 +62,22 @@ class User extends Authenticatable
     // Add this accessor
     public function getDefaultPaymentDetailAttribute()
     {
-        return $this->paymentDetail()->where('is_default', true)->first();
+        if (!$this->card_number) {
+            return null;
+        }
+        return [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'address' => $this->address,
+            'city' => $this->city,
+            'province' => $this->province,
+            'postcode' => $this->postcode,
+            'card_name' => $this->card_name,
+            'card_number' => $this->card_number,
+            'card_type' => $this->card_type,
+            'card_expiration' => $this->card_expiration,
+            'card_cvv' => $this->card_cvv,
+        ];
     }
 }

@@ -1,6 +1,6 @@
 <header
-    class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
-    style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
+class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
+style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
     <div class="col-md-3 mb-md-0 align-items-center mb-2">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
             <img src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="logo" height="40">
@@ -9,12 +9,12 @@
 
     <ul class="nav col-12 col-md-auto justify-content-center mb-md-0 mb-2">
         <li><a href="{{ route('app.home.page') }}" class="nav-link px-2"
-                style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Home</a></li>
+                style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Beranda</a></li>
         <li><a href="{{ route('app.catalogue.page') }}" class="nav-link px-2"
-                style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Catalogue</a>
+                style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Katalog</a>
         </li>
         <li><a href="{{ route('app.aboutus.page') }}" class="nav-link px-2"
-                style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }}">About Us</a></li>
+                style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }}">Tentang Kami</a></li>
     </ul>
 
     <div class="col-md-3 text-end">
@@ -36,10 +36,10 @@
                                 </li>
                             @endcan
                             <li>
-                                <a href="{{ route('app.profile.page') }}" class="dropdown-item">Profile</a>
+                                <a href="{{ route('app.profile.page') }}" class="dropdown-item">Profil</a>
                             </li>
                             <li>
-                                <a href="{{ route('app.invoice.page') }}" class="dropdown-item">Transaction</a>
+                                <a href="{{ route('app.invoice.page') }}" class="dropdown-item">Transaksi</a>
                             </li>
                             <li>
                                 <a href="{{ route('app.logout.logout') }}" class="dropdown-item">Logout</a>
@@ -49,8 +49,8 @@
                 </li>
             </ul>
         @else
-            <a href="{{ route('app.login.page') }}" class="btn btn-light me-2">Login</a>
-            <a href="{{ route('app.register.page') }}" class="btn btn-primary">Sign-up</a>
+            <a href="{{ route('app.login.page') }}" class="btn btn-light me-2">Masuk</a>
+            <a href="{{ route('app.register.page') }}" class="btn btn-primary">Daftar</a>
         @endauth
     </div>
 </header>

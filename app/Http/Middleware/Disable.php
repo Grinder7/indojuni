@@ -17,6 +17,13 @@ class Disable
     public function handle(Request $request, Closure $next)
     {
         // return $next($request);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'This feature is disabled',
+                'data' => null
+            ], 403);
+        }
         return redirect('/');
     }
 }

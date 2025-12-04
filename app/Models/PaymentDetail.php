@@ -15,18 +15,18 @@ class PaymentDetail extends Model
     ];
     protected $fillable = [
         'user_id',
-        'is_default',
         'firstname',
         'lastname',
         'email',
         'address',
-        'address2',
-        'payment_method',
+        'city',
+        'province',
+        'postcode',
         'card_name',
         'card_number',
+        'card_type',
         'card_expiration',
         'card_cvv',
-        'zip',
     ];
     public function user()
     {

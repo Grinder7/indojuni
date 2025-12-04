@@ -45,7 +45,7 @@ class LoginController extends Controller
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Login failed: ' . $th->getMessage(),
+                    'message' => 'Login gagal: ' . $th->getMessage(),
                     'data' => null
                 ], 400);
             }

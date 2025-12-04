@@ -8,7 +8,7 @@
                 Selamat datang di IndoJuni!
             </h1>
             <h3>
-                Ini adalah website testing, tidak melayani pembelian.
+                Ini adalah website demonstrasi, tidak melayani pembelian.
             </h3>
             <p>
                 Kami adalah toko retail yang menyediakan berbagai macam barang serba

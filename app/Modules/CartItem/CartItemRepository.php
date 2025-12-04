@@ -41,7 +41,6 @@ class CartItemRepository
             $cartItem->save();
             $result = $cartItem;
         } else {
-            error_log('Creating new cart item with data: ' . json_encode($data));
             $result = CartItem::create($data);
         }
         return $result;

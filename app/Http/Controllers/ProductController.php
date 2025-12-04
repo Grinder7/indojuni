@@ -102,12 +102,12 @@ class ProductController extends Controller
             "message" => "Successfully retrieved product"
         ]);
     }
-    public function searchSimiliarProductByName(Request $request)
+    public function searchSimilarProductByName(Request $request)
     {
         $validated = $request->validate([
             'product_name' => 'required|string',
         ]);
-        $products = $this->productService->searchSimiliarProductByName($validated['product_name']);
+        $products = $this->productService->searchSimilarProductByName($validated['product_name']);
         return response()->json([
             'status' => 200,
             'data' => ProductSummaryResource::collection($products),

@@ -14,7 +14,13 @@ services:
     restart: unless-stopped
     volumes:
       - product_image:/app/public/images/products
+    networks:
+      - indojuni-network
 
 volumes:
-    product_image:
-        driver: local
+  product_image:
+    driver: local
+
+networks:
+  indojuni-network:
+    external: true

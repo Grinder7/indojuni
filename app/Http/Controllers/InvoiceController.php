@@ -71,7 +71,7 @@ class InvoiceController extends Controller
                             'data' => null
                         ], 404);
                     }
-                    return redirect()->back()->with('error', 'Order not found');
+                    return redirect()->back()->with('error', 'Pesanan tidak ditemukan');
                 }
             } else {
                 if ($request->expectsJson()) {
@@ -81,7 +81,7 @@ class InvoiceController extends Controller
                         'data' => null
                     ], 403);
                 }
-                return redirect()->back()->with('error', 'You are not authorized to view this invoice');
+                return redirect()->back()->with('error', 'Anda tidak berwenang untuk melihat faktur ini');
             }
         }
     }

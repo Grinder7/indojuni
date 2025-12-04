@@ -55,22 +55,22 @@ class CheckoutController extends Controller
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Checkout successful',
+                    'message' => 'Berhasil melakukan checkout',
                     'data' => $orderDetail
                 ], 200);
             }
             return redirect()->route('app.invoice.invoice', ['id' => $orderDetail->id])
-                ->with('success', 'Checkout successful');
+                ->with('success', 'Berhasil melakukan checkout');
         } catch (\Throwable $th) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Checkout failed: ' . $th->getMessage(),
+                    'message' => 'Checkout gagal: ' . $th->getMessage(),
                     'data' => null
                 ], 500);
             }
             return redirect()->back()
-                ->with('error', 'Checkout failed: ' . $th->getMessage());
+                ->with('error', 'Checkout gagal: ' . $th->getMessage());
         }
     }
 }

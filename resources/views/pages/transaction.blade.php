@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Transaction')
+@section('title', 'Transaksi Saya - IndoJuni')
 @section('styles')
     <style>
         .avatar.sm {
@@ -58,7 +58,9 @@
                                             <td><a href="/invoice/{{ $transaction['id'] }}">{{ $transaction['id'] }}</a></td>
                                             <td>{{ $transaction['created_at'] }}</td>
                                             <td>{{ $transaction->payment()->first()['address'] }} &nbsp;
-                                                {{ $transaction->payment()->first()['address2'] }}</td>
+                                                {{ $transaction->payment()->first()['city'] }},
+                                                {{ $transaction->payment()->first()['province'] }},
+                                                {{ $transaction->payment()->first()['postcode'] }}</td>
                                             <td> Rp{{ number_format($transaction['total'] + floor($transaction['total'] * 0.11), 2, ',', '.') }}
                                             </td>
                                         </tr>

@@ -53,11 +53,11 @@
                                     <h2 class="text-light mb-1">IndoJuni</h2>
                                 </div>
                                 <div class="text-light">
-                                    <p class="mb-1">Dk. Basoka No. 100, Lampung</p>
+                                    <p class="mb-1">Alamat 123</p>
                                     <p class="mb-1">
                                         indojuni@gmail.com
                                     </p>
-                                    <p><i class="uil uil-phone me-1"></i> (+62) 26 1884 857</p>
+                                    <p><i class="uil uil-phone me-1"></i> (+62) 812 3456 7980</p>
                                 </div>
                             </div>
                             <hr class="my-4" />
@@ -68,9 +68,16 @@
                                         <h5 class="font-size-15 mb-2">{{ $invoiceData['payment_detail']->firstname }}
                                             {{ $invoiceData['payment_detail']->lastname }}</h5>
                                         <p class="mb-1">{{ $invoiceData['payment_detail']->address }}</p>
-                                        <p class="mb-1">{{ $invoiceData['payment_detail']->address2 }}</p>
+                                        <p class="mb-1">{{ $invoiceData['payment_detail']->city }},
+                                            {{ $invoiceData['payment_detail']->province }},
+                                            {{ $invoiceData['payment_detail']->postcode }}</p>
                                         <p class="mb-1">
                                             {{ $invoiceData['payment_detail']->email }}
+                                        </p>
+                                        <p class="mb-1">
+                                            Pembayaran dengan:
+                                            {{ $invoiceData['payment_detail']->card_type === 1 ? 'Kartu Kredit' : 'Kartu Debit' }}
+                                            {{ substr(preg_replace('/\D/', '', $invoiceData['payment_detail']->card_number ?? ''), -4) }}
                                         </p>
                                     </div>
                                 </div>
@@ -91,9 +98,9 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 70px">No.</th>
-                                                <th>Item</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
+                                                <th>Barang</th>
+                                                <th>Harga</th>
+                                                <th>Kuantitas</th>
                                                 <th class="text-end" style="width: 120px">Total</th>
                                             </tr>
                                         </thead>
@@ -148,7 +155,7 @@
                                 <div class="d-flex float-end">
                                     <a class="btn btn-success me-1 pt-2" href="{{ URL::previous() }}">
                                         <i class="fa-solid fa-arrow-left"></i>
-                                        <span>Back</span>
+                                        <span>Kembali</span>
                                     </a>
                                 </div>
                                 {{-- <div class="d-print-none mt-4">

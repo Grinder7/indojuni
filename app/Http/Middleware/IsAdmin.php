@@ -20,6 +20,13 @@ class IsAdmin
         if (Auth::check() && Auth::user()->is_admin == true) {
             return $next($request);
         }
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'Forbidden',
+                'data' => null
+            ], 403);
+        }
         return redirect("/");
     }
 }
