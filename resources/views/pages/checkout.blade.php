@@ -96,16 +96,16 @@
                     </div>
                 </div>
 
-                <div class="row g-5">
-                    <div class="col-7">
+                <div class="row g-5 d-flex flex-column flex-md-row flex-sm-flow-reverse justify-content-center w-100">
+                    <div class="col-md-7 col-12 order-2 order-md-1">
                         <h4 class="mb-3">Alamat Pembayaran</h4>
                         <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
                             novalidate>
                             @csrf
                             <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label for="firstName" class="form-label">Nama Depan</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstname"
+                                    <label for="firstname" class="form-label">Nama Depan</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname"
                                         placeholder="" value="{{ old('firstname', $userdata->firstname) }}" required>
                                     <div class="invalid-feedback">
                                         Nama depan harus valid.
@@ -113,8 +113,8 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="lastName" class="form-label">Nama Belakang</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder=""
+                                    <label for="lastname" class="form-label">Nama Belakang</label>
+                                    <input type="text" class="form-control" id="lastname" placeholder=""
                                         value="{{ old('lastname', $userdata->lastname) }}" name="lastname" required>
                                     <div class="invalid-feedback">
                                         Nama belakang harus valid.
@@ -189,8 +189,8 @@
 
                             <div class="row gy-3">
                                 <div class="col-md-6">
-                                    <label for="cc-name" class="form-label">Nama pada kartu</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder=""
+                                    <label for="card_name" class="form-label">Nama pada kartu</label>
+                                    <input type="text" class="form-control" id="card_name" placeholder=""
                                         name="card_name" value="{{ old('card_name', $userdata->card_name) }}" required>
                                     <small class="text-body-secondary">Nama Lengkap sesuai kartu</small>
                                     <div class="invalid-feedback">
@@ -199,9 +199,9 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="cc-number" class="form-label">Nomor Kartu</label>
+                                    <label for="card_number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
-                                        class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx"
+                                        class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
                                         name="card_number" value="{{ old('card_number', $userdata->card_number) }}"
                                         required>
                                     <div class="invalid-feedback">
@@ -210,8 +210,8 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control" id="cc-expiration"
+                                    <label for="card_expiration" class="form-label">Masa Berlaku</label>
+                                    <input type="text" class="form-control" id="card_expiration"
                                         style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
                                         value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                     <div class="invalid-feedback">
@@ -219,8 +219,8 @@
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-3">
-                                    <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="mm/yy" style="padding-left:0.8em;"
+                                    <label for="card_expiration" class="form-label">Masa Berlaku</label>
+                                    <input type="text" class="form-control" id="card_expiration" placeholder="mm/yy" style="padding-left:0.8em;"
                                         name="card_expiration"value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
@@ -228,8 +228,8 @@
                                 </div> --}}
 
                                 <div class="col-md-3">
-                                    <label for="cc-cvv" class="form-label">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="xxx"
+                                    <label for="card_cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="card_cvv" placeholder="xxx"
                                         name="card_cvv" value="{{ old('card_cvv', $userdata->card_cvv) }}"required>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
@@ -241,7 +241,7 @@
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan Pembayaran</button>
                         </form>
                     </div>
-                    <div class="col-5">
+                    <div class="col-md-5 col-12 order-1 order-md-2">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-primary">Keranjang Anda</span>
                             <span class="badge bg-primary rounded-pill">{{ $totalItems }}</span>
@@ -249,7 +249,7 @@
                         <ul class="list-group mb-3">
                             @foreach ($items as $item)
                                 <li id="item_{{ $item['product_id'] }}"
-                                    class="list-group-item d-flex justify-content-between lh-sm px-3 py-2">
+                                    class="list-group-item d-flex justify-content-md-center lh-sm px-3 py-2">
                                     <div>
                                         <h6 class="mb-2">{{ $item['product_name'] }}</h6>
                                         <div class="d-flex col-8 align-items-center w-100">
@@ -305,7 +305,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
             crossorigin="anonymous"></script>
         <script type="text/javascript">
-            const card_expiration = document.getElementById('cc-expiration');
+            const card_expiration = document.getElementById('card_expiration');
             // Card Expiration Formatting
             card_expiration.addEventListener('input', function (e) {
                 let v = e.target.value.replace(/\D/g, ''); // only digits
@@ -340,7 +340,7 @@
                 return value.replace(/(.{4})/g, '$1 ').trim();
             }
 
-            const card_number = document.getElementById('cc-number');
+            const card_number = document.getElementById('card_number');
 
             // Format on input
             card_number.addEventListener('input', function(e) {
@@ -512,21 +512,21 @@
                     return "";
                 }
             }
-            const cardNumber = document.querySelector('#cc-number');
+            const cardNumber = document.querySelector('#card_number');
             cardNumber.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxx xxxx xxxx xxxx",
                 });
             };
-            const cardExpiration = document.querySelector('#cc-expiration');
+            const cardExpiration = document.querySelector('#card_expiration');
             cardExpiration.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xx/xx",
                 });
             };
-            const cardCvv = document.querySelector('#cc-cvv');
+            const cardCvv = document.querySelector('#card_cvv');
             cardCvv.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
