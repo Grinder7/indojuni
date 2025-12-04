@@ -80,7 +80,6 @@
     </style>
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/alertify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/vendor/ajax/bootstrap-datepicker.min.css') }}">
 
 @endsection
 
@@ -212,7 +211,7 @@
 
                                 <div class="col-md-3">
                                     <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control datepicker" id="cc-expiration"
+                                    <input type="text" class="form-control" id="cc-expiration"
                                         style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
                                         value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                     <div class="invalid-feedback">
@@ -305,36 +304,51 @@
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
             crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-            // Datepicker
-            $('.datepicker').datepicker({
-                format: "mm/yy",
-                startView: "months",
-                minViewMode: "months"
+            const card_expiration = document.getElementById('cc-expiration');
+            // Card Expiration Formatting
+            card_expiration.addEventListener('input', function (e) {
+                let v = e.target.value.replace(/\D/g, ''); // only digits
+
+                if (v.length >= 2) {
+                    e.target.value = v.slice(0,2) + '/' + v.slice(2,4);
+                } else {
+                    e.target.value = v;
+                }
+            });
+            // Delete two chars if backspace on char length = 3
+            card_expiration.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace') {
+                    const v = card_expiration.value;
+
+                    // Length 3 means: "12/" or "1/2" depending on user edits
+                    if (v.length === 3) {
+                        e.preventDefault(); // stop normal backspace
+
+                        // Remove last two chars
+                        card_expiration.value = v.slice(0,1);  
+                    }
+                }
             });
 
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (() => {
-                'use strict'
+            // card number formatter
+            function formatGroups(value) {
+                // remove non-digits
+                value = value.replace(/\D/g, '');
 
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                const forms = document.querySelectorAll('.needs-validation')
+                // group every 4 digits
+                return value.replace(/(.{4})/g, '$1 ').trim();
+            }
 
-                // Loop over them and prevent submission
-                Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
+            const card_number = document.getElementById('cc-number');
 
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-            })()
+            // Format on input
+            card_number.addEventListener('input', function(e) {
+                e.target.value = formatGroups(e.target.value);
+            });
+
+            // Format initial value when page loads
+            card_number.value = formatGroups(card_number.value);
 
             const startProductLoading = (productId) => {
                 const qtyInput = document.querySelector(`#product_${productId}`);
@@ -526,25 +540,6 @@
                     template: "xxxxx",
                 });
             };
-
-            // card number formatter
-            function formatGroups(value) {
-                // remove non-digits
-                value = value.replace(/\D/g, '');
-
-                // group every 4 digits
-                return value.replace(/(.{4})/g, '$1 ').trim();
-            }
-
-            const card_number = document.getElementById('cc-number');
-
-            // Format on input
-            card_number.addEventListener('input', function(e) {
-                e.target.value = formatGroups(e.target.value);
-            });
-
-            // ✅ Format initial value when page loads
-            card_number.value = formatGroups(card_number.value);
         </script>
 
     @endsection
