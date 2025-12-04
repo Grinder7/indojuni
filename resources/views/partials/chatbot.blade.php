@@ -40,7 +40,7 @@
         <div>
             {{-- Chatbot Popup UI --}}
             <div id="chatbot-popup"
-                style="display: none; width: 400px; height: 500px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1001; margin-bottom: 125px; margin-right: 2rem;"
+                style="display: none; width: 300px; height: 500px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1001; margin-bottom: 125px; margin-right: 2rem; z-index: 999;"
                 class="position-fixed bottom-0 end-0 rounded border">
                 <div class="d-flex justify-content-between align-items-center border-bottom p-2"
                     style="background: #007bff; color: white;">

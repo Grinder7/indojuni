@@ -1,6 +1,6 @@
 <header
-    class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
-    style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
+class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
+style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
     <div class="col-md-3 mb-md-0 align-items-center mb-2">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
             <img src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="logo" height="40">
