@@ -103,7 +103,7 @@
                             <button class="btn btn-danger ms-2" id="btn-empty">Kosongkan Detail Pembayaran</button>
                         </div>
                         <hr>
-                        <h4 class="mb-3">Alamat Pembayaran</h4>
+                        <h4 class="mb-3">Alamat Pengiriman</h4>
                         <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
                             novalidate>
                             @csrf
@@ -243,7 +243,7 @@
                             </div>
 
                             <hr class="my-4">
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan Pembayaran</button>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
                         </form>
                     </div>
                     <div class="col-md-5 col-12 order-1 order-md-2">
