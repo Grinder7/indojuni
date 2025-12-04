@@ -98,6 +98,11 @@
 
                 <div class="row g-5 d-flex flex-column flex-md-row flex-sm-flow-reverse justify-content-center w-100">
                     <div class="col-md-7 col-12 order-2 order-md-1">
+                        <div class="d-flex justify-content-between mb-4">
+                            <button class="btn btn-success me-2" id="btn-fill">Ambil Dari Profil</button>
+                            <button class="btn btn-danger ms-2" id="btn-empty">Kosongkan Detail Pembayaran</button>
+                        </div>
+                        <hr>
                         <h4 class="mb-3">Alamat Pembayaran</h4>
                         <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
                             novalidate>
@@ -106,7 +111,7 @@
                                 <div class="col-sm-6">
                                     <label for="firstname" class="form-label">Nama Depan</label>
                                     <input type="text" class="form-control" id="firstname" name="firstname"
-                                        placeholder="" value="{{ old('firstname', $userdata->firstname) }}" required>
+                                        placeholder=""  required>
                                     <div class="invalid-feedback">
                                         Nama depan harus valid.
                                     </div>
@@ -115,7 +120,7 @@
                                 <div class="col-sm-6">
                                     <label for="lastname" class="form-label">Nama Belakang</label>
                                     <input type="text" class="form-control" id="lastname" placeholder=""
-                                        value="{{ old('lastname', $userdata->lastname) }}" name="lastname" required>
+                                         name="lastname" required>
                                     <div class="invalid-feedback">
                                         Nama belakang harus valid.
                                     </div>
@@ -124,7 +129,7 @@
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        value="{{ old('email', $userdata->email) }}" name="email" required>
+                                         name="email" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -133,7 +138,7 @@
                                 <div class="col-12">
                                     <label for="address" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                        value="{{ old('address', $userdata->address) }}" name="address" required>
+                                         name="address" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
@@ -142,7 +147,7 @@
                                 <div class="col-md-5">
                                     <label for="province" class="form-label">Provinsi</label>
                                     <input type="text" class="form-control" id="province" placeholder="Provinsi"
-                                        value="{{ old('province', $userdata->province) }}" name="province" required>
+                                         name="province" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan provinsi pengiriman anda.
                                     </div>
@@ -151,7 +156,7 @@
                                 <div class="col-md-4">
                                     <label for="city" class="form-label">Kota / Kabupaten</label>
                                     <input type="text" class="form-control" id="city" placeholder="Kota / Kab."
-                                        value="{{ old('city', $userdata->city) }}" name="city" required>
+                                         name="city" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan kota pengiriman anda.
                                     </div>
@@ -160,7 +165,7 @@
                                 <div class="col-md-3">
                                     <label for="postcode" class="form-label">Kode Pos</label>
                                     <input type="text" class="form-control" id="postcode" placeholder="" name="postcode"
-                                        value="{{ old('postcode', $userdata->postcode) }}"required>
+                                        required>
                                     <div class="invalid-feedback">
                                         Kode pos diperlukan.
                                     </div>
@@ -191,7 +196,7 @@
                                 <div class="col-md-6">
                                     <label for="card_name" class="form-label">Nama pada kartu</label>
                                     <input type="text" class="form-control" id="card_name" placeholder=""
-                                        name="card_name" value="{{ old('card_name', $userdata->card_name) }}" required>
+                                        name="card_name"  required>
                                     <small class="text-body-secondary">Nama Lengkap sesuai kartu</small>
                                     <div class="invalid-feedback">
                                         Nama pada kartu diperlukan
@@ -202,7 +207,7 @@
                                     <label for="card_number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" value="{{ old('card_number', $userdata->card_number) }}"
+                                        name="card_number" 
                                         required>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
@@ -213,7 +218,7 @@
                                     <label for="card_expiration" class="form-label">Masa Berlaku</label>
                                     <input type="text" class="form-control" id="card_expiration"
                                         style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
-                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
+                                         required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
@@ -221,7 +226,7 @@
                                 {{-- <div class="col-md-3">
                                     <label for="card_expiration" class="form-label">Masa Berlaku</label>
                                     <input type="text" class="form-control" id="card_expiration" placeholder="mm/yy" style="padding-left:0.8em;"
-                                        name="card_expiration"value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
+                                        name="card_expiration" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
@@ -230,7 +235,7 @@
                                 <div class="col-md-3">
                                     <label for="card_cvv" class="form-label">CVV</label>
                                     <input type="text" class="form-control" id="card_cvv" placeholder="xxx"
-                                        name="card_cvv" value="{{ old('card_cvv', $userdata->card_cvv) }}"required>
+                                        name="card_cvv" required>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
                                     </div>
@@ -258,7 +263,7 @@
                                             </label>
                                             <input type="number" min="0" step="1"
                                                 class="form-control form-control-sm quantity-form"
-                                                value="{{ $item['quantity'] }}" id="product_{{ $item['product_id'] }}">
+                                                 $item['product_id'] }}">
                                             </input>
                                             <div>
                                                 <i id="delete_{{ $item['product_id'] }}"
@@ -305,7 +310,23 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
             crossorigin="anonymous"></script>
         <script type="text/javascript">
-            const card_expiration = document.getElementById('card_expiration');
+            // Fields
+            const data = @json($userdata->toArray()['default_payment_detail']);
+            console.log(data);
+
+            const firstname = document.getElementById("firstname");
+            const lastname = document.getElementById("lastname");
+            const email = document.getElementById("email");
+            const address = document.getElementById("address");
+            const province = document.getElementById("province");
+            const city = document.getElementById("city");
+            const postcode = document.getElementById("postcode");
+            const card_type = document.getElementById("card_type");
+            const card_name = document.getElementById("card_name");
+            const card_number = document.getElementById("card_number");
+            const card_expiration = document.getElementById("card_expiration");
+            const card_cvv = document.getElementById("card_cvv");
+
             // Card Expiration Formatting
             card_expiration.addEventListener('input', function (e) {
                 let v = e.target.value.replace(/\D/g, ''); // only digits
@@ -340,8 +361,6 @@
                 return value.replace(/(.{4})/g, '$1 ').trim();
             }
 
-            const card_number = document.getElementById('card_number');
-
             // Format on input
             card_number.addEventListener('input', function(e) {
                 e.target.value = formatGroups(e.target.value);
@@ -350,6 +369,40 @@
             // Format initial value when page loads
             card_number.value = formatGroups(card_number.value);
 
+            // Get from Profile Button
+            document.getElementById("btn-fill").addEventListener("click", function(){
+                firstname.value = data["firstname"] ?? "";
+                lastname.value = data["lastname"] ?? "";
+                email.value = data["email"] ?? "";
+                address.value = data["address"] ?? "";
+                province.value = data["province"] ?? "";
+                city.value = data["city"] ?? "";
+                postcode.value = data["postcode"] ?? "";
+                card_type.value = data["card_type"] ?? "";
+                card_name.value = data["card_name"] ?? "";
+                card_number.value = data["card_number"] ?? "";
+                card_expiration.value = data["card_expiration"] ?? "";
+                card_cvv.value = data["card_cvv"] ?? "";
+            })
+            
+            
+            // Clear Button
+            document.getElementById("btn-empty").addEventListener("click", function(){
+                firstname.value = "";
+                lastname.value = "";
+                email.value = "";
+                address.value = "";
+                province.value = "";
+                city.value = "";
+                postcode.value = "";
+                card_type.value = "";
+                card_name.value = "";
+                card_number.value = "";
+                card_expiration.value = "";
+                card_cvv.value = "";
+            })
+
+            // Other Functions
             const startProductLoading = (productId) => {
                 const qtyInput = document.querySelector(`#product_${productId}`);
                 const spinner = document.querySelector(`#spinner_${productId}`);
@@ -533,8 +586,8 @@
                     template: "xxx",
                 });
             };
-            const postcode = document.querySelector('#postcode');
-            postcode.oninput = (e) => {
+            const postCode = document.querySelector('#postcode');
+            postCode.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxxx",
