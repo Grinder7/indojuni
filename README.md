@@ -59,6 +59,13 @@ All API endpoints are under `/api/v1`. Authentication uses Laravel Sanctum token
 -   **Frontend**: Blade templates under `resources/views` with assets built by Vite (`resources/js`, `resources/css`).
 -   **Containers**: Dockerfiles and a compose definition are available for local and production deployments.
 
+## Prerequisites
+
+-   PHP 8.2+
+-   Composer
+-   Node.js 18+ and npm
+-   PostgreSQL
+
 ## Local Development
 
 1. Install dependencies:
@@ -73,11 +80,16 @@ All API endpoints are under `/api/v1`. Authentication uses Laravel Sanctum token
     php artisan migrate
     ```
 4. (Optional) Seed data or use factories in `database/factories`.
-5. Start services:
+5. Start services (Laravel + Vite HMR):
     ```bash
-    php artisan serve
-    npm run dev
+    composer run dev
     ```
+
+### Frontend (Vite)
+
+-   Dev: `npm run dev` (HMR). Laravel still serves Blade; Vite serves compiled assets.
+-   Prod build: `npm run build` outputs to `public/build`.
+-   Env: set `APP_URL` (and `VITE_APP_URL` if used) to your host. Use `ASSET_URL` when serving assets via CDN/reverse proxy.
 
 ### Docker
 
