@@ -11,7 +11,7 @@
     "name": "Indomie Goreng Jumbo",
     "stock": 999,
     "price": 4500,
-    "description": "Indomie Goreng Jumbo adalah varian mie instan dengan porsi lebih besar, memberikan kepuasan makan berganda dalam setiap suapan. Tekstur mi yang pipih berpadu sempurna dengan bumbu goreng special yang menggugah selera. [1]",
+    "description": "Indomie Goreng Jumbo adalah varian mie instan dengan porsi lebih besar, memberikan kepuasan makan berganda dalam setiap suapan. Tekstur mi yang pipih berpadu sempurna dengan bumbu goreng special yang menggugah selera.",
     "img": "Iyo3eLTieosZSvRJTGQl.jpg"
   },
   {
@@ -26,8 +26,8 @@
     "name": "Indomie Kuah Rasa Kaldu Ayam",
     "stock": 999,
     "price": 3500,
-    "description": "Rasakan kehangatan sejati dalam setiap tegukan dengan Indomie Kuah Rasa Kaldu Ayam. Kuahnya kaya akan aroma kaldu ayam alami, lembut di lidah, dan sempurna untuk menghangatkan tubuh di hari hujan. [1]",
-    "img": "HJpiy51TDS6Be8q2v8LE.jpg"
+    "description": "Rasakan kehangatan sejati dalam setiap tegukan dengan Indomie Kuah Rasa Kaldu Ayam. Kuahnya kaya akan aroma kaldu ayam alami, lembut di lidah, dan sempurna untuk menghangatkan tubuh di hari hujan.",
+    "img": "692ae19f765d44x62558.jpg"
   },
   {
     "product_id": 1004,
@@ -41,7 +41,7 @@
     "name": "Indomie Kuah Rasa Ayam Bawang",
     "stock": 999,
     "price": 3500,
-    "description": "Nikmati harmoni gurih kaldu ayam berpadu aroma bawang renyah dengan Indomie Kuah Rasa Ayam Bawang. Setiap sendok menghadirkan cita rasa otentik dan memanjakan lidah Anda. [1]",
+    "description": "Nikmati harmoni gurih kaldu ayam berpadu aroma bawang renyah dengan Indomie Kuah Rasa Ayam Bawang. Setiap sendok menghadirkan cita rasa otentik dan memanjakan lidah Anda.",
     "img": "zw34JULbUEUB3us1VzcW.jpg"
   },
   {
@@ -56,7 +56,7 @@
     "name": "Mie Sedaap Goreng Original",
     "stock": 999,
     "price": 3100,
-    "description": "Mie Sedaap Goreng adalah mi goreng instan pertama dengan kriuk-kriuk bawang goreng asli. Teksturnya lebih tebal, renyah, dan dipadu dengan kecap istimewa yang membuat setiap gigitan begitu menggoda. [1]"
+    "description": "Mie Sedaap Goreng adalah mi goreng instan pertama dengan kriuk-kriuk bawang goreng asli. Teksturnya lebih tebal, renyah, dan dipadu dengan kecap istimewa yang membuat setiap gigitan begitu menggoda."
   },
   {
     "product_id": 1006,
@@ -70,7 +70,7 @@
     "name": "Mie Sedaap Soto",
     "stock": 999,
     "price": 3500,
-    "description": "Mie Sedaap Soto menyajikan kelezatan mi kuah instan rasa soto pertama dengan serbuk koya gurih dan aroma segar jeruk limau. Kuahnya ringan, namun kaya rempah, sempurna dipadukan dengan sambal tambahan. [1]"
+    "description": "Mie Sedaap Soto menyajikan kelezatan mi kuah instan rasa soto pertama dengan serbuk koya gurih dan aroma segar jeruk limau. Kuahnya ringan, namun kaya rempah, sempurna dipadukan dengan sambal tambahan."
   },
   {
     "product_id": 1007,
@@ -84,7 +84,7 @@
     "name": "Sarimi Goreng Isi Dua Ayam Kremes",
     "stock": 999,
     "price": 4000,
-    "description": "Sarimi Goreng Isi Dua Ayam Kremes menghadirkan porsi ganda dengan cita rasa ayam kremes gurih. Taburan kremes renyah menambah sensasi tekstur, membuat momen makan Anda semakin istimewa. [1]"
+    "description": "Sarimi Goreng Isi Dua Ayam Kremes menghadirkan porsi ganda dengan cita rasa ayam kremes gurih. Taburan kremes renyah menambah sensasi tekstur, membuat momen makan Anda semakin istimewa."
   },
   {
     "product_id": 1008,
@@ -98,7 +98,7 @@
     "name": "Supermi Mi Instan Ayam Bawang",
     "stock": 999,
     "price": 3000,
-    "description": "Supermi Mi Instan Ayam Bawang memadukan mie kenyal dengan kaldu ayam bawang yang gurih. Kuahnya lembut, bumbunya kaya, dan setiap suapan terasa nikmat tiada duanya. [1]"
+    "description": "Supermi Mi Instan Ayam Bawang memadukan mie kenyal dengan kaldu ayam bawang yang gurih. Kuahnya lembut, bumbunya kaya, dan setiap suapan terasa nikmat tiada duanya."
   },
   {
     "product_id": 1009,
@@ -112,7 +112,7 @@
     "name": "ABC Mie Rebus Ayam Bawang",
     "stock": 999,
     "price": 2100,
-    "description": "ABC Mie Rebus Ayam Bawang menawarkan sensasi kaldu ayam bawang yang lezat. Mi-nya lembut, bumbunya pas, cocok dinikmati seluruh keluarga kapan saja. [1]"
+    "description": "ABC Mie Rebus Ayam Bawang menawarkan sensasi kaldu ayam bawang yang lezat. Mi-nya lembut, bumbunya pas, cocok dinikmati seluruh keluarga kapan saja."
   },
   {
     "product_id": 1010,
@@ -126,7 +126,7 @@
     "name": "Lemonilo Mie Goreng Alami",
     "stock": 999,
     "price": 6800,
-    "description": "Lemonilo Mie Goreng Alami dibuat dari saripati sayuran dan dipanggang, bukan digoreng, sehingga bebas pengawet dan pewarna. Mi-nya renyah, warna hijau alami dari bayam, sehat tanpa MSG, sempurna untuk gaya hidup modern. [1]"
+    "description": "Lemonilo Mie Goreng Alami dibuat dari saripati sayuran dan dipanggang, bukan digoreng, sehingga bebas pengawet dan pewarna. Mi-nya renyah, warna hijau alami dari bayam, sehat tanpa MSG, sempurna untuk gaya hidup modern."
   },
   {
     "product_id": 1011,
@@ -140,7 +140,7 @@
     "name": "Pop Mie Goreng Spesial",
     "stock": 999,
     "price": 4500,
-    "description": "Pop Mie Goreng Spesial menggabungkan mie kenyal dengan potongan daging ayam asli dan sayuran segar, dipadu bumbu goreng spesial yang gurih dan kaya rempah. [1]"
+    "description": "Pop Mie Goreng Spesial menggabungkan mie kenyal dengan potongan daging ayam asli dan sayuran segar, dipadu bumbu goreng spesial yang gurih dan kaya rempah."
   },
   {
     "product_id": 1012,
@@ -154,7 +154,7 @@
     "name": "Pop Mie Goreng Pedas",
     "stock": 999,
     "price": 6200,
-    "description": "Pop Mie Goreng Pedas memadukan mie kenyal dengan bumbu pedas menggigit, menghasilkan sensasi panas dan gurih yang menggugah selera. [1]"
+    "description": "Pop Mie Goreng Pedas memadukan mie kenyal dengan bumbu pedas menggigit, menghasilkan sensasi panas dan gurih yang menggugah selera."
   },
   {
     "product_id": 1013,
@@ -168,7 +168,7 @@
     "name": "Pop Mie Rasa Kari Ayam",
     "stock": 999,
     "price": 5100,
-    "description": "Pop Mie Rasa Kari Ayam menyajikan kuah kari ayam kental dan gurih, dilengkapi potongan ayam dan serbuk koya yang renyah untuk sensasi rasa yang otentik. [1]"
+    "description": "Pop Mie Rasa Kari Ayam menyajikan kuah kari ayam kental dan gurih, dilengkapi potongan ayam dan serbuk koya yang renyah untuk sensasi rasa yang otentik."
   },
   {
     "product_id": 1014,
@@ -182,7 +182,7 @@
     "name": "Pop Mie Rasa Soto Ayam",
     "stock": 999,
     "price": 3400,
-    "description": "Pop Mie Rasa Soto Ayam menawarkan kuah soto ayam ringan namun kaya bumbu, diperkaya serbuk koya gurih dan aroma jeruk limau yang menyegarkan. [1]"
+    "description": "Pop Mie Rasa Soto Ayam menawarkan kuah soto ayam ringan namun kaya bumbu, diperkaya serbuk koya gurih dan aroma jeruk limau yang menyegarkan."
   },
   {
     "product_id": 1015,
@@ -196,7 +196,7 @@
     "name": "Sarimi Mie Kuah Isi Dua Baso Sapi",
     "stock": 999,
     "price": 3500,
-    "description": "Sarimi Mie Kuah Isi Dua Baso Sapi menggabungkan dua keping mie kenyal dengan kuah kaldu sapi gurih, dilengkapi potongan bakso sapi dan sayuran kering yang menambah kenikmatan. [1]"
+    "description": "Sarimi Mie Kuah Isi Dua Baso Sapi menggabungkan dua keping mie kenyal dengan kuah kaldu sapi gurih, dilengkapi potongan bakso sapi dan sayuran kering yang menambah kenikmatan."
   },
   {
     "product_id": 1016,
@@ -210,7 +210,7 @@
     "name": "Sarimi Mie Kuah Isi Dua Ayam Bawang",
     "stock": 999,
     "price": 3400,
-    "description": "Sarimi Mie Kuah Isi Dua Ayam Bawang memadukan empuknya dua lapis mie dengan kuah ayam bawang aromatik, disempurnakan taburan bawang goreng yang renyah. [1]"
+    "description": "Sarimi Mie Kuah Isi Dua Ayam Bawang memadukan empuknya dua lapis mie dengan kuah ayam bawang aromatik, disempurnakan taburan bawang goreng yang renyah."
   },
   {
     "product_id": 1017,
@@ -224,7 +224,7 @@
     "name": "Indomie Mi Goreng Rendang",
     "stock": 999,
     "price": 2700,
-    "description": "Indomie Mi Goreng Rendang menghadirkan cita rasa rendang pedas autentik dengan bumbu rempah Minang dan topping rendang kering yang gurih. [1]"
+    "description": "Indomie Mi Goreng Rendang menghadirkan cita rasa rendang pedas autentik dengan bumbu rempah Minang dan topping rendang kering yang gurih."
   },
   {
     "product_id": 1018,
@@ -238,7 +238,7 @@
     "name": "Indomie Mi Goreng Aceh",
     "stock": 999,
     "price": 3500,
-    "description": "Indomie Mi Goreng Aceh dibuat dari tepung terigu pilihan dan dipadu bumbu rempah khas Aceh, menyajikan kombinasi kari pedas dan gurih yang menggugah selera. [1]"
+    "description": "Indomie Mi Goreng Aceh dibuat dari tepung terigu pilihan dan dipadu bumbu rempah khas Aceh, menyajikan kombinasi kari pedas dan gurih yang menggugah selera."
   },
   {
     "product_id": 1101,
@@ -252,7 +252,7 @@
     "name": "Cimory Susu UHT Chocolate (250 ml)",
     "stock": 999,
     "price": 5900,
-    "description": "Bebas laktosa. [1]"
+    "description": "Bebas laktosa."
   },
   {
     "product_id": 1102,
@@ -266,7 +266,7 @@
     "name": "Ultra Milk UHT Full Cream (750 ml)",
     "stock": 999,
     "price": 12500,
-    "description": "UHT full cream. [1]"
+    "description": "UHT full cream."
   },
   {
     "product_id": 1103,
@@ -280,7 +280,7 @@
     "name": "Ultra Milk UHT Chocolate (1 L)",
     "stock": 999,
     "price": 14490,
-    "description": "UHT full cream rasa cokelat. [1]"
+    "description": "UHT full cream rasa cokelat."
   },
   {
     "product_id": 1104,
@@ -294,7 +294,7 @@
     "name": "Greenfields UHT Strawberry (125 ml)",
     "stock": 999,
     "price": 3900,
-    "description": "UHT rasa stroberi kemasan kotak. [1]"
+    "description": "UHT rasa stroberi kemasan kotak."
   },
   {
     "product_id": 1105,
@@ -308,7 +308,7 @@
     "name": "Greenfields Fresh Milk Pasteurisasi Full Cream (500 ml)",
     "stock": 999,
     "price": 17000,
-    "description": "Susu segar pasteurisasi full cream. [1]"
+    "description": "Susu segar pasteurisasi full cream."
   },
   {
     "product_id": 1106,
@@ -322,7 +322,7 @@
     "name": "Frisian Flag UHT Purefarm Full Cream (946 ml)",
     "stock": 999,
     "price": 18800,
-    "description": "UHT full cream Purefarm. [1]"
+    "description": "UHT full cream Purefarm."
   },
   {
     "product_id": 1107,
@@ -336,7 +336,7 @@
     "name": "Dancow FortiGro UHT (110 ml)",
     "stock": 999,
     "price": 2500,
-    "description": "Mini UHT diperkaya omega-3 & omega-6 untuk anak 6-12 tahun. [1]"
+    "description": "Mini UHT diperkaya omega-3 & omega-6 untuk anak 6-12 tahun."
   },
   {
     "product_id": 1108,
@@ -350,7 +350,7 @@
     "name": "Diamond Milk Low Fat High Calcium (1 L)",
     "stock": 999,
     "price": 22200,
-    "description": "Susu rendah lemak tinggi kalsium. [1]"
+    "description": "Susu rendah lemak tinggi kalsium."
   },
   {
     "product_id": 1109,
@@ -364,7 +364,7 @@
     "name": "Indomilk UHT Plain (1 L)",
     "stock": 999,
     "price": 17600,
-    "description": "UHT plain. [1]"
+    "description": "UHT plain."
   },
   {
     "product_id": 1110,
@@ -378,7 +378,7 @@
     "name": "Bear Brand Susu Steril Tube (189 ml)",
     "stock": 999,
     "price": 9000,
-    "description": "Susu steril tube. [1]"
+    "description": "Susu steril tube."
   },
   {
     "product_id": 1111,
@@ -392,7 +392,7 @@
     "name": "Sustagen Kid UHT Vanilla (235 ml)",
     "stock": 999,
     "price": 12000,
-    "description": "UHT rasa vanila. [1]"
+    "description": "UHT rasa vanila."
   },
   {
     "product_id": 1112,
@@ -406,7 +406,7 @@
     "name": "Milagros Susu Kambing Bubuk (200 g)",
     "stock": 999,
     "price": 50000,
-    "description": "Susu kambing bubuk. [1]"
+    "description": "Susu kambing bubuk."
   },
   {
     "product_id": 1113,
@@ -420,7 +420,7 @@
     "name": "Greenfields Yogurt Original 1 kg",
     "stock": 999,
     "price": 95900,
-    "description": "Plain yoghurt dari susu segar, sumber serat pangan. [1]"
+    "description": "Plain yoghurt dari susu segar, sumber serat pangan."
   },
   {
     "product_id": 1114,
@@ -434,7 +434,7 @@
     "name": "Yoforia Berry Smooth 200 ml",
     "stock": 999,
     "price": 9700,
-    "description": "Refreshing yogurt drink. [1]"
+    "description": "Refreshing yogurt drink."
   },
   {
     "product_id": 1115,
@@ -448,7 +448,8 @@
     "name": "Biokul Yogurt Blueberry 1 L",
     "stock": 999,
     "price": 79400,
-    "description": "Flavoured yoghurt blueberry rendah lemak. [1]"
+    "description": "Flavoured yoghurt blueberry rendah lemak.",
+    "img": "692f05c7cec9c9L74089.jpg"
   },
   {
     "product_id": 1116,
@@ -462,7 +463,8 @@
     "name": "Biokul Yogurt Greek Strawberry 473 ml",
     "stock": 999,
     "price": 72000,
-    "description": "Greek yoghurt rasa strawberry, sumber kalsium. [1]"
+    "description": "Greek yoghurt rasa strawberry, sumber kalsium.",
+    "img": "692f0f6e817ca5636269.jpg"
   },
   {
     "product_id": 1117,
@@ -476,7 +478,7 @@
     "name": "Greenfields Yogurt Mixed Berry (4x125 g)",
     "stock": 999,
     "price": 50900,
-    "description": "Yoghurt campuran berry dari susu segar. [1]"
+    "description": "Yoghurt campuran berry dari susu segar."
   },
   {
     "product_id": 1118,
@@ -490,7 +492,7 @@
     "name": "Cimory Yogurt Drink Blueberry 250 ml",
     "stock": 999,
     "price": 9500,
-    "description": "Drinkable yoghurt blueberry dari susu segar. [1]"
+    "description": "Drinkable yoghurt blueberry dari susu segar."
   },
   {
     "product_id": 1119,
@@ -504,7 +506,7 @@
     "name": "Greenfields Yogurt Mango Pouch 80 g",
     "stock": 999,
     "price": 9900,
-    "description": "Yoghurt pouch rasa mangga. [1]"
+    "description": "Yoghurt pouch rasa mangga."
   },
   {
     "product_id": 1120,
@@ -518,7 +520,7 @@
     "name": "Cimory Yoghurt Strawberry 240 ml",
     "stock": 999,
     "price": 9500,
-    "description": "Yoghurt rasa stroberi. [1]"
+    "description": "Yoghurt rasa stroberi."
   },
   {
     "product_id": 1121,
@@ -532,7 +534,7 @@
     "name": "Heavenly Blush Greek Yoghurt Drink 200 ml",
     "stock": 999,
     "price": 19500,
-    "description": "Greek yoghurt drink premium. [1]"
+    "description": "Greek yoghurt drink premium."
   },
   {
     "product_id": 1122,
@@ -546,7 +548,7 @@
     "name": "Greenfields Yogurt Original Pouch 80 g",
     "stock": 999,
     "price": 9900,
-    "description": "Plain yoghurt pouch praktis. [1]"
+    "description": "Plain yoghurt pouch praktis."
   },
   {
     "product_id": 1123,
@@ -560,7 +562,7 @@
     "name": "Biokul Yogurt Original 1 L",
     "stock": 999,
     "price": 79400,
-    "description": "Plain yoghurt rendah lemak. [1]"
+    "description": "Plain yoghurt rendah lemak."
   },
   {
     "product_id": 2001,
@@ -574,7 +576,7 @@
     "name": "Rinso Molto Deterjen Cair Rose Fresh (38 ml)",
     "stock": 999,
     "price": 1060,
-    "description": "Deterjen cair konsentrat dengan keharuman mawar segar dalam kemasan sachet. [2]"
+    "description": "Deterjen cair konsentrat dengan keharuman mawar segar dalam kemasan sachet."
   },
   {
     "product_id": 2002,
@@ -588,7 +590,7 @@
     "name": "Rinso Molto Deterjen Cair Rose Fresh (200 ml)",
     "stock": 999,
     "price": 5400,
-    "description": "Deterjen cair konsentrat dengan keharuman mawar segar. [3]"
+    "description": "Deterjen cair konsentrat dengan keharuman mawar segar."
   },
   {
     "product_id": 2003,
@@ -602,7 +604,7 @@
     "name": "Rinso Molto Deterjen Cair Rose Fresh (700 ml)",
     "stock": 999,
     "price": 20800,
-    "description": "Deterjen cair konsentrat dengan keharuman mawar segar. [3]"
+    "description": "Deterjen cair konsentrat dengan keharuman mawar segar."
   },
   {
     "product_id": 2004,
@@ -616,7 +618,7 @@
     "name": "Rinso Molto Deterjen Cair Perfume Essence (510 ml)",
     "stock": 999,
     "price": 14400,
-    "description": "Deterjen cair dengan keharuman perfume essence. [3]"
+    "description": "Deterjen cair dengan keharuman perfume essence."
   },
   {
     "product_id": 2005,
@@ -630,7 +632,7 @@
     "name": "Rinso Molto Deterjen Cair Perfume Essence (1.65 L)",
     "stock": 999,
     "price": 41500,
-    "description": "Deterjen cair konsentrat dengan keharuman perfume essence. [3]"
+    "description": "Deterjen cair konsentrat dengan keharuman perfume essence."
   },
   {
     "product_id": 2006,
@@ -644,7 +646,7 @@
     "name": "Rinso Sensi Fresh Deterjen Cair Japanese Peach (700 ml)",
     "stock": 999,
     "price": 20800,
-    "description": "Deterjen cair dengan keharuman Japanese Peach. [3]"
+    "description": "Deterjen cair dengan keharuman Japanese Peach."
   },
   {
     "product_id": 2007,
@@ -658,7 +660,7 @@
     "name": "Rinso Sensi Fresh Deterjen Cair Korean Strawberry (510 ml)",
     "stock": 999,
     "price": 14400,
-    "description": "Deterjen cair dengan keharuman Korean Strawberry. [3]"
+    "description": "Deterjen cair dengan keharuman Korean Strawberry."
   },
   {
     "product_id": 2008,
@@ -672,7 +674,7 @@
     "name": "Rinso Deterjen Cair (5 L)",
     "stock": 999,
     "price": 75000,
-    "description": "Deterjen cair konsentrat dalam kemasan jerigen besar. [3]"
+    "description": "Deterjen cair konsentrat dalam kemasan jerigen besar."
   },
   {
     "product_id": 2009,
@@ -686,7 +688,7 @@
     "name": "Gentle Gen Deterjen Cair Morning Breeze (700 ml)",
     "stock": 999,
     "price": 19900,
-    "description": "Deterjen cair dengan aroma Morning Breeze. [4]"
+    "description": "Deterjen cair dengan aroma Morning Breeze."
   },
   {
     "product_id": 2010,
@@ -700,7 +702,7 @@
     "name": "Attack Easy Sweet Glamour Deterjen Cair (1200 ml)",
     "stock": 999,
     "price": 20900,
-    "description": "Deterjen cair dengan keharuman Sweet Glamour. [5]"
+    "description": "Deterjen cair dengan keharuman Sweet Glamour."
   },
   {
     "product_id": 2011,
@@ -714,7 +716,7 @@
     "name": "Soklin Liquid Softergent (1600 ml)",
     "stock": 999,
     "price": 17500,
-    "description": "Deterjen cair dengan pelembut. [5]"
+    "description": "Deterjen cair dengan pelembut."
   },
   {
     "product_id": 2012,
@@ -728,7 +730,7 @@
     "name": "Wipol Pembersih Lantai Karbol Cemara (750 ml)",
     "stock": 999,
     "price": 20200,
-    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol cemara. [6]"
+    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol cemara."
   },
   {
     "product_id": 2013,
@@ -742,7 +744,7 @@
     "name": "Wipol Pembersih Lantai Sereh & Jeruk (750 ml)",
     "stock": 999,
     "price": 20200,
-    "description": "Cairan disinfektan pembersih lantai dengan aroma sereh dan jeruk. [6]"
+    "description": "Cairan disinfektan pembersih lantai dengan aroma sereh dan jeruk."
   },
   {
     "product_id": 2014,
@@ -756,7 +758,7 @@
     "name": "Wipol Pembersih Lantai Karbol Lemon (750 ml)",
     "stock": 999,
     "price": 20200,
-    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol lemon. [6]"
+    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol lemon."
   },
   {
     "product_id": 2015,
@@ -770,7 +772,7 @@
     "name": "Wipol Pembersih Lantai Karbol Cemara (200 ml)",
     "stock": 999,
     "price": 5400,
-    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol cemara. [6]"
+    "description": "Cairan disinfektan pembersih lantai dengan aroma karbol cemara."
   },
   {
     "product_id": 2016,
@@ -784,7 +786,7 @@
     "name": "Wipol Pembersih Lantai Lemon Pine (800 ml)",
     "stock": 999,
     "price": 15290,
-    "description": "Cairan pembersih lantai dengan aroma lemon pine. [7]"
+    "description": "Cairan pembersih lantai dengan aroma lemon pine."
   },
   {
     "product_id": 2017,
@@ -798,7 +800,7 @@
     "name": "Wipol Pembersih Lantai Classic Pine (800 ml)",
     "stock": 999,
     "price": 33220,
-    "description": "Cairan disinfektan pembersih lantai dengan aroma classic pine. [7]"
+    "description": "Cairan disinfektan pembersih lantai dengan aroma classic pine."
   },
   {
     "product_id": 2018,
@@ -812,7 +814,7 @@
     "name": "Wipol Pembersih Lantai Probiotic Citrus Fresh (450 ml)",
     "stock": 999,
     "price": 8690,
-    "description": "Cairan pembersih lantai dengan formula probiotic citrus fresh. [7]"
+    "description": "Cairan pembersih lantai dengan formula probiotic citrus fresh."
   },
   {
     "product_id": 2019,
@@ -826,7 +828,7 @@
     "name": "Super Pell Pembersih Lantai (800 ml)",
     "stock": 999,
     "price": 15000,
-    "description": "Pembersih lantai populer yang efektif membersihkan dan mengharumkan. [5]"
+    "description": "Pembersih lantai populer yang efektif membersihkan dan mengharumkan."
   },
   {
     "product_id": 2020,
@@ -840,7 +842,7 @@
     "name": "Dettol Pembersih Lantai Lavender (700 ml)",
     "stock": 999,
     "price": 20000,
-    "description": "Pembersih lantai disinfektan dengan aroma lavender. [5]"
+    "description": "Pembersih lantai disinfektan dengan aroma lavender."
   },
   {
     "product_id": 2021,
@@ -854,7 +856,7 @@
     "name": "Mr. Muscle Pembersih Kaca Serbaguna (440 ml)",
     "stock": 999,
     "price": 5900,
-    "description": "Pembersih kaca serbaguna yang efektif membersihkan tanpa meninggalkan noda. [8]"
+    "description": "Pembersih kaca serbaguna yang efektif membersihkan tanpa meninggalkan noda."
   },
   {
     "product_id": 2022,
@@ -868,7 +870,7 @@
     "name": "Sunlight Cairan Pencuci Piring Jeruk Nipis (92 g)",
     "stock": 999,
     "price": 1700,
-    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak. [9]"
+    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak."
   },
   {
     "product_id": 2023,
@@ -896,7 +898,7 @@
     "name": "Sunlight Cairan Pencuci Piring Jeruk Nipis (650 ml)",
     "stock": 999,
     "price": 12500,
-    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak. [10]"
+    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak."
   },
   {
     "product_id": 2025,
@@ -924,7 +926,7 @@
     "name": "Sunlight Cairan Pencuci Piring Jeruk Nipis (1500 g)",
     "stock": 999,
     "price": 22900,
-    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak. [10]"
+    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis yang efektif menghilangkan lemak."
   },
   {
     "product_id": 2027,
@@ -938,7 +940,7 @@
     "name": "Sunlight Cairan Pencuci Piring Jeruk Nipis (5 L)",
     "stock": 999,
     "price": 91790,
-    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis dalam kemasan jerigen besar. [9]"
+    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis dalam kemasan jerigen besar."
   },
   {
     "product_id": 2028,
@@ -966,7 +968,7 @@
     "name": "Sunlight Cairan Pencuci Piring Extra Power Higienis (600 ml)",
     "stock": 999,
     "price": 13100,
-    "description": "Cairan pencuci piring dengan kekuatan ekstra higienis. [10]"
+    "description": "Cairan pencuci piring dengan kekuatan ekstra higienis."
   },
   {
     "product_id": 2030,
@@ -980,7 +982,7 @@
     "name": "Sunlight Cairan Pencuci Piring Extra Anti Bau (600 ml)",
     "stock": 999,
     "price": 13100,
-    "description": "Cairan pencuci piring dengan formula anti bau. [10]"
+    "description": "Cairan pencuci piring dengan formula anti bau."
   },
   {
     "product_id": 2031,
@@ -994,7 +996,7 @@
     "name": "Sunlight Cairan Pencuci Piring Korean Strawberry (600 ml)",
     "stock": 999,
     "price": 13100,
-    "description": "Cairan pencuci piring dengan aroma Korean Strawberry. [10]"
+    "description": "Cairan pencuci piring dengan aroma Korean Strawberry."
   },
   {
     "product_id": 2032,
@@ -1008,7 +1010,7 @@
     "name": "Sunlight Cairan Pencuci Piring Habbatussauda (755 ml)",
     "stock": 999,
     "price": 14000,
-    "description": "Cairan pencuci piring dengan ekstrak Habbatussauda. [9]"
+    "description": "Cairan pencuci piring dengan ekstrak Habbatussauda."
   },
   {
     "product_id": 2033,
@@ -1022,7 +1024,7 @@
     "name": "Sunlight Cairan Pencuci Piring Rhamno Clean (600 ml)",
     "stock": 999,
     "price": 13500,
-    "description": "Cairan pencuci piring dengan formula Rhamno Clean. [9]"
+    "description": "Cairan pencuci piring dengan formula Rhamno Clean."
   },
   {
     "product_id": 2034,
@@ -1036,7 +1038,7 @@
     "name": "Sunlight Cairan Pencuci Piring Extra Lembut (625 ml)",
     "stock": 999,
     "price": 13500,
-    "description": "Cairan pencuci piring dengan formula ekstra lembut. [9]"
+    "description": "Cairan pencuci piring dengan formula ekstra lembut."
   },
   {
     "product_id": 2035,
@@ -1050,7 +1052,7 @@
     "name": "Mama Lemon Cairan Pencuci Piring Ekstrak Jeruk Nipis (430 ml)",
     "stock": 999,
     "price": 8000,
-    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis. [4]"
+    "description": "Cairan pencuci piring dengan ekstrak jeruk nipis."
   },
   {
     "product_id": 2036,
@@ -1064,7 +1066,7 @@
     "name": "Ekonomi Pencuci Piring Power Liquid Jeruk Nipis (650 ml)",
     "stock": 999,
     "price": 9500,
-    "description": "Cairan pencuci piring dengan kekuatan pembersih jeruk nipis. [4]"
+    "description": "Cairan pencuci piring dengan kekuatan pembersih jeruk nipis."
   },
   {
     "product_id": 2037,
@@ -1078,7 +1080,7 @@
     "name": "SOS Sabun Cuci Piring (500 ml)",
     "stock": 999,
     "price": 10000,
-    "description": "Sabun cuci piring yang efektif membersihkan. [5]"
+    "description": "Sabun cuci piring yang efektif membersihkan."
   },
   {
     "product_id": 2038,
@@ -1092,7 +1094,7 @@
     "name": "Lifebuoy Sabun Cuci Piring (500 ml)",
     "stock": 999,
     "price": 10000,
-    "description": "Sabun cuci piring dari Lifebuoy. [5]"
+    "description": "Sabun cuci piring dari Lifebuoy."
   },
   {
     "product_id": 3001,
@@ -1106,7 +1108,7 @@
     "name": "Pepsodent Pasta Gigi Pencegah Gigi Berlubang (225 g)",
     "stock": 999,
     "price": 21900,
-    "description": "Pasta gigi yang membantu mencegah gigi berlubang. [11]"
+    "description": "Pasta gigi yang membantu mencegah gigi berlubang."
   },
   {
     "product_id": 3002,
@@ -1120,7 +1122,7 @@
     "name": "Pepsodent Jumbo White Pasta Gigi (190 g)",
     "stock": 999,
     "price": 13736,
-    "description": "Pasta gigi pencerah gigi dalam kemasan jumbo. [11]"
+    "description": "Pasta gigi pencerah gigi dalam kemasan jumbo."
   },
   {
     "product_id": 3003,
@@ -1134,7 +1136,7 @@
     "name": "Pepsodent Complete 8 Whitening Pasta Gigi (190 g)",
     "stock": 999,
     "price": 26500,
-    "description": "Pasta gigi dengan 8 manfaat lengkap dan efek memutihkan. [11]"
+    "description": "Pasta gigi dengan 8 manfaat lengkap dan efek memutihkan."
   },
   {
     "product_id": 3004,
@@ -1148,7 +1150,7 @@
     "name": "Pepsodent Action 123 Herbal Pasta Gigi (190 g)",
     "stock": 999,
     "price": 23500,
-    "description": "Pasta gigi herbal dengan 3 aksi perlindungan. [11]"
+    "description": "Pasta gigi herbal dengan 3 aksi perlindungan."
   },
   {
     "product_id": 3005,
@@ -1162,7 +1164,7 @@
     "name": "Pepsodent Pasta Gigi Economy (150 g)",
     "stock": 999,
     "price": 10500,
-    "description": "Pasta gigi ekonomis untuk penggunaan sehari-hari. [12]"
+    "description": "Pasta gigi ekonomis untuk penggunaan sehari-hari."
   },
   {
     "product_id": 3006,
@@ -1176,7 +1178,7 @@
     "name": "Ciptadent Pasta Gigi Cool Mint (190 g)",
     "stock": 999,
     "price": 13800,
-    "description": "Pasta gigi dengan sensasi mint dingin. [4]"
+    "description": "Pasta gigi dengan sensasi mint dingin."
   },
   {
     "product_id": 3007,
@@ -1190,7 +1192,7 @@
     "name": "Systema Pasta Gigi Menthol (190 g)",
     "stock": 999,
     "price": 10900,
-    "description": "Pasta gigi dengan rasa menthol yang menyegarkan. [12]"
+    "description": "Pasta gigi dengan rasa menthol yang menyegarkan."
   },
   {
     "product_id": 3008,
@@ -1204,7 +1206,7 @@
     "name": "Systema Pasta Gigi Spring Breeze (190 g)",
     "stock": 999,
     "price": 10900,
-    "description": "Pasta gigi dengan aroma spring breeze. [12]"
+    "description": "Pasta gigi dengan aroma spring breeze."
   },
   {
     "product_id": 3009,
@@ -1218,7 +1220,7 @@
     "name": "Sunsilk Super Bye Bye Rambut Rontok Shampoo (160 ml)",
     "stock": 999,
     "price": 22800,
-    "description": "Shampo untuk mengurangi rambut rontok. [13]"
+    "description": "Shampo untuk mengurangi rambut rontok."
   },
   {
     "product_id": 3010,
@@ -1232,7 +1234,7 @@
     "name": "Sunsilk Soft & Smooth Shampoo (160 ml)",
     "stock": 999,
     "price": 24600,
-    "description": "Shampo untuk rambut lembut dan halus. [13]"
+    "description": "Shampo untuk rambut lembut dan halus."
   },
   {
     "product_id": 3011,
@@ -1246,7 +1248,7 @@
     "name": "Sunsilk Soft & Smooth Shampoo (650 ml)",
     "stock": 999,
     "price": 65300,
-    "description": "Shampo untuk rambut lembut dan halus dengan Active Infusion Argan Oil. [13]"
+    "description": "Shampo untuk rambut lembut dan halus dengan Active Infusion Argan Oil."
   },
   {
     "product_id": 3012,
@@ -1260,7 +1262,7 @@
     "name": "Sunsilk Soft & Smooth Shampoo (900 ml)",
     "stock": 999,
     "price": 74000,
-    "description": "Shampo untuk rambut lembut dan halus dengan Active Infusion Argan Oil. [13]"
+    "description": "Shampo untuk rambut lembut dan halus dengan Active Infusion Argan Oil."
   },
   {
     "product_id": 3013,
@@ -1274,7 +1276,7 @@
     "name": "Sunsilk Black Shine Shampoo (70 ml)",
     "stock": 999,
     "price": 13500,
-    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring. [13]"
+    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring."
   },
   {
     "product_id": 3014,
@@ -1288,7 +1290,7 @@
     "name": "Sunsilk Black Shine Shampoo (160 ml)",
     "stock": 999,
     "price": 24600,
-    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring. [13]"
+    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring."
   },
   {
     "product_id": 3015,
@@ -1302,7 +1304,7 @@
     "name": "Sunsilk Black Shine Shampoo (900 ml)",
     "stock": 999,
     "price": 74000,
-    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring. [13]"
+    "description": "Shampo untuk rambut hitam berkilau dengan Urang Aring."
   },
   {
     "product_id": 3016,
@@ -1316,7 +1318,7 @@
     "name": "Sunsilk Tea Tree Oil Anti Ketombe Shampoo (650 ml)",
     "stock": 999,
     "price": 65300,
-    "description": "Shampo anti ketombe dengan Tea Tree Oil. [13]"
+    "description": "Shampo anti ketombe dengan Tea Tree Oil."
   },
   {
     "product_id": 3017,
@@ -1330,7 +1332,7 @@
     "name": "Sunsilk Hijab Refresh & Anti Dandruff Shampoo (170 ml)",
     "stock": 999,
     "price": 17400,
-    "description": "Shampo khusus hijab untuk kesegaran dan anti ketombe. [13]"
+    "description": "Shampo khusus hijab untuk kesegaran dan anti ketombe."
   },
   {
     "product_id": 3018,
@@ -1358,7 +1360,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Total 10 (4x60 g)",
     "stock": 999,
     "price": 17900,
-    "description": "Sabun mandi batang anti bakteri Total 10. [16]"
+    "description": "Sabun mandi batang anti bakteri Total 10."
   },
   {
     "product_id": 3020,
@@ -1372,7 +1374,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Total 10 (75 g)",
     "stock": 999,
     "price": 4550,
-    "description": "Sabun mandi batang anti bakteri Total 10. [16]"
+    "description": "Sabun mandi batang anti bakteri Total 10."
   },
   {
     "product_id": 3021,
@@ -1386,7 +1388,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Total 10 (100 g)",
     "stock": 999,
     "price": 6400,
-    "description": "Sabun mandi batang anti bakteri Total 10. [16]"
+    "description": "Sabun mandi batang anti bakteri Total 10."
   },
   {
     "product_id": 3022,
@@ -1400,7 +1402,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Mild Care (4x60 g)",
     "stock": 999,
     "price": 17900,
-    "description": "Sabun mandi batang Mild Care untuk kulit lembut. [16]"
+    "description": "Sabun mandi batang Mild Care untuk kulit lembut."
   },
   {
     "product_id": 3023,
@@ -1414,7 +1416,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Mild Care (4x100 g)",
     "stock": 999,
     "price": 19800,
-    "description": "Sabun mandi batang Mild Care untuk kulit lembut. [16]"
+    "description": "Sabun mandi batang Mild Care untuk kulit lembut."
   },
   {
     "product_id": 3024,
@@ -1428,7 +1430,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Lemon Fresh (4x60 g)",
     "stock": 999,
     "price": 13800,
-    "description": "Sabun mandi batang dengan aroma lemon segar. [16]"
+    "description": "Sabun mandi batang dengan aroma lemon segar."
   },
   {
     "product_id": 3025,
@@ -1442,7 +1444,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Lemon Fresh (4x100 g)",
     "stock": 999,
     "price": 24200,
-    "description": "Sabun mandi batang dengan aroma lemon segar. [16]"
+    "description": "Sabun mandi batang dengan aroma lemon segar."
   },
   {
     "product_id": 3026,
@@ -1456,7 +1458,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Japanese Shiso & Mineral Clay (4x100 g)",
     "stock": 999,
     "price": 17900,
-    "description": "Sabun mandi batang dengan Japanese Shiso & Mineral Clay. [16]"
+    "description": "Sabun mandi batang dengan Japanese Shiso & Mineral Clay."
   },
   {
     "product_id": 3027,
@@ -1470,7 +1472,7 @@
     "name": "Lifebuoy Sabun Mandi Batang Matcha (70 g)",
     "stock": 999,
     "price": 4300,
-    "description": "Sabun mandi batang dengan ekstrak Matcha. [16]"
+    "description": "Sabun mandi batang dengan ekstrak Matcha."
   },
   {
     "product_id": 3028,
@@ -1484,7 +1486,7 @@
     "name": "Lifebuoy Sabun Mandi Cair Total 10 (450 ml)",
     "stock": 999,
     "price": 19900,
-    "description": "Sabun mandi cair anti bakteri Total 10. [17]"
+    "description": "Sabun mandi cair anti bakteri Total 10."
   },
   {
     "product_id": 3029,

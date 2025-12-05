@@ -38,7 +38,7 @@ style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35)
                         <ul class="dropdown-menu">
                             @can('isAdmin')
                                 <li>
-                                    <a href="{{ route('app.admin.dashboard.page') }}" class="dropdown-item">Dashboard</a>
+                                    <a href="{{ route('adm.dashboard.page') }}" class="dropdown-item">Admin Dashboard</a>
                                 </li>
                             @endcan
                             <li>

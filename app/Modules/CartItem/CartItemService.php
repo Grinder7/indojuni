@@ -31,18 +31,18 @@ class CartItemService
             try {
                 $product = $this->productRepository->getProductByID((int)$item["product_id"]);
                 if ($product == null) {
-                    throw new \Exception("Product not found");
+                    throw new \Exception("Produk tidak ditemukan");
                 }
                 if ((int)$item["quantity"] < 1) {
                     $cartItem = $this->cartItemRepository->getCartItemByProductIDShoppingSessionID((int)$item["product_id"], $shoppingSession->id);
                     if ($cartItem !== null) {
                         $res = $this->cartItemRepository->removeCartItemByID($cartItem->id);
                         if (!$res) {
-                            throw new \Exception("Failed to remove cart item");
+                            throw new \Exception("Gagal menghapus item keranjang");
                         }
                         $shoppingSession->total -= $cartItem->quantity * $product->price;
                         if (!$shoppingSession->save()) {
-                            throw new \Exception("Failed to update shopping session");
+                            throw new \Exception("Gagal memperbarui sesi belanja");
                         }
                         $itemData = [
                             "product_id" => (int)$item["product_id"],
@@ -53,7 +53,7 @@ class CartItemService
                         ];
                         $successProducts[] = $itemData;
                     } else {
-                        throw new \Exception("Failed to find cart item");
+                        throw new \Exception("Gagal menemukan item keranjang untuk dihapus");
                     }
                 } else if ($product->stock > (int)$item["quantity"]) {
                     $cartItem = $this->cartItemRepository->getCartItemByProductIDShoppingSessionID((int)$item["product_id"], $shoppingSession->id);
@@ -64,11 +64,11 @@ class CartItemService
                             "quantity" => (int)$item["quantity"]
                         ]);
                         if (!$cartItem) {
-                            throw new \Exception("Failed to create new cart item");
+                            throw new \Exception("Gagal membuat item keranjang baru");
                         }
                         $shoppingSession->total += $product->price * $item["quantity"];
                         if (!$shoppingSession->save()) {
-                            throw new \Exception("Failed to update shopping session");
+                            throw new \Exception("Gagal memperbarui sesi belanja");
                         }
                         $itemData = [
                             "product_id" => (int)$item["product_id"],
@@ -82,14 +82,14 @@ class CartItemService
                         $shoppingSession->total = $shoppingSession->total - ($cartItem->quantity * $product->price) + ($item["quantity"] * $product->price);
                         // error_log("Shopping Session Total: " . $shoppingSession->total);
                         if ($shoppingSession->total < 0) {
-                            throw new \Exception("Total cannot be negative");
+                            throw new \Exception("Total tidak boleh negatif");
                         }
                         $success = $this->cartItemRepository->updateCartItem($shoppingSession, $item, $cartItem);
                         if (!$success) {
-                            throw new \Exception("Failed to update cart item");
+                            throw new \Exception("Gagal memperbarui item keranjang");
                         }
                         if (!$shoppingSession->save()) {
-                            throw new \Exception("Failed to update shopping session");
+                            throw new \Exception("Gagal memperbarui sesi belanja");
                         }
                         $item["error"] = null;
                         $itemData = [
@@ -102,9 +102,9 @@ class CartItemService
                         $successProducts[] = $itemData;
                     }
                 } else if ($product->stock < (int)$item["quantity"]) {
-                    throw new \Exception("Stock not enough");
+                    throw new \Exception("Stok tidak cukup");
                 } else {
-                    throw new \Exception("Unknown error");
+                    throw new \Exception("Kesalahan tidak diketahui");
                 }
                 DB::commit();
             } catch (\Exception $e) {

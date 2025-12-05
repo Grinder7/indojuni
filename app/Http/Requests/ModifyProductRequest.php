@@ -24,12 +24,19 @@ class ModifyProductRequest extends FormRequest
     public function rules()
     {
         return [
+            'category' => 'required|string|max:255',
+            'subcategory' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'variant' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'size' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'stock' => 'required|integer',
             'price' => 'required|integer',
             'img' => 'nullable|file|image',
-            'product_id' => 'nullable|string|exists:products,id',
+            'id' => 'required|integer|exists:products,id',
         ];
     }
 }

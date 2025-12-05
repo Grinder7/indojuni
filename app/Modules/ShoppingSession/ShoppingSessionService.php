@@ -72,7 +72,7 @@ class ShoppingSessionService
         $shoppingSession = $this->shoppingSessionRepository->getShoppingSessionByUserID($userID);
         $cartItems = $this->cartItemRepository->getCartItemsByShoppingID($shoppingSession->id);
         if ($cartItems->isEmpty()) {
-            throw new \Exception('Cart is empty');
+            throw new \Exception('Keranjang belanja kosong');
         }
         DB::beginTransaction();
         try {
@@ -81,15 +81,15 @@ class ShoppingSessionService
                 $product = $this->productRepository->getProductByID($item["product_id"]);
                 if ($product) {
                     if ($product->stock < $item["quantity"]) {
-                        throw new \Exception("{$product->name} doesn't have enough stock");
+                        throw new \Exception("{$product->name} tidak cukup stok");
                     }
                     $product->stock -= $item["quantity"];
                     if (!$product->save()) {
-                        throw new \Exception("{$product->name} failed to be processed");
+                        throw new \Exception("{$product->name} gagal diproses");
                     }
                     $item->delete();
                 } else {
-                    throw new \Exception("Product with ID {$item['product_id']} not found");
+                    throw new \Exception("Produk tidak ditemukan");
                 }
             }
 
