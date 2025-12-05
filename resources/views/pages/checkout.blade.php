@@ -48,7 +48,6 @@
     </style>
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/alertify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vendor/alertify/default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/vendor/ajax/bootstrap-datepicker.min.css') }}">
 
 @endsection
 
@@ -65,26 +64,30 @@
                     </div>
                 </div>
 
-                <div class="row g-5">
-                    <div class="col-7">
-                        <h4 class="mb-3">Alamat Pembayaran</h4>
-                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
-                            novalidate>
+                <div class="row g-5 d-flex flex-column flex-md-row flex-sm-flow-reverse justify-content-center w-100">
+                    <div class="col-md-7 col-12 order-md-1 order-2">
+                        <div class="d-flex justify-content-between mb-4">
+                            <button class="btn btn-success me-2" id="btn-fill">Ambil Dari Profil</button>
+                            <button class="btn btn-danger ms-2" id="btn-empty">Kosongkan Detail Pembayaran</button>
+                        </div>
+                        <hr>
+                        <h4 class="mb-3">Alamat Pengiriman</h4>
+                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label for="firstName" class="form-label">Nama Depan</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstname"
-                                        placeholder="" value="{{ old('firstname', $userdata->firstname) }}" required>
+                                    <label for="firstname" class="form-label">Nama Depan</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname"
+                                        placeholder="" required>
                                     <div class="invalid-feedback">
                                         Nama depan harus valid.
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="lastName" class="form-label">Nama Belakang</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder=""
-                                        value="{{ old('lastname', $userdata->lastname) }}" name="lastname" required>
+                                    <label for="lastname" class="form-label">Nama Belakang</label>
+                                    <input type="text" class="form-control" id="lastname" placeholder="" name="lastname"
+                                        required>
                                     <div class="invalid-feedback">
                                         Nama belakang harus valid.
                                     </div>
@@ -93,7 +96,7 @@
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        value="{{ old('email', $userdata->email) }}" name="email" required>
+                                        name="email" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -102,7 +105,7 @@
                                 <div class="col-12">
                                     <label for="address" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                        value="{{ old('address', $userdata->address) }}" name="address" required>
+                                        name="address" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
@@ -111,7 +114,7 @@
                                 <div class="col-md-5">
                                     <label for="province" class="form-label">Provinsi</label>
                                     <input type="text" class="form-control" id="province" placeholder="Provinsi"
-                                        value="{{ old('province', $userdata->province) }}" name="province" required>
+                                        name="province" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan provinsi pengiriman anda.
                                     </div>
@@ -120,7 +123,7 @@
                                 <div class="col-md-4">
                                     <label for="city" class="form-label">Kota / Kabupaten</label>
                                     <input type="text" class="form-control" id="city" placeholder="Kota / Kab."
-                                        value="{{ old('city', $userdata->city) }}" name="city" required>
+                                        name="city" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan kota pengiriman anda.
                                     </div>
@@ -129,7 +132,7 @@
                                 <div class="col-md-3">
                                     <label for="postcode" class="form-label">Kode Pos</label>
                                     <input type="text" class="form-control" id="postcode" placeholder="" name="postcode"
-                                        value="{{ old('postcode', $userdata->postcode) }}"required>
+                                        required>
                                     <div class="invalid-feedback">
                                         Kode pos diperlukan.
                                     </div>
@@ -158,9 +161,9 @@
 
                             <div class="row gy-3">
                                 <div class="col-md-6">
-                                    <label for="cc-name" class="form-label">Nama pada kartu</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder=""
-                                        name="card_name" value="{{ old('card_name', $userdata->card_name) }}" required>
+                                    <label for="card_name" class="form-label">Nama pada kartu</label>
+                                    <input type="text" class="form-control" id="card_name" placeholder=""
+                                        name="card_name" required>
                                     <small class="text-body-secondary">Nama Lengkap sesuai kartu</small>
                                     <div class="invalid-feedback">
                                         Nama pada kartu diperlukan
@@ -168,38 +171,28 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="cc-number" class="form-label">Nomor Kartu</label>
+                                    <label for="card_number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
-                                        class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" value="{{ old('card_number', $userdata->card_number) }}"
-                                        required>
+                                        class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
+                                        name="card_number" required>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control datepicker" id="cc-expiration"
-                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
-                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
+                                    <label for="card_expiration" class="form-label">Masa Berlaku</label>
+                                    <input type="text" class="form-control" id="card_expiration"
+                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-3">
-                                    <label for="cc-expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="mm/yy" style="padding-left:0.8em;"
-                                        name="card_expiration"value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
-                                    <div class="invalid-feedback">
-                                        Tanggal kadaluarsa diperlukan
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-md-3">
-                                    <label for="cc-cvv" class="form-label">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="xxx"
-                                        name="card_cvv" value="{{ old('card_cvv', $userdata->card_cvv) }}"required>
+                                    <label for="card_cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="card_cvv" placeholder="xxx"
+                                        name="card_cvv" required>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
                                     </div>
@@ -207,10 +200,10 @@
                             </div>
 
                             <hr class="my-4">
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Lanjutkan Pembayaran</button>
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
                         </form>
                     </div>
-                    <div class="col-5">
+                    <div class="col-md-5 col-12 order-md-2 order-1">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-primary">Keranjang Anda</span>
                             <span class="badge bg-primary rounded-pill">{{ $totalItems }}</span>
@@ -218,7 +211,7 @@
                         <ul class="list-group mb-3">
                             @foreach ($items as $item)
                                 <li id="item_{{ $item['product_id'] }}"
-                                    class="list-group-item d-flex justify-content-between lh-sm px-3 py-2">
+                                    class="list-group-item d-flex justify-content-md-center lh-sm px-3 py-2">
                                     <div>
                                         <h6 class="mb-2">{{ $item['product_name'] }}</h6>
                                         <div class="d-flex col-8 align-items-center w-100">
@@ -227,7 +220,8 @@
                                             </label>
                                             <input type="number" min="0" step="1"
                                                 class="form-control form-control-sm quantity-form"
-                                                value="{{ $item['quantity'] }}" id="product_{{ $item['product_id'] }}">
+                                                value={{ $item['quantity'] }} id={{ 'product_' . $item['product_id'] }}
+                                                name="product_{{ $item['product_id'] }}">
                                             </input>
                                             <div>
                                                 <i id="delete_{{ $item['product_id'] }}"
@@ -273,37 +267,99 @@
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
             crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-            // Datepicker
-            $('.datepicker').datepicker({
-                format: "mm/yy",
-                startView: "months",
-                minViewMode: "months"
+            // Fields
+            const data = @json($userdata->toArray()['default_payment_detail']);
+
+            const firstname = document.getElementById("firstname");
+            const lastname = document.getElementById("lastname");
+            const email = document.getElementById("email");
+            const address = document.getElementById("address");
+            const province = document.getElementById("province");
+            const city = document.getElementById("city");
+            const postcode = document.getElementById("postcode");
+            const card_type = document.getElementById("card_type");
+            const card_name = document.getElementById("card_name");
+            const card_number = document.getElementById("card_number");
+            const card_expiration = document.getElementById("card_expiration");
+            const card_cvv = document.getElementById("card_cvv");
+
+            // Card Expiration Formatting
+            card_expiration.addEventListener('input', function(e) {
+                let v = e.target.value.replace(/\D/g, ''); // only digits
+
+                if (v.length >= 2) {
+                    e.target.value = v.slice(0, 2) + '/' + v.slice(2, 4);
+                } else {
+                    e.target.value = v;
+                }
+            });
+            // Delete two chars if backspace on char length = 3
+            card_expiration.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace') {
+                    const v = card_expiration.value;
+
+                    // Length 3 means: "12/" or "1/2" depending on user edits
+                    if (v.length === 3) {
+                        e.preventDefault(); // stop normal backspace
+
+                        // Remove last two chars
+                        card_expiration.value = v.slice(0, 1);
+                    }
+                }
             });
 
-            // Example starter JavaScript for disabling form submissions if there are invalid fields
-            (() => {
-                'use strict'
+            // card number formatter
+            function formatGroups(value) {
+                // remove non-digits
+                value = value.replace(/\D/g, '');
 
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                const forms = document.querySelectorAll('.needs-validation')
+                // group every 4 digits
+                return value.replace(/(.{4})/g, '$1 ').trim();
+            }
 
-                // Loop over them and prevent submission
-                Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
+            // Format on input
+            card_number.addEventListener('input', function(e) {
+                e.target.value = formatGroups(e.target.value);
+            });
 
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-            })()
+            // Format initial value when page loads
+            card_number.value = formatGroups(card_number.value);
 
+            // Get from Profile Button
+            document.getElementById("btn-fill").addEventListener("click", function() {
+                firstname.value = data["firstname"] ?? "";
+                lastname.value = data["lastname"] ?? "";
+                email.value = data["email"] ?? "";
+                address.value = data["address"] ?? "";
+                province.value = data["province"] ?? "";
+                city.value = data["city"] ?? "";
+                postcode.value = data["postcode"] ?? "";
+                card_type.value = data["card_type"] ?? "";
+                card_name.value = data["card_name"] ?? "";
+                card_number.value = data["card_number"] ?? "";
+                card_expiration.value = data["card_expiration"] ?? "";
+                card_cvv.value = data["card_cvv"] ?? "";
+            })
+
+
+            // Clear Button
+            document.getElementById("btn-empty").addEventListener("click", function() {
+                firstname.value = "";
+                lastname.value = "";
+                email.value = "";
+                address.value = "";
+                province.value = "";
+                city.value = "";
+                postcode.value = "";
+                card_type.value = "";
+                card_name.value = "";
+                card_number.value = "";
+                card_expiration.value = "";
+                card_cvv.value = "";
+            })
+
+            // Other Functions
             const startProductLoading = (productId) => {
                 const qtyInput = document.querySelector(`#product_${productId}`);
                 const spinner = document.querySelector(`#spinner_${productId}`);
@@ -466,53 +522,26 @@
                     return "";
                 }
             }
-            const cardNumber = document.querySelector('#cc-number');
+            const cardNumber = document.querySelector('#card_number');
             cardNumber.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxx xxxx xxxx xxxx",
                 });
             };
-            const cardExpiration = document.querySelector('#cc-expiration');
-            cardExpiration.oninput = (e) => {
-                e.target.value = patternMatch({
-                    input: e.target.value,
-                    template: "xx/xx",
-                });
-            };
-            const cardCvv = document.querySelector('#cc-cvv');
+            const cardCvv = document.querySelector('#card_cvv');
             cardCvv.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxx",
                 });
             };
-            const postcode = document.querySelector('#postcode');
             postcode.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxxx",
                 });
             };
-
-            // card number formatter
-            function formatGroups(value) {
-                // remove non-digits
-                value = value.replace(/\D/g, '');
-
-                // group every 4 digits
-                return value.replace(/(.{4})/g, '$1 ').trim();
-            }
-
-            const card_number = document.getElementById('cc-number');
-
-            // Format on input
-            card_number.addEventListener('input', function(e) {
-                e.target.value = formatGroups(e.target.value);
-            });
-
-            // ✅ Format initial value when page loads
-            card_number.value = formatGroups(card_number.value);
         </script>
 
     @endsection
