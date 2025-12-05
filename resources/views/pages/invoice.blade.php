@@ -29,11 +29,10 @@
                 border-radius: 1rem;
             }
         </style>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
     <body class="bg-body-tertiary">
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-            integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" /> --}}
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -166,9 +165,6 @@
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
         <script type="text/javascript">
             $(document).ready(function() {
                 const invoiceDate = '{{ $invoiceData['order_detail']->created_at->toIso8601String() }}';
