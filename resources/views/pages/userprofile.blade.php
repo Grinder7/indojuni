@@ -262,20 +262,19 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-
         const card_expiration = document.getElementById('card_expiration');
         // Card Expiration Formatting
-        card_expiration.addEventListener('input', function (e) {
+        card_expiration.addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, ''); // only digits
 
             if (v.length >= 2) {
-                e.target.value = v.slice(0,2) + '/' + v.slice(2,4);
+                e.target.value = v.slice(0, 2) + '/' + v.slice(2, 4);
             } else {
                 e.target.value = v;
             }
         });
         // Delete two chars if backspace on char length = 3
-        card_expiration.addEventListener('keydown', function (e) {
+        card_expiration.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace') {
                 const v = card_expiration.value;
 
@@ -284,12 +283,20 @@
                     e.preventDefault(); // stop normal backspace
 
                     // Remove last two chars
-                    card_expiration.value = v.slice(0,1);  
+                    card_expiration.value = v.slice(0, 1);
                 }
             }
         });
-        
+
         const card_number = document.getElementById('card_number');
+
+        function formatGroups(value) {
+            // remove non-digits
+            value = value.replace(/\D/g, '');
+
+            // group every 4 digits
+            return value.replace(/(.{4})/g, '$1 ').trim();
+        }
         // Card Number Formatting
         card_number.addEventListener('input', function(e) {
             e.target.value = formatGroups(e.target.value);

@@ -65,21 +65,20 @@
                 </div>
 
                 <div class="row g-5 d-flex flex-column flex-md-row flex-sm-flow-reverse justify-content-center w-100">
-                    <div class="col-md-7 col-12 order-2 order-md-1">
+                    <div class="col-md-7 col-12 order-md-1 order-2">
                         <div class="d-flex justify-content-between mb-4">
                             <button class="btn btn-success me-2" id="btn-fill">Ambil Dari Profil</button>
                             <button class="btn btn-danger ms-2" id="btn-empty">Kosongkan Detail Pembayaran</button>
                         </div>
                         <hr>
                         <h4 class="mb-3">Alamat Pengiriman</h4>
-                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}"
-                            novalidate>
+                        <form class="needs-validation" method="POST" action="{{ route('app.checkout.checkout') }}">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="firstname" class="form-label">Nama Depan</label>
                                     <input type="text" class="form-control" id="firstname" name="firstname"
-                                        placeholder=""  required>
+                                        placeholder="" required>
                                     <div class="invalid-feedback">
                                         Nama depan harus valid.
                                     </div>
@@ -87,8 +86,8 @@
 
                                 <div class="col-sm-6">
                                     <label for="lastname" class="form-label">Nama Belakang</label>
-                                    <input type="text" class="form-control" id="lastname" placeholder=""
-                                         name="lastname" required>
+                                    <input type="text" class="form-control" id="lastname" placeholder="" name="lastname"
+                                        required>
                                     <div class="invalid-feedback">
                                         Nama belakang harus valid.
                                     </div>
@@ -97,7 +96,7 @@
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                         name="email" required>
+                                        name="email" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -106,7 +105,7 @@
                                 <div class="col-12">
                                     <label for="address" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                         name="address" required>
+                                        name="address" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
@@ -115,7 +114,7 @@
                                 <div class="col-md-5">
                                     <label for="province" class="form-label">Provinsi</label>
                                     <input type="text" class="form-control" id="province" placeholder="Provinsi"
-                                         name="province" required>
+                                        name="province" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan provinsi pengiriman anda.
                                     </div>
@@ -124,7 +123,7 @@
                                 <div class="col-md-4">
                                     <label for="city" class="form-label">Kota / Kabupaten</label>
                                     <input type="text" class="form-control" id="city" placeholder="Kota / Kab."
-                                         name="city" required>
+                                        name="city" required>
                                     <div class="invalid-feedback">
                                         Mohon masukkan kota pengiriman anda.
                                     </div>
@@ -164,7 +163,7 @@
                                 <div class="col-md-6">
                                     <label for="card_name" class="form-label">Nama pada kartu</label>
                                     <input type="text" class="form-control" id="card_name" placeholder=""
-                                        name="card_name"  required>
+                                        name="card_name" required>
                                     <small class="text-body-secondary">Nama Lengkap sesuai kartu</small>
                                     <div class="invalid-feedback">
                                         Nama pada kartu diperlukan
@@ -175,8 +174,7 @@
                                     <label for="card_number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" 
-                                        required>
+                                        name="card_number" required>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
@@ -185,20 +183,11 @@
                                 <div class="col-md-3">
                                     <label for="card_expiration" class="form-label">Masa Berlaku</label>
                                     <input type="text" class="form-control" id="card_expiration"
-                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration"
-                                         required>
+                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-3">
-                                    <label for="card_expiration" class="form-label">Masa Berlaku</label>
-                                    <input type="text" class="form-control" id="card_expiration" placeholder="mm/yy" style="padding-left:0.8em;"
-                                        name="card_expiration" required>
-                                    <div class="invalid-feedback">
-                                        Tanggal kadaluarsa diperlukan
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-md-3">
                                     <label for="card_cvv" class="form-label">CVV</label>
@@ -214,7 +203,7 @@
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
                         </form>
                     </div>
-                    <div class="col-md-5 col-12 order-1 order-md-2">
+                    <div class="col-md-5 col-12 order-md-2 order-1">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-primary">Keranjang Anda</span>
                             <span class="badge bg-primary rounded-pill">{{ $totalItems }}</span>
@@ -231,7 +220,8 @@
                                             </label>
                                             <input type="number" min="0" step="1"
                                                 class="form-control form-control-sm quantity-form"
-                                                 $item['product_id'] }}">
+                                                value={{ $item['quantity'] }} id={{ 'product_' . $item['product_id'] }}
+                                                name="product_{{ $item['product_id'] }}">
                                             </input>
                                             <div>
                                                 <i id="delete_{{ $item['product_id'] }}"
@@ -280,7 +270,6 @@
         <script type="text/javascript">
             // Fields
             const data = @json($userdata->toArray()['default_payment_detail']);
-            console.log(data);
 
             const firstname = document.getElementById("firstname");
             const lastname = document.getElementById("lastname");
@@ -296,17 +285,17 @@
             const card_cvv = document.getElementById("card_cvv");
 
             // Card Expiration Formatting
-            card_expiration.addEventListener('input', function (e) {
+            card_expiration.addEventListener('input', function(e) {
                 let v = e.target.value.replace(/\D/g, ''); // only digits
 
                 if (v.length >= 2) {
-                    e.target.value = v.slice(0,2) + '/' + v.slice(2,4);
+                    e.target.value = v.slice(0, 2) + '/' + v.slice(2, 4);
                 } else {
                     e.target.value = v;
                 }
             });
             // Delete two chars if backspace on char length = 3
-            card_expiration.addEventListener('keydown', function (e) {
+            card_expiration.addEventListener('keydown', function(e) {
                 if (e.key === 'Backspace') {
                     const v = card_expiration.value;
 
@@ -315,7 +304,7 @@
                         e.preventDefault(); // stop normal backspace
 
                         // Remove last two chars
-                        card_expiration.value = v.slice(0,1);  
+                        card_expiration.value = v.slice(0, 1);
                     }
                 }
             });
@@ -338,7 +327,7 @@
             card_number.value = formatGroups(card_number.value);
 
             // Get from Profile Button
-            document.getElementById("btn-fill").addEventListener("click", function(){
+            document.getElementById("btn-fill").addEventListener("click", function() {
                 firstname.value = data["firstname"] ?? "";
                 lastname.value = data["lastname"] ?? "";
                 email.value = data["email"] ?? "";
@@ -352,10 +341,10 @@
                 card_expiration.value = data["card_expiration"] ?? "";
                 card_cvv.value = data["card_cvv"] ?? "";
             })
-            
-            
+
+
             // Clear Button
-            document.getElementById("btn-empty").addEventListener("click", function(){
+            document.getElementById("btn-empty").addEventListener("click", function() {
                 firstname.value = "";
                 lastname.value = "";
                 email.value = "";
@@ -540,13 +529,6 @@
                     template: "xxxx xxxx xxxx xxxx",
                 });
             };
-            const cardExpiration = document.querySelector('#card_expiration');
-            cardExpiration.oninput = (e) => {
-                e.target.value = patternMatch({
-                    input: e.target.value,
-                    template: "xx/xx",
-                });
-            };
             const cardCvv = document.querySelector('#card_cvv');
             cardCvv.oninput = (e) => {
                 e.target.value = patternMatch({
@@ -554,8 +536,7 @@
                     template: "xxx",
                 });
             };
-            const postCode = document.querySelector('#postcode');
-            postCode.oninput = (e) => {
+            postcode.oninput = (e) => {
                 e.target.value = patternMatch({
                     input: e.target.value,
                     template: "xxxxx",
