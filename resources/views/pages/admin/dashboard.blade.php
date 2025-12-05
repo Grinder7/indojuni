@@ -364,7 +364,6 @@
                                     location.reload();
                                 });
                         } else {
-                            console.log(response);
                             Swal.fire(
                                 'Error',
                                 'error',
