@@ -68,7 +68,6 @@
                     <div class="col-md-7 col-12 order-md-1 order-2">
                         <div class="d-flex justify-content-between mb-4">
                             <button class="btn btn-success me-2" id="btn-fill">Ambil Dari Profil</button>
-                            <button class="btn btn-danger ms-2" id="btn-empty">Kosongkan Detail Pembayaran</button>
                         </div>
                         <hr>
                         <h4 class="mb-3">Alamat Pengiriman</h4>
@@ -342,22 +341,37 @@
                 card_cvv.value = data["card_cvv"] ?? "";
             })
 
+            window.onload = function() {
+                firstname.value = data["firstname"] ?? "";
+                lastname.value = data["lastname"] ?? "";
+                email.value = data["email"] ?? "";
+                address.value = data["address"] ?? "";
+                province.value = data["province"] ?? "";
+                city.value = data["city"] ?? "";
+                postcode.value = data["postcode"] ?? "";
+                card_type.value = data["card_type"] ?? "";
+                card_name.value = data["card_name"] ?? "";
+                card_number.value = data["card_number"] ?? "";
+                card_expiration.value = data["card_expiration"] ?? "";
+                card_cvv.value = data["card_cvv"] ?? "";
+            }
+
 
             // Clear Button
-            document.getElementById("btn-empty").addEventListener("click", function() {
-                firstname.value = "";
-                lastname.value = "";
-                email.value = "";
-                address.value = "";
-                province.value = "";
-                city.value = "";
-                postcode.value = "";
-                card_type.value = "";
-                card_name.value = "";
-                card_number.value = "";
-                card_expiration.value = "";
-                card_cvv.value = "";
-            })
+            // document.getElementById("btn-empty").addEventListener("click", function() {
+            //     firstname.value = "";
+            //     lastname.value = "";
+            //     email.value = "";
+            //     address.value = "";
+            //     province.value = "";
+            //     city.value = "";
+            //     postcode.value = "";
+            //     card_type.value = "";
+            //     card_name.value = "";
+            //     card_number.value = "";
+            //     card_expiration.value = "";
+            //     card_cvv.value = "";
+            // })
 
             // Other Functions
             const startProductLoading = (productId) => {
