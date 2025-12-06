@@ -1,5 +1,5 @@
 <style>
-.out-of-bonds{
+.out-of-bounds{
     position: absolute;
     visibility: hidden;
 }
@@ -72,11 +72,11 @@ style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35)
         const width = entries[0].contentRect.width;
         var tresholdPx = item_left.getBoundingClientRect().width + item_mid.getBoundingClientRect().width + item_right.getBoundingClientRect().width;
         if (width < tresholdPx + padding) {
-            item_left.classList.add("out-of-bonds");
+            item_left.classList.add("out-of-bounds");
             header.classList.remove("justify-content-between")
             header.classList.add("justify-content-around")
         } else {
-            item_left.classList.remove("out-of-bonds");
+            item_left.classList.remove("out-of-bounds");
             header.classList.add("justify-content-between")
             header.classList.remove("justify-content-around")
         }
