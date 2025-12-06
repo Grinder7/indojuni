@@ -34,11 +34,13 @@
         }
 
         .tiny-form {
-            width: 4em;
+            max-width: 4em;
+            width:100%;
         }
-
+        
         .small-form {
-            width: 10em;
+            max-width: 10em;
+            width:100%;
         }
 
         .medium-form {
