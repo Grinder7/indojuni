@@ -84,14 +84,14 @@ namespace App\Models{
 /**
  * @property string $id
  * @property string $user_id
- * @property bool $is_default
  * @property string $firstname
  * @property string $lastname
- * @property string|null $email
+ * @property string $email
  * @property string $address
- * @property string|null $address2
- * @property string $zip
- * @property string $payment_method
+ * @property string $city
+ * @property string $province
+ * @property string $postcode
+ * @property int $card_type
  * @property string $card_name
  * @property string $card_number
  * @property string $card_expiration
@@ -103,21 +103,21 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereAddress2($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCardCvv($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCardExpiration($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCardName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCardNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCardType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereIsDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereLastname($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail wherePaymentMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail wherePostcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereProvince($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|PaymentDetail whereZip($value)
  */
 	class PaymentDetail extends \Eloquent {}
 }
@@ -184,9 +184,20 @@ namespace App\Models{
 /**
  * @property string $id
  * @property string $username
+ * @property string|null $firstname
+ * @property string|null $lastname
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $province
+ * @property string|null $postcode
+ * @property int|null $card_type
+ * @property string|null $card_name
+ * @property string|null $card_number
+ * @property string|null $card_expiration
+ * @property string|null $card_cvv
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -202,12 +213,23 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCardCvv($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCardExpiration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCardName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCardNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCardType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastname($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePostcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProvince($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)

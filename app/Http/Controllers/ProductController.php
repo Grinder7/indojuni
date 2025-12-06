@@ -20,10 +20,10 @@ class ProductController extends Controller
         $searchQuery = $request->query('search');
         if ($searchQuery === null) $searchQuery = '';
         $filter = [];
-        $filter["category"] = $request->query('category', '');
-        $filter["subcategory"] = $request->query("subcategory", '');
+        $filter["category"] = $request->query('kategori', '');
+        $filter["subcategory"] = $request->query("sub_kategori", '');
         $filter["brand"] = $request->query("brand", '');
-
+        // dd($filter);
         $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery, $filter);
         $productFilters = $this->productService->getProductFilterOptions();
         return view('pages.catalogue', compact('products'))->with('productFilters', $productFilters);

@@ -8,6 +8,7 @@ use App\Modules\Product\ProductService;
 use App\Modules\OrderDetail\OrderDetailService;
 
 use App\Modules\User\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,108 +26,129 @@ class AdminController extends Controller
         $this->user = $user;
     }
 
-    public function adminHome()
+    public function dashboard(Request $request)
     {
-        $products = $this->productService->getAllProducts();
-        return view('pages.admin.admin')->with(compact("products"));
+        $searchQuery = $request->query('search');
+        if ($searchQuery === null) $searchQuery = '';
+        $filter = [];
+        $filter["category"] = $request->query('kategori', '');
+        $filter["subcategory"] = $request->query("sub_kategori", '');
+        $filter["brand"] = $request->query("brand", '');
+        // dd($filter);
+        $products = $this->productService->getPaginatedProduct(24, 'name', $searchQuery, $filter);
+        $productFilters = $this->productService->getProductFilterOptions();
+        return view('pages.admin.dashboard')->with(compact("products", "productFilters"));
     }
-
-    // public function adminInvoice()
-    // {
-    //     $order_details = $this->orderDetail->getAllData();
-    //     $users = $this->user->getAllData();
-    //     foreach ($order_details as $order_detail) {
-    //         foreach ($users as $user) {
-    //             if (!strcmp($user->id, $order_detail->user_id)) {
-    //                 $order_detail->username = $user->username;
-    //             }
-    //         }
-    //     }
-    //     return view('pages.admin.invoices')->with(compact("order_details"));
-    // }
 
     public function modify(ModifyProductRequest $request)
     {
         $validate = $request->validated();
-        $inputData = [
-            'id' => $validate['product_id'],
-            'name' => $validate['name'],
-            'description' => $validate['description'],
-            'stock' => $validate['stock'],
-            'price' => $validate['price'],
-            'img' => $validate['img'] ?? null
-        ];
+        $inputData = $validate;
+        $inputData['id'] = intval($inputData['id']);
         $product = $this->productService->getProductById($inputData['id']);
-        if ($product->img && $product->img !== $inputData['img']) {
-            $path = $request->file('img');
-            $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3)) . '.' . File::extension($path->getClientOriginalName());
-            if (!Storage::disk('admin_img_upload')->put($filename, $path->get())) {
-                return redirect()->back()->with('error', $path->getErrorMessage());
-            } else {
-                $inputData['img'] = $filename;
+        if ($request->hasFile('img')) {
+            $uploaded = $request->file('img');
+            $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3)) . '.' . File::extension($uploaded->getClientOriginalName());
+            if (!Storage::disk('admin_img_upload')->put($filename, $uploaded->get())) {
+                return response()->json([
+                    'status'  => 400,
+                    'message' => 'Failed to upload image',
+                    'data'    => null,
+                ]);
             }
+            if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
+                Storage::disk('admin_img_upload')->delete($product->img);
+            }
+
+            $inputData['img'] = $filename;
         } else {
-            // TODO: REMOVE PREVIOUS FILE IF EXISTS
+            unset($inputData['img']);
         }
         try {
             $this->productService->updateProduct($inputData);
         } catch (\Throwable $th) {
+            error_log($th->getMessage());
+            if (isset($inputData['img']) && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
+                Storage::disk('admin_img_upload')->delete($inputData['img']);
+            }
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => $th->getMessage(),
+                    'data' => null
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'Gagal memperbaharui data produk');
+            }
+        }
+        if ($request->expectsJson()) {
             return response()->json([
-                'status' => 400,
-                'message' => $th->getMessage(),
+                'status' => 200,
+                'message' => 'Data has been successfully updated',
                 'data' => null
             ]);
+        } else {
+            return redirect()->back()->with('success', 'Berhasil memperbaharui data produk');
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Data has been successfully updated',
-            'data' => null
-        ]);
     }
 
     public function create(CreateProductRequest $request)
     {
         $validate = $request->validated();
         $inputData = [
-            'name' => $validate['name'],
+            'name'        => $validate['name'],
             'description' => $validate['description'],
-            'stock' => $validate['stock'],
-            'price' => $validate['price'],
-            'img' => null
+            'stock'       => $validate['stock'],
+            'price'       => $validate['price'],
+            'img'         => null,
         ];
-        if (isset($validate['img'])) {
-            $path = $request->file('file');
-            $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3)) . '.' . File::extension($path->getClientOriginalName());
-            if (!Storage::disk('admin_img_upload')->put($filename, $path->get())) {
-                return redirect()->back()->with('error', $path->getErrorMessage());
-            } else {
-                $inputData['img'] = $filename;
+        if ($request->hasFile('img')) {
+            $uploaded = $request->file('img');
+            $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3))
+                . '.' . File::extension($uploaded->getClientOriginalName());
+            if (!Storage::disk('admin_img_upload')->put($filename, $uploaded->get())) {
+                return response()->json([
+                    'status'  => 400,
+                    'message' => 'Failed to upload image',
+                ]);
             }
+            $inputData['img'] = $filename;
         }
         try {
             $this->productService->createProduct($inputData);
         } catch (\Throwable $th) {
             return response()->json([
-                'status' => 400,
+                'status'  => 400,
                 'message' => $th->getMessage(),
-                'data' => null
+                'data'    => null,
             ]);
         }
         return response()->json([
-            'status' => 200,
+            'status'  => 200,
             'message' => 'Data has been successfully created',
-            'data' => null
+            'data'    => null,
         ]);
     }
 
-    // public function deleteData(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'product_id' => "required|integer",
-    //     ]);
-    //     $data = $this->productService->getProductById($validated['product_id']);
-    //     $terserah = $data->delete();
-    //     if ($terserah) return Response::json(['success' => true]);
-    //     else return Response::json(['success' => false]);
-    // }
+    public function deleteData(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'product_id' => "required|integer",
+            ]);
+            $product = $this->productService->getProductById($validated['product_id']);
+            if (!$product) {
+                return response()->json(['success' => false, 'message' => 'Product not found']);
+            }
+            // delete file
+            if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
+                Storage::disk('admin_img_upload')->delete($product->img);
+            }
+            $product->is_active = false;
+            $result = $product->save();
+            return response()->json(['success' => (bool)$result]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()]);
+        }
+    }
 }

@@ -1,9 +1,45 @@
-# image build from Dockerfile.prod.base
-FROM indojuni:prod-base
+###########################
+# 1) Node Build Stage
+###########################
+FROM node:22-alpine AS node-build
+
 WORKDIR /app
-COPY composer.json composer.lock ./
-RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
+
+# Only copy what Node needs first (cache layer)
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+# Now copy full project for Vite build
 COPY . .
+
+RUN npm run build
+
+
+###########################
+# 2) PHP / FrankenPHP Stage
+###########################
+# image build from Dockerfile.prod.base
+FROM indojuni:prod-base AS app
+WORKDIR /app
+
+# Copy Composer manifests
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
+
+# Copy application source
+COPY . .
+
+# Copy Vite-built assets from Node stage
+COPY --from=node-build /app/public/build ./public/build
+
+# Expose FrankenPHP port
 EXPOSE 8000
+
+# Install FrankenPHP into Laravel Octane
 RUN php artisan octane:install --server=frankenphp
+
+# Cache everything before starting server
 ENTRYPOINT ["sh", "-c", "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan octane:frankenphp"]
