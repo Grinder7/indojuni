@@ -312,7 +312,6 @@
         <script type="text/javascript">
             // Fields
             const data = @json($userdata->toArray()['default_payment_detail']);
-            console.log(data);
 
             const firstname = document.getElementById("firstname");
             const lastname = document.getElementById("lastname");

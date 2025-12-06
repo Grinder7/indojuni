@@ -135,7 +135,6 @@
         }
 
         const chats = @json(session('chat_fe_log', []));
-        console.log(chats);
         const chatArea = document.getElementById('chatbot-messages');
         initializeChat();
         chats.forEach(chat => {

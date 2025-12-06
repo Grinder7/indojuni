@@ -71,7 +71,6 @@ style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35)
     const observer = new ResizeObserver(entries => {
         const width = entries[0].contentRect.width;
         var tresholdPx = item_left.getBoundingClientRect().width + item_mid.getBoundingClientRect().width + item_right.getBoundingClientRect().width;
-        console.log(width, tresholdPx + padding)
         if (width < tresholdPx + padding) {
             item_left.classList.add("out-of-bonds");
             header.classList.remove("justify-content-between")
