@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             "firstname" => "Calvin",
             "lastname" => "Farrellino",
             "email" => "calvinfarrellinok@gmail.com",
-            "password" => bcrypt("adminpass"),
+            "password" => bcrypt("adminpass789"),
             "address" => "Somewhere in Sidoarjo",
             "city" => "Kab. Sidoarjo",
             "province" => "Jawa Timur",
@@ -26,13 +26,6 @@ class UserSeeder extends Seeder
             "card_expiration" => "11/30",
             "card_cvv" => "123",
             "is_admin" => true,
-        ]);
-
-        $user = User::create([
-            "username" => "User",
-            "email" => "user@gmail.com",
-            "password" => bcrypt("userpass"),
-            "is_admin" => false,
         ]);
     }
 }
