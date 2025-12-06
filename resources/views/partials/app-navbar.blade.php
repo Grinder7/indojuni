@@ -1,25 +1,31 @@
+<style>
+    .out-of-bounds {
+        position: absolute;
+        visibility: hidden;
+    }
+</style>
 <header
-class="d-flex align-items-center justify-content-center justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
-style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
-    <div class="col-md-3 mb-md-0 align-items-center mb-2">
+    class="d-flex align-items-center justify-content-between justify-content-md-between fixed-top mb-4 flex-wrap px-3 py-3"
+    style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 50%, rgba(255,255,255,0) 100%);">
+    <div class="mb-md-0 align-items-center" id="item-left">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none align-items-center">
             <img src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="logo" height="40">
         </a>
     </div>
 
-    <ul class="nav col-12 col-md-auto justify-content-center mb-md-0 mb-2">
-        <li><a href="{{ route('app.home.page') }}" class="nav-link px-2"
-                style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Beranda</a></li>
-        <li><a href="{{ route('app.catalogue.page') }}" class="nav-link px-2"
-                style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Katalog</a>
-        </li>
-        <li><a href="{{ route('app.aboutus.page') }}" class="nav-link px-2"
-                style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }}">Tentang Kami</a></li>
-    </ul>
+    <div class="nav justify-content-around mb-md-0" id="item-mid">
+        <a href="{{ route('app.home.page') }}" class="nav-link px-2"
+            style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Beranda</a>
+        <a href="{{ route('app.catalogue.page') }}" class="nav-link px-2"
+            style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Katalog</a>
 
-    <div class="col-md-3 text-end">
+        <a href="{{ route('app.aboutus.page') }}" class="nav-link px-2"
+            style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }}">Tentang Kami</a>
+    </div>
+
+    <div class="text-end" id="item-right">
         @auth
-            <ul class="nav col-12 col-md-auto justify-content-end mb-md-0 mb-2">
+            <ul class="nav col-12 col-md-auto justify-content-end mb-md-0 w-100">
                 <li class="d-flex align-items-center">
                     <a href="{{ route('app.checkout.page') }}" class="me-3"><i class="fa-solid fa-cart-shopping fa-xl"
                             style="color: rgb(255,255,255);{{ Request::is('checkout*') ? 'text-decoration:underline;text-underline-offset: 0.25rem;' : '' }}"></i></a>
@@ -32,7 +38,7 @@ style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35)
                         <ul class="dropdown-menu">
                             @can('isAdmin')
                                 <li>
-                                    <a href="{{ route('app.admin.dashboard.page') }}" class="dropdown-item">Dashboard</a>
+                                    <a href="{{ route('adm.dashboard.page') }}" class="dropdown-item">Admin Dashboard</a>
                                 </li>
                             @endcan
                             <li>
@@ -54,3 +60,28 @@ style="background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35)
         @endauth
     </div>
 </header>
+<script>
+    const header = document.querySelector("header");
+    const item_left = document.getElementById("item-left");
+    const item_mid = document.getElementById("item-mid");
+    const item_right = document.getElementById("item-right");
+    const padding = window.innerWidth / 100 * 5;
+
+
+    const observer = new ResizeObserver(entries => {
+        const width = entries[0].contentRect.width;
+        var tresholdPx = item_left.getBoundingClientRect().width + item_mid.getBoundingClientRect().width +
+            item_right.getBoundingClientRect().width;
+        if (width < tresholdPx + padding) {
+            item_left.classList.add("out-of-bounds");
+            header.classList.remove("justify-content-between")
+            header.classList.add("justify-content-around")
+        } else {
+            item_left.classList.remove("out-of-bounds");
+            header.classList.add("justify-content-between")
+            header.classList.remove("justify-content-around")
+        }
+    });
+
+    observer.observe(header);
+</script>

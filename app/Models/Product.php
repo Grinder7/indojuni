@@ -28,7 +28,7 @@ class Product extends Model
         'price',
         'img',
         'description',
-
+        'is_active',
     ];
     public $timestamps = false;
 
@@ -52,6 +52,7 @@ class Product extends Model
                                         websearch_to_tsquery('english', ?)) AS text_rank,
                 similarity({$columnName}, ?) AS fuzzy_rank
             ", [$searchParam, $searchParam, $searchParam])
+            ->where('is_active', true)
             ->whereRaw("
                 search_vector @@ (websearch_to_tsquery('indonesian', ?) ||
                                   websearch_to_tsquery('english', ?))
@@ -87,6 +88,7 @@ class Product extends Model
                                         websearch_to_tsquery('english', ?)) AS text_rank,
                 similarity({$columnName}, ?) AS fuzzy_rank
             ", [$searchParam, $searchParam, $searchParam])
+            ->where('is_active', true)
             ->whereRaw("
                 search_vector @@ (websearch_to_tsquery('indonesian', ?) ||
                                   websearch_to_tsquery('english', ?))

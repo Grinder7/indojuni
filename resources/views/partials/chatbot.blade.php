@@ -29,19 +29,43 @@
             margin-left: auto;
             color: white;
         }
+
+        .clamp {
+            top: min(var(--desired-top, 0px), 75px);
+        }
+
+        #outer_box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+        }
+
+        /* Chatbot popup appears above the button */
+        #chatbot-popup {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 300px;
+            height: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+        }
     </style>
     <div>
-        {{-- Chatbot Toggle Button --}}
-        <div style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
-            <button id="chatbot-toggle"
-                style="border: none; background: blue; cursor: pointer; padding:0.75rem; border-radius: 50%;"><i
-                    class="fa-solid fa-comment" style="color: white; font-size: 1.5rem;"></i></button>
-        </div>
-        <div>
+        <div id="outer_box">
+            <div id="chatbot-btn">
+                <button id="chatbot-toggle"
+                    style="border: none; background: blue; cursor: pointer; padding:0.75rem; border-radius: 50%;">
+                    <i class="fa-solid fa-comment" style="color: white; font-size: 1.5rem;"></i>
+                </button>
+            </div>
             {{-- Chatbot Popup UI --}}
-            <div id="chatbot-popup"
-                style="display: none; width: 300px; height: 500px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1001; margin-bottom: 125px; margin-right: 2rem; z-index: 999;"
-                class="position-fixed bottom-0 end-0 rounded border">
+            <div id="chatbot-popup" class="rounded border">
                 <div class="d-flex justify-content-between align-items-center border-bottom p-2"
                     style="background: #007bff; color: white;">
                     <h5 class="mb-0">Virtual Assistant</h5>
@@ -67,6 +91,21 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
     <script>
+        const chatInput = document.getElementById('chatbot-input');
+
+        chatInput.addEventListener("focus", () => {
+            document.body.style.overflow = "hidden";
+        });
+
+        chatInput.addEventListener("blur", () => {
+            document.body.style.overflow = "";
+        });
+
+        chatInput.addEventListener('click', () => {
+            setTimeout(() => chatInput.focus(), 50);
+        });
+
+
         function appendChatDOM(role, content, messageElem = null) {
             const chatArea = document.getElementById('chatbot-messages');
             if (messageElem === null) {
@@ -97,6 +136,7 @@
                 role: 'user',
                 content: message
             });
+            chatInput.disabled = true;
             const chatArea = document.getElementById('chatbot-messages');
             appendChatDOM('user', message);
             const assistantMessageElem = document.createElement('p');
@@ -121,11 +161,10 @@
                 assistantMessageElem.remove();
                 appendChatDOM('assistant', 'Terjadi kesalahan: Tidak dapat menerima respons dari asisten.');
             });
-
+            chatInput.disabled = false;
         }
 
         const chats = @json(session('chat_fe_log', []));
-        console.log(chats);
         const chatArea = document.getElementById('chatbot-messages');
         initializeChat();
         chats.forEach(chat => {
@@ -150,14 +189,13 @@
         });
 
         document.getElementById('chatbot-send').addEventListener('click', function() {
-            const inputField = document.getElementById('chatbot-input');
-            const message = inputField.value.trim();
+            const message = chatInput.value.trim();
             if (message) {
-                inputField.value = '';
+                chatInput.value = '';
                 sendMessage(message);
             }
         })
-        document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+        chatInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 document.getElementById('chatbot-send').click();
@@ -165,7 +203,6 @@
         });
         document.getElementById('chatbot-clear').addEventListener('click', function() {
             if (confirm('Apakah Anda yakin ingin menghapus riwayat obrolan?')) {
-                const chatInput = document.getElementById('chatbot-input');
                 chatInput.disabled = true;
                 chatInput.placeholder = 'Menghapus Pesan...';
                 const sendButton = document.getElementById('chatbot-send');

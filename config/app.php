@@ -122,7 +122,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-    'secret_key' => env('API_SECRET_KEY', 'secret'),
     'chatbot_api_url' => env('CHATBOT_API_URL')
 ];

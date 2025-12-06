@@ -49,9 +49,8 @@ Route::middleware('enable')->group(function () {
         Route::post('checkout', [CheckoutController::class, 'checkout'])->name('app.checkout.checkout');
     });
     Route::middleware('admin')->group(function () {
-        Route::get('/admin', [AdminController::class, 'adminHome'])->name('admin.dashboard');
-        Route::get('/admin/invoice', [AdminController::class, 'adminInvoice'])->name('admin.invoice');
-        Route::post('/admin', [AdminController::class, 'editData'])->name('adm.edit');
+        Route::get('/admin', [AdminController::class, 'dashboard'])->name('adm.dashboard.page');
+        Route::post('/admin', [AdminController::class, 'modify'])->name('adm.edit');
         Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
     });
 });

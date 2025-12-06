@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('price');
             $table->text('description')->nullable();
             $table->string('img')->nullable();
+            $table->boolean('is_active')->default(true);
         });
         DB::statement("ALTER TABLE products ADD COLUMN search_vector tsvector GENERATED ALWAYS AS (
             setweight(to_tsvector('indonesian', name), 'A') ||
