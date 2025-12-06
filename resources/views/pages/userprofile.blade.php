@@ -89,6 +89,10 @@
     <div class="container" style="margin-top:6rem">
         <main style="font-size:1.2em;">
             <h1>Profil Saya</h1>
+                <div class="alert alert-warning" role="alert">
+                    <strong>Perhatian:</strong> Situs ini hanya untuk demonstrasi e-commerce. Jangan masukkan data
+                    pribadi atau sensitif (seperti nomor kartu asli, alamat lengkap, KTP). Gunakan data contoh saja.
+                </div>
             <hr>
             <form class="needs-validation" method="POST" action="{{ route('app.profile.store') }}" novalidate>
                 @csrf
@@ -126,7 +130,7 @@
                         </div>
                         <div class="input-group medium-form mb-0">
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}">
+                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}" disabled>
                         </div>
                     </div>
                     {{-- <div class="d-flex justify-content-end mb-5 mt-4 me-5">
@@ -148,7 +152,7 @@
                         </div>
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" id="address" name="address" placeholder="Alamat"
-                                value="{{ old('address', $userdata->address) }}" required>
+                                value="{{ old('address', $userdata->address) }}" required disabled>
                         </div>
                     </div>
 
@@ -245,7 +249,7 @@
                                 <div class="input-group medium-form mb-0">
                                     <input type="text" class="form-control card_number" name="card_number"
                                         placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                        value="{{ old('card_number', $userdata->card_number) }}" required>
+                                        value="{{ old('card_number', $userdata->card_number) }}" required disabled>
                                 </div>
                             </div>
     
@@ -255,7 +259,7 @@
                                     <p class="separator mb-0">:</p>
                                 </div>
                                 <div class="input-group mb-0">
-                                    <select class="form-select" id="card_type" name="card_type" required>
+                                    <select class="form-select" id="card_type" name="card_type" required disabled>
                                         <option disabled hidden
                                             {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
                                             Kartu</option>
@@ -279,7 +283,7 @@
                                 <div class="input-group tiny-form mb-0">
                                     <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
                                         placeholder="mm/yy" name="card_expiration"
-                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
+                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required disabled>
                                 </div>
                             </div>
     
@@ -290,7 +294,7 @@
                                 </div>
                                 <div class="input-group tiny-form mb-0">
                                     <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                        placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
+                                        placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required disabled>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +309,7 @@
                             <div class="input-group medium-form mb-0">
                                 <input type="text" class="form-control card_number" name="card_number"
                                     placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                    value="{{ old('card_number', $userdata->card_number) }}" required>
+                                    value="{{ old('card_number', $userdata->card_number) }}" required disabled>
                             </div>
                         </div>
 
@@ -315,7 +319,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 small-form">
-                                <select class="form-select" id="card_type" name="card_type" required>
+                                <select class="form-select" id="card_type" name="card_type" required disabled>
                                     <option disabled hidden
                                         {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
                                         Kartu</option>
@@ -337,7 +341,7 @@
                             <div class="input-group tiny-form mb-0">
                                 <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
                                      placeholder="mm/yy" name="card_expiration"
-                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
+                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required disabled>
                             </div>
                         </div>
 
@@ -348,7 +352,7 @@
                             </div>
                             <div class="input-group tiny-form mb-0">
                                 <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
+                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required disabled>
                             </div>
                         </div>
                     </div>

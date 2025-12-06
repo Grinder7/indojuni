@@ -30,7 +30,7 @@ class AppController extends Controller
                 "province" => "Jawa Timur",
                 "postcode" => 65535,
                 "card_name" => "User",
-                "card_number" => 123456789123456,
+                "card_number" => 1234567890123456,
                 "card_type" => 1,
                 "card_expiration" => "12/34",
                 "card_cvv" => "999",

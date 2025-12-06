@@ -60,7 +60,7 @@
                     <p class="lead">Lengkapi Formulir di Bawah Sesuai Identitas Anda</p>
                     <div class="alert alert-warning" role="alert">
                         <strong>Perhatian:</strong> Situs ini hanya untuk demonstrasi e-commerce. Jangan masukkan data
-                        pribadi atau sensitif (mis. nomor kartu asli, alamat lengkap, KTP). Gunakan data contoh saja.
+                        pribadi atau sensitif (seperti nomor kartu asli, alamat lengkap, KTP). Gunakan data contoh saja.
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        name="email" required>
+                                        name="email" required disabled>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
@@ -104,7 +104,7 @@
                                 <div class="col-12">
                                     <label for="address" class="form-label">Alamat</label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                        name="address" required>
+                                        name="address" required disabled>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
@@ -143,7 +143,7 @@
                             <h4 class="mb-3">Pembayaran</h4>
 
                             <div class="my-3">
-                                <select class="form-select" id="card_type" name="card_type">
+                                <select class="form-select" id="card_type" name="card_type" disabled>
                                     <option disabled hidden
                                         {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Jenis
                                         Kartu</option>
@@ -173,7 +173,7 @@
                                     <label for="card_number" class="form-label">Nomor Kartu</label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" required>
+                                        name="card_number" required disabled>
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
@@ -182,7 +182,7 @@
                                 <div class="col-md-3">
                                     <label for="card_expiration" class="form-label">Masa Berlaku</label>
                                     <input type="text" class="form-control" id="card_expiration"
-                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required>
+                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required disabled>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="col-md-3">
                                     <label for="card_cvv" class="form-label">CVV</label>
                                     <input type="text" class="form-control" id="card_cvv" placeholder="xxx"
-                                        name="card_cvv" required>
+                                        name="card_cvv" required disabled>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
                                     </div>
@@ -322,9 +322,6 @@
                 e.target.value = formatGroups(e.target.value);
             });
 
-            // Format initial value when page loads
-            card_number.value = formatGroups(card_number.value);
-
             // Get from Profile Button
             document.getElementById("btn-fill").addEventListener("click", function() {
                 firstname.value = data["firstname"] ?? "";
@@ -336,7 +333,7 @@
                 postcode.value = data["postcode"] ?? "";
                 card_type.value = data["card_type"] ?? "";
                 card_name.value = data["card_name"] ?? "";
-                card_number.value = data["card_number"] ?? "";
+                card_number.value = formatGroups(data["card_number"]) ?? "";
                 card_expiration.value = data["card_expiration"] ?? "";
                 card_cvv.value = data["card_cvv"] ?? "";
             })
@@ -351,7 +348,7 @@
                 postcode.value = data["postcode"] ?? "";
                 card_type.value = data["card_type"] ?? "";
                 card_name.value = data["card_name"] ?? "";
-                card_number.value = data["card_number"] ?? "";
+                card_number.value = formatGroups(data["card_number"])?? "";
                 card_expiration.value = data["card_expiration"] ?? "";
                 card_cvv.value = data["card_cvv"] ?? "";
             }
