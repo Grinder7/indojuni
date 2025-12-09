@@ -15,12 +15,12 @@
 
     <div class="nav justify-content-around mb-md-0" id="item-mid">
         <a href="{{ route('app.home.page') }}" class="nav-link px-2"
-            style="{{ Request::is('/') ? 'text-decoration:underline' : '' }}">Beranda</a>
+            style="{{ Request::is('/') ? 'text-decoration:underline' : '' }};color:#fff;">Beranda</a>
         <a href="{{ route('app.catalogue.page') }}" class="nav-link px-2"
-            style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }}">Katalog</a>
+            style="{{ Request::is('catalogue*') ? 'text-decoration:underline' : '' }};color:#fff;">Katalog</a>
 
         <a href="{{ route('app.aboutus.page') }}" class="nav-link px-2"
-            style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }}">Tentang Kami</a>
+            style="{{ Request::is('aboutus*') ? 'text-decoration:underline' : '' }};color:#fff;">Tentang Kami</a>
     </div>
 
     <div class="text-end" id="item-right">
