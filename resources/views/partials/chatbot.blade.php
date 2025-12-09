@@ -175,12 +175,14 @@
                 return response.json()
             }).then(data => {
                 appendChatDOM('assistant', data.chat.content);
+                chatInput.disabled = false;
             }).catch(error => {
                 console.error('Error:', error);
                 assistantMessageElem.remove();
                 appendChatDOM('assistant', 'Terjadi kesalahan: Tidak dapat menerima respons dari asisten.');
+                chatInput.disabled = false;
             });
-            chatInput.disabled = false;
+           
         }
 
         const chats = @json(session('chat_fe_log', []));
