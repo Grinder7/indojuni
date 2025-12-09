@@ -10,7 +10,6 @@
             width:fit-content;
             word-wrap: break-word;
             color: black;
-            white-space-collapse: preserve;
         }
 
         .chatbot-user-message {
