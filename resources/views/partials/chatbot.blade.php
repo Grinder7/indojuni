@@ -69,12 +69,19 @@
         #chatbot-send {
             min-width:3em;
         }
-        #chatbot-input {
+        .hide-scrollbar {
             scrollbar-width: none;
         } 
-        #chatbot-input::-webkit-scrollbar {
+        .hide-scrollbar::-webkit-scrollbar {
             display: none;
         } 
+        .hide-scrollbar:focus {
+            scrollbar-width: none;
+        }
+
+        .hide-scrollbar:focus::-webkit-scrollbar {
+            display: none;
+        }
     </style>
     <div>
         <div id="outer_box">
@@ -98,11 +105,11 @@
                                 class="fa-solid fa-times"></i></button>
                     </div>
                 </div>
-                <div id="chatbot-messages" class="d-flex flex-column bg-body-tertiary p-2"
-                    style="height: calc(100% - 50px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ccc transparent; scroll-behavior: smooth;">
+                <div id="chatbot-messages" class="d-flex flex-column bg-body-tertiary p-2 hide-scrollbar"
+                    style="height: calc(100% - 50px); overflow-y: auto; scroll-behavior: smooth;">
                 </div>
                 <div class="input-group">
-                    <textarea id="chatbot-input" type="text" class="form-control" placeholder="Ketik pesan anda" rows=2 style="margin:0px;"></textarea>
+                    <textarea id="chatbot-input" type="text" class="form-control hide-scrollbar" placeholder="Ketik pesan anda" rows=2 style="margin:0px;"></textarea>
                     <button class="btn btn-primary" type="button" id="chatbot-send"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
@@ -112,14 +119,6 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
     <script>
         const chatInput = document.getElementById('chatbot-input');
-
-        chatInput.addEventListener("focus", () => {
-            document.body.style.overflow = "hidden";
-        });
-
-        chatInput.addEventListener("blur", () => {
-            document.body.style.overflow = "";
-        });
 
         chatInput.addEventListener('click', () => {
             setTimeout(() => chatInput.focus(), 50);
