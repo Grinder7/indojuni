@@ -1,36 +1,42 @@
 @auth
     <style>
         .chatbot-assistant-message {
-            text-align: justify;
-            text-justify: inter-word;
             background-color: #f1f1f1;
             padding: 0.5rem;
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
             display: inline-block;
             max-width: 80%;
+            width:fit-content;
             word-wrap: break-word;
             color: black;
-        }
-
-        .chatbot-assistant-message p {
-            margin: 0;
+            white-space-collapse: preserve;
         }
 
         .chatbot-user-message {
-            text-align: justify;
-            text-justify: inter-word;
             background-color: #007bff;
             color: white;
             padding: 0.5rem;
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
             display: inline-block;
+            width:fit-content;
             max-width: 80%;
             word-wrap: break-word;
             margin-left: auto;
             color: white;
+            white-space-collapse: preserve;
         }
+
+        .chatbot-assistant-message p {
+            margin: 0;
+            text-align: left;
+        }
+        .chatbot-user-message p {
+            margin: 0;
+            text-align: left;
+        }
+
 
         .clamp {
             top: min(var(--desired-top, 0px), 75px);
@@ -51,12 +57,25 @@
             position: absolute;
             bottom: 90px;
             right: 0;
-            width: 300px;
-            height: 500px;
+            max-width: 450px;
+            max-height:65vh;
+            width:80vw;
+            height: 700px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
             z-index: 1001;
+            margin-bottom:1.5em;
         }
+
+        #chatbot-send {
+            min-width:3em;
+        }
+        #chatbot-input {
+            scrollbar-width: none;
+        } 
+        #chatbot-input::-webkit-scrollbar {
+            display: none;
+        } 
     </style>
     <div>
         <div id="outer_box">
@@ -67,14 +86,14 @@
                 </button>
             </div>
             {{-- Chatbot Popup UI --}}
-            <div id="chatbot-popup" class="rounded border">
+            <div id="chatbot-popup" class="rounded border" style="font-size:1em;">
                 <div class="d-flex justify-content-between align-items-center border-bottom p-2"
                     style="background: #007bff; color: white;">
                     <h5 class="mb-0">Virtual Assistant</h5>
                     <div class="d-flex align-items-center">
                         <button id="chatbot-clear"
                             style="border: none; background: transparent; color: white; font-size: 1rem; cursor: pointer; margin-right: 0.125rem;"><i
-                                class="fa-solid fa-arrow-rotate-right"></i></button>
+                                class="fa-solid fa-eraser"></i></button>
                         <button id="chatbot-close"
                             style="border: none; background: transparent; color: white; font-size: 1.1rem; cursor: pointer;"><i
                                 class="fa-solid fa-times"></i></button>
@@ -84,8 +103,8 @@
                     style="height: calc(100% - 50px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ccc transparent; scroll-behavior: smooth;">
                 </div>
                 <div class="input-group">
-                    <input id="chatbot-input" type="text" class="form-control" placeholder="Ketik pesan anda">
-                    <button class="btn btn-primary" type="button" id="chatbot-send">Kirim</button>
+                    <textarea id="chatbot-input" type="text" class="form-control" placeholder="Ketik pesan anda" rows=2 style="margin:0px;"></textarea>
+                    <button class="btn btn-primary" type="button" id="chatbot-send"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
@@ -116,10 +135,10 @@
 
             if (role === 'assistant') {
                 messageElem.className = 'chatbot-assistant-message';
-                messageElem.innerHTML = DOMPurify.sanitize(marked.parse(content || ''));
+                messageElem.innerHTML = DOMPurify.sanitize(marked.parse(content.trim() || '')).trim();
             } else if (role === 'user') {
                 messageElem.className = 'chatbot-user-message';
-                messageElem.textContent = content;
+                messageElem.textContent = content.trim();
             } else {
                 return;
             }
@@ -198,7 +217,7 @@
             }
         })
         chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 document.getElementById('chatbot-send').click();
             }
