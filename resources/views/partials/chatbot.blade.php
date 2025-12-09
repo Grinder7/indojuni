@@ -53,12 +53,12 @@
 
         /* Chatbot popup appears above the button */
         #chatbot-popup {
-            position: absolute;
+            position:absolute;
             bottom: 90px;
             right: 0;
             max-width: 450px;
-            max-height:65vh;
-            width:80vw;
+            max-height: calc(65vh - 5em);
+            width:85vw;
             height: 700px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
@@ -108,7 +108,7 @@
                 <div id="chatbot-messages" class="d-flex flex-column bg-body-tertiary p-2 hide-scrollbar"
                     style="height: calc(100% - 50px); overflow-y: auto; scroll-behavior: smooth;">
                 </div>
-                <div class="input-group">
+                <div class="input-group" style="position:relative; flex-wrap:wrap;align-items: stretch;">
                     <textarea id="chatbot-input" type="text" class="form-control hide-scrollbar" placeholder="Ketik pesan anda" rows=2 style="margin:0px;"></textarea>
                     <button class="btn btn-primary" type="button" id="chatbot-send"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
