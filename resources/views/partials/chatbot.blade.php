@@ -1,7 +1,8 @@
 @auth
     <style>
         .chatbot-assistant-message {
-            text-align: left;
+            text-align: justify;
+            text-justify: inter-word;
             background-color: #f1f1f1;
             padding: 0.5rem;
             border-radius: 0.5rem;
@@ -17,7 +18,8 @@
         }
 
         .chatbot-user-message {
-            text-align: right;
+            text-align: justify;
+            text-justify: inter-word;
             background-color: #007bff;
             color: white;
             padding: 0.5rem;
