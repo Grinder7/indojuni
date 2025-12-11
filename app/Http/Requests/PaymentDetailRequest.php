@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PaymentDetailRequest extends FormRequest
 {
@@ -44,5 +46,15 @@ class PaymentDetailRequest extends FormRequest
         $this->merge([
             'card_number' => preg_replace('/[^\d]/', '', $this->card_number),
         ]);
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Terdapat kesalahan pada data yang Anda masukkan.')
+        );
     }
 }

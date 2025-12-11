@@ -125,12 +125,12 @@
 
                     <div class="tab input-row mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Email</p>
+                            <p class="labels mb-0">Email <small class="text-body-secondary"> (Read only)</small></p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group medium-form mb-0">
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}" disabled>
+                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}" readonly>
                         </div>
                     </div>
                     {{-- <div class="d-flex justify-content-end mb-5 mt-4 me-5">
@@ -147,12 +147,12 @@
 
                     <div class="tab input-row mb-3">
                         <div class="d-flex">
-                            <p class="labels mb-0">Alamat</p>
+                            <p class="labels mb-0">Alamat <small class="text-body-secondary"> (Read only)</small></p>
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group long-form mb-0">
                             <input type="text" class="form-control" id="address" name="address" placeholder="Alamat"
-                                value="{{ old('address', $userdata->address) }}" required disabled>
+                                value="{{ old('address', $userdata->address) }}" required readonly>
                         </div>
                     </div>
 
@@ -243,13 +243,13 @@
                         <div class="d-flex">
                             <div class="tab input-row mb-3">
                                 <div class="d-flex">
-                                    <p class="labels mb-0">Nomor Kartu</p>
+                                    <p class="labels mb-0">Nomor Kartu <small class="text-body-secondary"> (Read only)</small></p>
                                     <p class="separator mb-0">:</p>
                                 </div>
                                 <div class="input-group medium-form mb-0">
                                     <input type="text" class="form-control card_number" name="card_number"
                                         placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                        value="{{ old('card_number', $userdata->card_number) }}" required disabled>
+                                        value="{{ old('card_number', $userdata->card_number) }}" required readonly>
                                 </div>
                             </div>
     
@@ -259,7 +259,7 @@
                                     <p class="separator mb-0">:</p>
                                 </div>
                                 <div class="input-group mb-0">
-                                    <select class="form-select" id="card_type" name="card_type" required disabled>
+                                    <select class="form-select" id="card_type" name="card_type" required readonly>
                                         <option disabled hidden
                                             {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
                                             Kartu</option>
@@ -283,18 +283,18 @@
                                 <div class="input-group tiny-form mb-0">
                                     <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
                                         placeholder="mm/yy" name="card_expiration"
-                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required disabled>
+                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                                 </div>
                             </div>
     
                             <div class="tab d-flex mb-3 ms-5">
                                 <div class="d-flex">
-                                    <p class="short-labels mb-0">CVV</p>
+                                    <p class="medium-labels mb-0">CVV <small class="text-body-secondary"> (Read only)</small></p>
                                     <p class="separator mb-0">:</p>
                                 </div>
                                 <div class="input-group tiny-form mb-0">
                                     <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                        placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required disabled>
+                                        placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required readonly>
                                 </div>
                             </div>
                         </div>
@@ -303,13 +303,13 @@
                     <div class="mobile-view">
                         <div class="tab input-row mb-3">
                             <div class="d-flex">
-                                <p class="labels mb-0">Nomor Kartu</p>
+                                <p class="labels mb-0">Nomor Kartu <small class="text-body-secondary"> (Read only)</small></p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group medium-form mb-0">
                                 <input type="text" class="form-control card_number" name="card_number"
                                     placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                    value="{{ old('card_number', $userdata->card_number) }}" required disabled>
+                                    value="{{ old('card_number', $userdata->card_number) }}" required readonly>
                             </div>
                         </div>
 
@@ -319,7 +319,7 @@
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group mb-0 small-form">
-                                <select class="form-select" id="card_type" name="card_type" required disabled>
+                                <select class="form-select" id="card_type" name="card_type" required readonly>
                                     <option disabled hidden
                                         {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
                                         Kartu</option>
@@ -341,18 +341,18 @@
                             <div class="input-group tiny-form mb-0">
                                 <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
                                      placeholder="mm/yy" name="card_expiration"
-                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required disabled>
+                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                             </div>
                         </div>
 
                         <div class="tab input-row mb-3">
                             <div class="d-flex">
-                                <p class="labels mb-0">CVV</p>
+                                <p class="labels mb-0">CVV <small class="text-body-secondary"> (Read only)</small></p>
                                 <p class="separator mb-0">:</p>
                             </div>
                             <div class="input-group tiny-form mb-0">
                                 <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required disabled>
+                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required readonly>
                             </div>
                         </div>
                     </div>

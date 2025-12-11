@@ -93,18 +93,18 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label">Email <small class="text-body-secondary"> (Read only)</small></label>
                                     <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                        name="email" required disabled>
+                                        name="email" required readonly>
                                     <div class="invalid-feedback">
                                         Mohon masukkan email yang valid untuk pembaruan pengiriman.
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="address" class="form-label">Alamat</label>
+                                    <label for="address" class="form-label">Alamat <small class="text-body-secondary"> (Read only)</small></label>
                                     <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                        name="address" required disabled>
+                                        name="address" required readonly>
                                     <div class="invalid-feedback">
                                         Mohon masukkan alamat pengiriman anda.
                                     </div>
@@ -120,7 +120,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="city" class="form-label">Kota / Kabupaten</label>
+                                    <label for="city" class="form-label">Kota / Kab.</label>
                                     <input type="text" class="form-control" id="city" placeholder="Kota / Kab."
                                         name="city" required>
                                     <div class="invalid-feedback">
@@ -143,7 +143,7 @@
                             <h4 class="mb-3">Pembayaran</h4>
 
                             <div class="my-3">
-                                <select class="form-select" id="card_type" name="card_type" disabled>
+                                <select class="form-select" id="card_type" name="card_type" readonly>
                                     <option disabled hidden
                                         {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Jenis
                                         Kartu</option>
@@ -170,10 +170,11 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="card_number" class="form-label">Nomor Kartu</label>
+                                    <label for="card_number" class="form-label">Nomor Kartu <small class="text-body-secondary"> (Read only)</small></label>
                                     <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}"
                                         class="form-control" id="card_number" placeholder="xxxx xxxx xxxx xxxx"
-                                        name="card_number" required disabled>
+                                        name="card_number" required readonly>
+                                    
                                     <div class="invalid-feedback">
                                         Nomor kartu invalid
                                     </div>
@@ -182,16 +183,16 @@
                                 <div class="col-md-3">
                                     <label for="card_expiration" class="form-label">Masa Berlaku</label>
                                     <input type="text" class="form-control" id="card_expiration"
-                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required disabled>
+                                        style="padding-left:0.8em;" placeholder="mm/yy" name="card_expiration" required>
                                     <div class="invalid-feedback">
                                         Tanggal kadaluarsa diperlukan
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="card_cvv" class="form-label">CVV</label>
+                                    <label for="card_cvv" class="form-label">CVV <small class="text-body-secondary"> (Read only)</small></label>
                                     <input type="text" class="form-control" id="card_cvv" placeholder="xxx"
-                                        name="card_cvv" required disabled>
+                                        name="card_cvv" required readonly>
                                     <div class="invalid-feedback">
                                         CVV diperlukan
                                     </div>

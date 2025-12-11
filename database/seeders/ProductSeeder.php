@@ -15,7 +15,9 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             // $product["id"] = $product["product_id"];
             // unset($product["product_id"]);
-            Product::create($product);
+            Product::create(
+                collect($product)->only((new \App\Models\Product)->getFillable())->toArray()
+            );
         }
     }
 }
