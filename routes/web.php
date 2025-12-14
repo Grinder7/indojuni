@@ -50,8 +50,9 @@ Route::middleware('enable')->group(function () {
     });
     Route::middleware('admin')->group(function () {
         Route::get('/admin', [AdminController::class, 'dashboard'])->name('adm.dashboard.page');
-        Route::post('/admin', [AdminController::class, 'modify'])->name('adm.edit');
-        Route::post('/admin/delete', [AdminController::class, 'deleteData'])->name('adm.delete');
+        Route::post('/admin/create-product', [AdminController::class, 'create'])->name('adm.create');
+        Route::post('/admin/modify-product', [AdminController::class, 'modify'])->name('adm.modify');
+        Route::post('/admin/delete-product', [AdminController::class, 'deleteData'])->name('adm.delete');
     });
 });
 
@@ -62,13 +63,8 @@ Route::middleware('disable')->group(function () {
     });
 });
 
-Route::get('/blank', function () {
-    return view('pages.blank');
-});
-
 Route::prefix('chatbot')->group(function () {
     Route::post('get-chats', [ChatbotController::class, 'getChats'])->name('chat.get');
     Route::put('clear-chats', [ChatbotController::class, 'clearChats'])->name('chat.clear');
-    Route::post('init-chat', [ChatbotController::class, 'initChat'])->name('chat.init');
     Route::post('send-message', [ChatbotController::class, 'sendMessage'])->name('chat.send');
 });

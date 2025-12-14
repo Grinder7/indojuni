@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductDetailResource;
 use App\Http\Resources\ProductSummaryResource;
 use App\Modules\Product\ProductService;
 use Illuminate\Http\Request;
@@ -87,59 +86,6 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => "Failed to retrieve products: " . $th->getMessage()
-            ], 500);
-        }
-    }
-    public function getProductById(Request $request)
-    {
-        $validated = $request->validate([
-            'product_id' => 'required|integer|exists:products,id',
-        ]);
-        $product = $this->productService->getProductById($validated['product_id']);
-        return response()->json([
-            'status' => 200,
-            'data' => ProductDetailResource::make($product),
-            "message" => "Successfully retrieved product"
-        ]);
-    }
-    public function searchSimilarProductByName(Request $request)
-    {
-        $validated = $request->validate([
-            'product_name' => 'required|string',
-        ]);
-        $products = $this->productService->searchSimilarProductByName($validated['product_name']);
-        return response()->json([
-            'status' => 200,
-            'data' => ProductSummaryResource::collection($products),
-            "message" => "Successfully retrieved products"
-        ]);
-    }
-
-    public function searchContainProductByName(Request $request)
-    {
-        $validated = $request->validate([
-            'product_name' => 'required|string',
-        ]);
-        $products = $this->productService->searchContainProductByName($validated['product_name']);
-        return response()->json([
-            'status' => 200,
-            'data' => ProductSummaryResource::collection($products),
-            "message" => "Successfully retrieved products"
-        ]);
-    }
-    public function getProductFilterOptions(Request $request)
-    {
-        try {
-            $options = $this->productService->getProductFilterOptions();
-            return response()->json([
-                'status' => 200,
-                'data' => $options,
-                "message" => "Successfully retrieved product filter options"
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 500,
-                'message' => "Failed to retrieve product filter options: " . $th->getMessage()
             ], 500);
         }
     }

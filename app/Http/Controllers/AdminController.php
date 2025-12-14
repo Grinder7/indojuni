@@ -45,7 +45,8 @@ class AdminController extends Controller
         $validate = $request->validated();
         $inputData = $validate;
         $inputData['id'] = intval($inputData['id']);
-        $product = $this->productService->getProductById($inputData['id']);
+        $product = $this->productService->getProductByID($inputData['id']);
+        $filename = "";
         if ($request->hasFile('img')) {
             $uploaded = $request->file('img');
             $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3)) . '.' . File::extension($uploaded->getClientOriginalName());
@@ -68,8 +69,8 @@ class AdminController extends Controller
             $this->productService->updateProduct($inputData);
         } catch (\Throwable $th) {
             error_log($th->getMessage());
-            if (isset($inputData['img']) && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
-                Storage::disk('admin_img_upload')->delete($inputData['img']);
+            if ($filename !== "" && Storage::disk('admin_img_upload')->exists($filename)) {
+                Storage::disk('admin_img_upload')->delete($filename);
             }
             if ($request->expectsJson()) {
                 return response()->json([
@@ -117,6 +118,9 @@ class AdminController extends Controller
         try {
             $this->productService->createProduct($inputData);
         } catch (\Throwable $th) {
+            if (isset($inputData['img']) && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
+                Storage::disk('admin_img_upload')->delete($inputData['img']);
+            }
             return response()->json([
                 'status'  => 400,
                 'message' => $th->getMessage(),
@@ -134,15 +138,11 @@ class AdminController extends Controller
     {
         try {
             $validated = $request->validate([
-                'product_id' => "required|integer",
+                'product_id' => "required|integer|exists:products,id",
             ]);
-            $product = $this->productService->getProductById($validated['product_id']);
+            $product = $this->productService->getProductByID($validated['product_id']);
             if (!$product) {
                 return response()->json(['success' => false, 'message' => 'Product not found']);
-            }
-            // delete file
-            if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
-                Storage::disk('admin_img_upload')->delete($product->img);
             }
             $product->is_active = false;
             $result = $product->save();
