@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\ModifyProductRequest;
 use App\Modules\Product\ProductService;
-use App\Modules\OrderDetail\OrderDetailService;
-
-use App\Modules\User\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -17,13 +14,9 @@ class AdminController extends Controller
 {
 
     public ProductService $productService;
-    public OrderDetailService $orderDetail;
-    public UserService $user;
-    public function __construct(ProductService $productService, OrderDetailService $orderDetail, UserService $user)
+    public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
-        $this->orderDetail = $orderDetail;
-        $this->user = $user;
     }
 
     public function dashboard(Request $request)

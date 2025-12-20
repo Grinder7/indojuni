@@ -41,7 +41,7 @@ Route::prefix("v1")->group(function () {
     });
 
     Route::prefix("product")->group(function () {
-        Route::get("all", [ProductController::class, "getProducts"])->name("api.v1.product.all");
+        Route::get("all", [ProductController::class, "index"])->name("api.v1.product.all");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
