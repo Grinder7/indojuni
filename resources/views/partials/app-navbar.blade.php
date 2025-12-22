@@ -70,8 +70,9 @@
 
     const observer = new ResizeObserver(entries => {
         const width = entries[0].contentRect.width;
-        var tresholdPx = item_left.getBoundingClientRect().width + item_mid.getBoundingClientRect().width +
-            item_right.getBoundingClientRect().width;
+
+        var tresholdPx = item_left.getBoundingClientRect().width + item_mid.getBoundingClientRect().width + item_right.getBoundingClientRect().width;
+
         if (width < tresholdPx + padding) {
             item_left.classList.add("out-of-bounds");
             header.classList.remove("justify-content-between")
