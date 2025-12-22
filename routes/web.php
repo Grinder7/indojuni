@@ -56,7 +56,7 @@ Route::middleware('enable')->group(function () {
     });
 });
 
-Route::middleware('disable')->group(function () {
+Route::middleware('enable')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('register', [RegisterController::class, 'index'])->name('app.register.page');
         Route::post('register', [RegisterController::class, 'register'])->name('app.register.register');
