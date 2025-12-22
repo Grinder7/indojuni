@@ -93,13 +93,7 @@ class AdminController extends Controller
     public function create(CreateProductRequest $request)
     {
         $validate = $request->validated();
-        $inputData = [
-            'name'        => $validate['name'],
-            'description' => $validate['description'],
-            'stock'       => $validate['stock'],
-            'price'       => $validate['price'],
-            'img'         => null,
-        ];
+        $inputData = $validate;
         if ($request->hasFile('img')) {
             $uploaded = $request->file('img');
             $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3))
