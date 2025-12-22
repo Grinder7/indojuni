@@ -25,28 +25,25 @@ class ProductController extends Controller
                 if (is_numeric($limitQuery)) {
                     $limit = (int)$limitQuery;
                     if ($limit < 1) {
-                        response()->json([
+                        return response()->json([
                             'status' => 400,
                             'message' => "Limit must be greater than 0"
                         ], 400);
-                        return;
                     }
                     $page = 1; // Default to page 1 if limit is provided
                 }
                 if (is_numeric($pageQuery)) {
                     $page = (int)$pageQuery;
                     if ($page < 1) {
-                        response()->json([
+                        return response()->json([
                             'status' => 400,
                             'message' => "Page must be greater than 0"
                         ], 400);
-                        return;
                     } else if ($limit === null) {
-                        response()->json([
+                        return response()->json([
                             'status' => 400,
                             'message' => "Limit must be provided when page is specified"
                         ], 400);
-                        return;
                     }
                 }
                 $filter = [];

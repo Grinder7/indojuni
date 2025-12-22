@@ -134,9 +134,6 @@ class AdminController extends Controller
                 'product_id' => "required|integer|exists:products,id",
             ]);
             $product = $this->productService->getProductByID($validated['product_id']);
-            if (!$product) {
-                return response()->json(['success' => false, 'message' => 'Product not found']);
-            }
             $product->is_active = false;
             $result = $product->save();
             return response()->json(['success' => (bool)$result]);

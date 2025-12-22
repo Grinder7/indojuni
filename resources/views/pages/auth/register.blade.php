@@ -43,37 +43,32 @@
 
 @section('content')
     <main class="form-signup w-100 m-auto">
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('app.register.register') }}" method="POST">
             @csrf
             <img class="mb-4" src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="" height="57">
-            <h1 class="h3 fw-normal mb-3">Register</h1>
+            <h1 class="h3 fw-normal mb-3">Daftar</h1>
             <div class="form-floating">
                 <input type="text" class="form-control @error('username') is-invalid @enderror" id="floatingUsername"
                     placeholder="Username" name="username" value="{{ old('username') }}">
-                <label for="floatingUsername">Username</label>
+                <label for="floatingUsername">Nama</label>
             </div>
             <div class="form-floating">
                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
                     placeholder="name@example.com" name="email" value="{{ old('email') }}">
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="floatingPasswordUp"
                     placeholder="Password" name="password">
-                <label for="floatingPassword">Password</label>
+                <label for="floatingPassword">Kata Sandi</label>
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                     id="floatingPasswordConfirmation" placeholder="Password Confirmation" name="password_confirmation">
-                <label for="floatingPasswordConfirmation">Password Confirmation</label>
+                <label for="floatingPasswordConfirmation">Konfirmasi Kata Sandi</label>
             </div>
             <div class="d-flex float-end pb-3">
-                Already have an account? <span><a href="{{ route('app.login.page') }}" class="ps-1"> Login</a></span>
-            </div>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="remember-me" value="1"> Remember me
-                </label>
+                Sudah punya akun? <span><a href="{{ route('app.login.page') }}" class="ps-1"> Masuk</a></span>
             </div>
             @error('email')
                 <div class="text-danger m-3">
@@ -89,8 +84,8 @@
                     </small>
                 </div>
             @enderror
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="text-body-secondary mb-3 mt-5">&copy; 2023 IndoJuni, Inc</p>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Daftar</button>
+            <p class="text-body-secondary mb-3 mt-5">&copy; 2025 IndoJuni, Inc</p>
         </form>
     </main>
 @endsection
