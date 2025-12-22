@@ -44,11 +44,15 @@ class AdminController extends Controller
             $uploaded = $request->file('img');
             $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3)) . '.' . File::extension($uploaded->getClientOriginalName());
             if (!Storage::disk('admin_img_upload')->put($filename, $uploaded->get())) {
-                return response()->json([
-                    'status'  => 400,
-                    'message' => 'Failed to upload image',
-                    'data'    => null,
-                ]);
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status'  => 400,
+                        'message' => 'Failed to upload image',
+                        'data'    => null,
+                    ]);
+                } else {
+                    return redirect()->back()->with('error', 'Gagal mengunggah gambar');
+                }
             }
             if ($product->img && Storage::disk('admin_img_upload')->exists($product->img)) {
                 Storage::disk('admin_img_upload')->delete($product->img);
@@ -101,10 +105,15 @@ class AdminController extends Controller
             $filename = str_replace(".", Str::random(1), substr(uniqid("", true), 0, -3))
                 . '.' . File::extension($uploaded->getClientOriginalName());
             if (!Storage::disk('admin_img_upload')->put($filename, $uploaded->get())) {
-                return response()->json([
-                    'status'  => 400,
-                    'message' => 'Failed to upload image',
-                ]);
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status'  => 400,
+                        'message' => 'Failed to upload image',
+                        'data'    => null,
+                    ]);
+                } else {
+                    return redirect()->back()->with('error', 'Gagal mengunggah gambar');
+                }
             }
             $inputData['img'] = $filename;
         }
@@ -114,17 +123,25 @@ class AdminController extends Controller
             if (isset($inputData['img']) && Storage::disk('admin_img_upload')->exists($inputData['img'])) {
                 Storage::disk('admin_img_upload')->delete($inputData['img']);
             }
-            return response()->json([
-                'status'  => 400,
-                'message' => $th->getMessage(),
-                'data'    => null,
-            ]);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => $th->getMessage(),
+                    'data' => null
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'Gagal menambah data produk');
+            }
         }
-        return response()->json([
-            'status'  => 200,
-            'message' => 'Data has been successfully created',
-            'data'    => null,
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data has been successfully created',
+                'data' => null
+            ]);
+        } else {
+            return redirect()->back()->with('success', 'Berhasil menambah data produk');
+        }
     }
 
     public function deleteData(Request $request)
