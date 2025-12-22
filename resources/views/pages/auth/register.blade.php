@@ -50,7 +50,7 @@
             <div class="form-floating">
                 <input type="text" class="form-control @error('username') is-invalid @enderror" id="floatingUsername"
                     placeholder="Username" name="username" value="{{ old('username') }}">
-                <label for="floatingUsername">Nama</label>
+                <label for="floatingUsername">Username</label>
             </div>
             <div class="form-floating">
                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
