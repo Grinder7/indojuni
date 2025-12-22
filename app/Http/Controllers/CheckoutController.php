@@ -3,22 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentDetailRequest;
-use App\Modules\Product\ProductService;
-use App\Modules\CartItem\CartItemService;
 use App\Modules\ShoppingSession\ShoppingSessionService;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
     public ShoppingSessionService $shoppingSessionService;
-    public CartItemService $cartItemService;
-    public ProductService $productService;
 
-    public function __construct(ShoppingSessionService $shoppingSessionService, CartItemService $cartItemService, ProductService $productService)
+    public function __construct(ShoppingSessionService $shoppingSessionService)
     {
         $this->shoppingSessionService = $shoppingSessionService;
-        $this->cartItemService = $cartItemService;
-        $this->productService = $productService;
     }
 
     public function index()

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\TransactionResource;
-use App\Modules\Product\ProductService;
 use App\Modules\OrderDetail\OrderDetailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +12,9 @@ use Illuminate\Support\Facades\Validator;
 class InvoiceController extends Controller
 {
     public OrderDetailService $orderDetailService;
-    public ProductService $productService;
-    public function __construct(OrderDetailService $orderDetailService, ProductService $productService)
+    public function __construct(OrderDetailService $orderDetailService)
     {
         $this->orderDetailService = $orderDetailService;
-        $this->productService = $productService;
     }
     public function index(Request $request)
     {

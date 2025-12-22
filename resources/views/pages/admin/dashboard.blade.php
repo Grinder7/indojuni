@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-inp" action="{{ route('adm.edit') }}" method="POST" enctype="multipart/form-data"
+                    <form id="form-inp" action="{{ route('adm.modify') }}" method="POST" enctype="multipart/form-data"
                         class="d-flex w-100 gap-4">
                         @csrf
                         <div id="imgBox"
@@ -222,6 +222,9 @@
                 const title = button.getAttribute('data-bs-modalType')
                 if (title == 'Create') {
                     formRef.reset();
+                    formRef.action = "{{ route('adm.create') }}";
+                } else {
+                    formRef.action = "{{ route('adm.modify') }}";
                 }
                 const modalTitle = mainBox.querySelector('.modal-title')
                 modalTitle.textContent = `${title} Product`

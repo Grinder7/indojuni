@@ -29,11 +29,7 @@ Route::get("ping", function () {
 
 Route::prefix("v1")->group(function () {
     Route::prefix("auth")->group(function () {
-        Route::middleware('guest:sanctum')->group(function () {
-            Route::post("login", [LoginController::class, "login"])->name("api.v1.auth.login");
-        });
         Route::middleware('auth:sanctum')->group(function () {
-            Route::post("logout", [LoginController::class, "logout"])->name("api.v1.auth.logout");
             Route::get("user", function (Request $request) {
                 return response()->json([
                     "status" => 200,
@@ -45,11 +41,7 @@ Route::prefix("v1")->group(function () {
     });
 
     Route::prefix("product")->group(function () {
-        Route::get("all", [ProductController::class, "getProducts"])->name("api.v1.product.all");
-        Route::post("detail", [ProductController::class, "getProductById"])->name("api.v1.product.detail");
-        Route::post("search-similar-name", [ProductController::class, "searchSimilarProductByName"])->name("api.v1.product.search.similar");
-        Route::post("search-contain-name", [ProductController::class, "searchContainProductByName"])->name("api.v1.product.search.contain");
-        Route::get("filter-options", [ProductController::class, "getProductFilterOptions"])->name("api.v1.product.filter_options");
+        Route::get("all", [ProductController::class, "index"])->name("api.v1.product.all");
     });
 
     Route::prefix("cart")->middleware('auth:sanctum')->group(function () {
@@ -60,10 +52,5 @@ Route::prefix("v1")->group(function () {
 
     Route::prefix("checkout")->middleware('auth:sanctum')->group(function () {
         Route::post("", [CheckoutController::class, "checkout"])->name("api.v1.checkout");
-    });
-
-    Route::prefix("invoice")->middleware('auth:sanctum')->group(function () {
-        Route::get("", [InvoiceController::class, "index"])->name("api.v1.invoice.list");
-        Route::get("{id}", [InvoiceController::class, "invoice"])->name("api.v1.invoice.detail");
     });
 });

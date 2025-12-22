@@ -46,31 +46,31 @@
         <form id="loginForm" action={{ route('app.login.login') }} method="POST">
             @csrf
             <img class="mb-4" src="{{ asset('images/app/xyXVxK19116nI6TPT5KF.png') }}" alt="" height="57">
-            <h1 class="h3 fw-normal mb-3">Please sign in</h1>
+            <h1 class="h3 fw-normal mb-3">Masuk</h1>
 
             <div class="form-floating">
                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
                     placeholder="name@example.com" name="email" value={{ old('email') }}>
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password"
                     name="password" id="floatingPasswordIn">
-                <label for="floatingPasswordIn">Password</label>
+                <label for="floatingPasswordIn">Kata Sandi</label>
             </div>
             <div class="d-flex float-end pb-3">
-                Doesn't have an account? <span><a href="{{ route('app.register.page') }}" class="ps-1">Register</a></span>
+                Belum punya akun? <span><a href="{{ route('app.register.page') }}" class="ps-1">Daftar</a></span>
             </div>
             <div class="checkbox my-3">
                 <label>
-                    <input type="checkbox" name="remember-me" value="1"> Remember me
+                    <input type="checkbox" name="remember-me" value="1"> Ingat saya
                 </label>
             </div>
             @error('errorMessage')
                 <div class="text-danger m-3"id="errorMessage" style="max-width: 50vw">{{ $message }}</div>
             @enderror
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="text-body-secondary mb-3 mt-5">&copy; 2023 IndoJuni, Inc</p>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Masuk</button>
+            <p class="text-body-secondary mb-3 mt-5">&copy; 2025 IndoJuni, Inc</p>
         </form>
     </main>
 @endsection

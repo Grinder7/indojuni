@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Modules\ShoppingSession\ShoppingSessionService;
 use App\Modules\User\UserService;
 use Auth;
 use Illuminate\Http\Request;
@@ -11,11 +10,9 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public UserService $userService;
-    public ShoppingSessionService $shoppingSessionService;
-    public function __construct(UserService $userService, ShoppingSessionService $shoppingSessionService)
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
-        $this->shoppingSessionService = $shoppingSessionService;
     }
     public function index()
     {
