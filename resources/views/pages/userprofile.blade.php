@@ -8,7 +8,7 @@
             width: 10rem;
         }
 
-        .input-row{
+        .input-row {
             display: flex;
         }
 
@@ -35,12 +35,12 @@
 
         .tiny-form {
             max-width: 4em;
-            width:100%;
+            width: 100%;
         }
-        
+
         .small-form {
             max-width: 10em;
-            width:100%;
+            width: 100%;
         }
 
         .medium-form {
@@ -65,23 +65,34 @@
             -moz-appearance: textfield;
         }
 
-        .normal-view { display: block; }
-        .mobile-view  { display: none; }
-
-
-        @media (max-width: 1150px) {
-            .normal-view { display: none; }
-            .mobile-view  { display: block; }
+        .normal-view {
+            display: block;
         }
 
+        .mobile-view {
+            display: none;
+        }
+
+
+        /* @media (max-width: 1150px) {
+                                                                                                                                                                            .normal-view {
+                                                                                                                                                                                display: none;
+                                                                                                                                                                            }
+
+                                                                                                                                                                            .mobile-view {
+                                                                                                                                                                                display: block;
+                                                                                                                                                                            }
+                                                                                                                                                                        } */
+
         @media (max-width: 700px) {
-            .separator{
+            .separator {
                 display: none;
             }
-            .input-row{
-                display:block;
+
+            .input-row {
+                display: block;
             }
-            
+
         }
     </style>
 @endsection
@@ -126,7 +137,7 @@
                         </div>
                         <div class="input-group medium-form mb-0">
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}">
+                                placeholder="email@contoh.com" value="{{ old('email', $userdata->email) }}" required>
                         </div>
                     </div>
                     {{-- <div class="d-flex justify-content-end mb-5 mt-4 me-5">
@@ -152,52 +163,24 @@
                         </div>
                     </div>
 
-
-                    <div class="normal-view">
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex me-5">
-                                <div class="d-flex">
-                                    <p class="labels mb-0">Kota</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group small-form mb-0">
-                                    <input type="text" class="form-control" id="city" name="city"
-                                        placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
-                                </div>
-                            </div>
-                            <div class="d-flex me-5">
-                                <div class="d-flex">
-                                    <p class="medium-labels mb-0">Provinsi</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group small-form mb-0">
-                                    <input type="text" class="form-control" id="province" name="province"
-                                        placeholder="Provinsi" value="{{ old('province', $userdata->province) }}" required>
-                                </div>
-                            </div>
+                    <div class="tab input-row mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Kota</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="city" name="city"
+                                placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
                         </div>
                     </div>
-                    
-                    <div class="mobile-view">
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">Kota</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group small-form mb-0">
-                                <input type="text" class="form-control" id="city2" name="city"
-                                placeholder="Kota / Kab." value="{{ old('city', $userdata->city) }}" required>
-                            </div>
+                    <div class="tab input-row mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Provinsi</p>
+                            <p class="separator mb-0">:</p>
                         </div>
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">Provinsi</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group small-form mb-0">
-                                <input type="text" class="form-control" id="province2" name="province"
-                                placeholder="Provinsi" value="{{ old('province', $userdata->province) }}" required>
-                            </div>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="province" name="province" placeholder="Provinsi"
+                                value="{{ old('province', $userdata->province) }}" required>
                         </div>
                     </div>
 
@@ -206,7 +189,7 @@
                             <p class="labels mb-0">Kode Pos</p>
                             <p class="separator mb-0">:</p>
                         </div>
-                        <div class="input-group tiny-form mb-0">
+                        <div class="input-group long-form mb-0">
                             <input type="number" class="form-control no-spin" id="postcode" name="postcode"
                                 placeholder="xxxxxx" value="{{ old('postcode', $userdata->postcode) }}" required>
                         </div>
@@ -222,6 +205,27 @@
                     <h2 class="mb-4">
                         Penagihan
                     </h2>
+                    <div class="tab input-row mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Tipe Kartu</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group mb-0">
+                            <select class="form-select" id="card_type" name="card_type" required>
+                                <option disabled hidden
+                                    {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
+                                    Kartu</option>
+                                <option value='1'
+                                    {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu
+                                    Kredit
+                                </option>
+                                <option value='2'
+                                    {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Kartu
+                                    Debit
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="tab input-row mb-3">
                         <div class="d-flex">
@@ -229,138 +233,50 @@
                             <p class="separator mb-0">:</p>
                         </div>
                         <div class="input-group long-form mb-0">
-                            <input type="text" class="form-control" id="card-name" name="card_name"
+                            <input type="text" class="form-control" id="card_name" name="card_name"
                                 placeholder="Nama pemegang kartu" value="{{ old('card_name', $userdata->card_name) }}"
                                 required>
                         </div>
                     </div>
-
-                    <div class="normal-view">
+                    <div class="tab input-row mb-3">
                         <div class="d-flex">
-                            <div class="tab input-row mb-3">
-                                <div class="d-flex">
-                                    <p class="labels mb-0">Nomor Kartu</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group medium-form mb-0">
-                                    <input type="text" class="form-control card_number" name="card_number"
-                                        placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                        value="{{ old('card_number', $userdata->card_number) }}" required>
-                                </div>
-                            </div>
-    
-                            <div class="tab d-flex mb-3 ms-5">
-                                <div class="d-flex">
-                                    <p class="medium-labels mb-0">Tipe Kartu</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group mb-0">
-                                    <select class="form-select" id="card_type" name="card_type" required>
-                                        <option disabled hidden
-                                            {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
-                                            Kartu</option>
-                                        <option value='1'
-                                            {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu Kredit
-                                        </option>
-                                        <option value='2'
-                                            {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Kartu Debit
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
+                            <p class="labels mb-0">Nomor Kartu</p>
+                            <p class="separator mb-0">:</p>
                         </div>
-    
-                        <div class="d-flex">
-                            <div class="tab input-row mb-3">
-                                <div class="d-flex">
-                                    <p class="labels mb-0">Tanggal Kadaluarsa</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group tiny-form mb-0">
-                                    <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
-                                        placeholder="mm/yy" name="card_expiration"
-                                        value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
-                                </div>
-                            </div>
-    
-                            <div class="tab d-flex mb-3 ms-5">
-                                <div class="d-flex">
-                                    <p class="short-labels mb-0">CVV</p>
-                                    <p class="separator mb-0">:</p>
-                                </div>
-                                <div class="input-group tiny-form mb-0">
-                                    <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                        placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
-                                </div>
-                            </div>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control card_number" name="card_number"
+                                placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
+                                value="{{ old('card_number', $userdata->card_number) }}" required>
                         </div>
                     </div>
-
-                    <div class="mobile-view">
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">Nomor Kartu</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group medium-form mb-0">
-                                <input type="text" class="form-control card_number" name="card_number"
-                                    placeholder="xxxx xxxx xxxx xxxx" maxlength="19"
-                                    value="{{ old('card_number', $userdata->card_number) }}" required>
-                            </div>
+                    <div class="tab input-row mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">Tanggal Kadaluarsa</p>
+                            <p class="separator mb-0">:</p>
                         </div>
-
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">Tipe Kartu</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group mb-0 small-form">
-                                <select class="form-select" id="card_type" name="card_type" required>
-                                    <option disabled hidden
-                                        {{ old('card_type', $userdata->card_type) == '' ? 'selected' : '' }}>Pilih Tipe
-                                        Kartu</option>
-                                    <option value='1'
-                                        {{ old('card_type', $userdata->card_type) == '1' ? 'selected' : '' }}>Kartu Kredit
-                                    </option>
-                                    <option value='2'
-                                        {{ old('card_type', $userdata->card_type) == '2' ? 'selected' : '' }}>Kartu Debit
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">Tanggal Kadaluarsa</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group tiny-form mb-0">
-                                <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
-                                     placeholder="mm/yy" name="card_expiration"
-                                    value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
-                            </div>
-                        </div>
-
-                        <div class="tab input-row mb-3">
-                            <div class="d-flex">
-                                <p class="labels mb-0">CVV</p>
-                                <p class="separator mb-0">:</p>
-                            </div>
-                            <div class="input-group tiny-form mb-0">
-                                <input type="text" class="form-control" id="card_cvv" name="card_cvv"
-                                    placeholder="xxx" value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
-                            </div>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control card_expiration" style="padding-left:0.8em;"
+                                placeholder="mm/yy" name="card_expiration"
+                                value="{{ old('card_expiration', $userdata->card_expiration) }}" required>
                         </div>
                     </div>
-
-                    <div class="mb-5"></div>
-
+                    <div class="tab input-row mb-3">
+                        <div class="d-flex">
+                            <p class="labels mb-0">CVV</p>
+                            <p class="separator mb-0">:</p>
+                        </div>
+                        <div class="input-group long-form mb-0">
+                            <input type="text" class="form-control" id="card_cvv" name="card_cvv" placeholder="xxx"
+                                value="{{ old('card_cvv', $userdata->card_cvv) }}" required>
+                        </div>
+                    </div>
                 </div>
 
                 <hr>
 
-                <div class="d-flex justify-content-end tab" style="margin-bottom:1rem;margin-top:5rem;">
-                    <a type="button" href="{{ route('app.home.page') }}" class="btn btn-danger buttons me-4">Batalkan</a>
+                <div class="d-flex justify-content-end tab mt-3">
+                    <a type="button" href="{{ route('app.home.page') }}"
+                        class="btn btn-danger buttons me-4">Batalkan</a>
                     <button type="submit" class="btn btn-primary buttons">Simpan</button>
                 </div>
             </form>
@@ -375,37 +291,36 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-
         // Card Expiration Formatting
         const card_expiration = document.querySelectorAll('.card_expiration');
 
-        for (let i = 0; i < card_expiration.length; i++){
-            card_expiration[i].addEventListener('input', function (e) {
+        for (let i = 0; i < card_expiration.length; i++) {
+            card_expiration[i].addEventListener('input', function(e) {
                 let v = e.target.value.replace(/\D/g, ''); // only digits
-    
+
                 if (v.length >= 2) {
-                    e.target.value = v.slice(0,2) + '/' + v.slice(2,4);
+                    e.target.value = v.slice(0, 2) + '/' + v.slice(2, 4);
                 } else {
                     e.target.value = v;
                 }
             });
 
             // Delete two chars if backspace on char length = 3
-            card_expiration[i].addEventListener('keydown', function (e) {
+            card_expiration[i].addEventListener('keydown', function(e) {
                 if (e.key === 'Backspace') {
                     const v = card_expiration[i].value;
-    
+
                     // Length 3 means: "12/" or "1/2" depending on user edits
                     if (v.length === 3) {
                         e.preventDefault(); // stop normal backspace
-    
+
                         // Remove last two chars
-                        card_expiration[i].value = v.slice(0,1);  
+                        card_expiration[i].value = v.slice(0, 1);
                     }
                 }
             });
         }
-        
+
         // Card Number Formatting
         const card_number = document.querySelectorAll('.card_number');
 
@@ -417,7 +332,7 @@
             return value.replace(/(.{4})/g, '$1 ').trim();
         }
 
-        for (let i = 0; i < card_number.length; i++){
+        for (let i = 0; i < card_number.length; i++) {
             card_number[i].addEventListener('input', function(e) {
                 e.target.value = formatGroups(e.target.value);
             });
@@ -425,5 +340,52 @@
             card_number[i].value = formatGroups(card_number[i].value);
         }
 
+        function patternMatch({
+            input,
+            template
+        }) {
+            try {
+                let j = 0;
+                let plaintext = "";
+                let countj = 0;
+                while (j < template.length) {
+                    if (countj > input.length - 1) {
+                        template = template.substring(0, j);
+                        break;
+                    }
+
+                    if (template[j] == input[j]) {
+                        j++;
+                        countj++;
+                        continue;
+                    }
+
+                    if (template[j] == "x") {
+                        template =
+                            template.substring(0, j) + input[countj] + template.substring(j + 1);
+                        plaintext = plaintext + input[countj];
+                        countj++;
+                    }
+                    j++;
+                }
+
+                return template;
+            } catch {
+                return "";
+            }
+        }
+        document.getElementById("postcode").oninput = (e) => {
+            e.target.value = patternMatch({
+                input: e.target.value,
+                template: "xxxxx",
+            });
+        };
+
+        document.getElementById("card_cvv").oninput = (e) => {
+            e.target.value = patternMatch({
+                input: e.target.value,
+                template: "xxx",
+            });
+        };
     </script>
 @endsection
