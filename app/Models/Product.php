@@ -88,13 +88,17 @@ class Product extends Model
                                         websearch_to_tsquery('english', ?)) AS text_rank,
                 similarity({$columnName}, ?) AS fuzzy_rank
             ", [$searchParam, $searchParam, $searchParam])
-            ->where('is_active', true)
-            ->whereRaw("
-                search_vector @@ (websearch_to_tsquery('indonesian', ?) ||
-                                  websearch_to_tsquery('english', ?))
-            ", [$searchParam, $searchParam])
-            ->orWhereRaw("similarity({$columnName}, ?) >= {$threshold}", [$searchParam])
+            ->where(function ($query) use ($searchParam, $columnName, $threshold) {
+                $query->whereRaw("
+                    search_vector @@ (
+                    websearch_to_tsquery('indonesian', ?) ||
+                    websearch_to_tsquery('english', ?)
+                    )
+                ", [$searchParam, $searchParam])
+                    ->orWhereRaw("similarity({$columnName}, ?) >= ?", [$searchParam, $threshold]);
+            })
             // Apply filters
+            ->where('is_active', true)
             ->when(isset($filter['category']) && !empty($filter['category']), function ($query) use ($filter) {
                 $query->where('category', $filter['category']);
             })
